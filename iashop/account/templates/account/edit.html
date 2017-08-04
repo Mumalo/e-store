@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load material_form %}
+{% block title %}edit{% endblock %}
+
+{% block content %}
+  <div class="container contaier-fluid">
+      <div class="row">
+          <div class="col-sm-2">
+              Right side bar
+
+          </div>
+          <div class="col-sm-8">
+              <form method="post" action="." enctype="multipart/form-data" class="viewform">
+                  {% form form=user_form %}{% endform %}
+                  {% form form=profile_form %}{% endform %}
+
+
+              </form>
+          </div>
+          <div class="col-sm-2">
+                Left side bar
+          </div>
+
+      </div>
+
+  </div>
+{% endblock %}

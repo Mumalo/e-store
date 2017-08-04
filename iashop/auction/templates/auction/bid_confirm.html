@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div>
+
+    </div>
+    <form  method="post">
+        {% csrf_token %}
+    <p><strong>Are you sure you want to place this bid?</strong></p>
+        <a class="btn btn-default" href="javascript:history.back()">Back</a>
+    <button type="submit" class="btn btn-info">Yes</button>
+</form>
+</div>
+
+{% endblock %}

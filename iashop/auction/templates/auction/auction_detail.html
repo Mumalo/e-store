@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load material_form %}
+{% load static %}
+{% block title %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-4">
+                    <p>Item Image</p>
+                    <p>{{ auction }}</p>
+                    <p>Current bid at N{{auction.get_current_price}}</p>
+                    <p>Winner: {{auction.winner}}</p>
+                    <img src="{% if auction.image %}{{ auction.image.url }}{%
+                        else %}{% static 'images/no_image.png' %}{% endif %}">
+                </div>
+
+                <div class="col-sm-8 form-container">
+                    {% if messages %}
+                            <ul class="messages">
+                            {% for message in messages %}
+                                <li class="{{ message.tags }}">
+                            {{ message|safe }}
+                                <a href="#" class="close">✖</a>
+                            </li>
+                            {% endfor %}
+                            </ul>
+                            {% endif %}
+                    <form method="post" class="viewform">
+                        {% csrf_token %}
+                        {% form form=bid_form %}{% endform %}
+                        <button type="submit" name="_submit" class="btn">PLACE BID</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+           <div>Right Column Here</div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
