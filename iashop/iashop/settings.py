@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from .secret import DATABASE_NAME, PASSWORD, USER, SECRET_KEY
-
+from django.core.urlresolvers import reverse_lazy
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -42,10 +42,14 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap3',
+    'common',
     'shop',
     'auction',
     'account',
     'base',
+    # 'notify',
+    'notifications',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -137,3 +141,25 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: reverse_lazy('user_detail',
+    args=[u.id])
+}
+
+
+NOTIFICATIONS_SOFT_DELETE=True
+NOTIFICATIONS_USE_JSONFIELD=True
+# Notify settings
+
+# NOTIFY_SOFT_DELETE = True
+# NOTIFY_NF_LIST_CLASS_SELECTOR = '.notifications'
+#
+# NOTIFY_NF_BOX_CLASS_SELECTOR = '.notification-box-list'
+#
+# NOTIFY_MARK_NF_CLASS_SELECTOR = '.mark-notification'
+# NOTIFY_MARK_ALL_NF_CLASS_SELECTOR = '.mark-all-notifications'
+# NOTIFY_READ_NOTIFICATION_CSS = 'read'
+# NOTIFY_UNREAD_NOTIFICATION_CSS = 'unread'
+#
+# NOTIFY_DELETE_NF_CLASS_SELECTOR = '.delete-notification'
+# NOTIFY_UPDATE_TIME_INTERVAL = ''

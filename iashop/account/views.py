@@ -6,7 +6,13 @@ from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
 from .models import Profile
 from django.contrib.auth.models import User
-
+from django.contrib import messages
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from common.decorators import ajax_required
+from .models import Follow
+from notifications.signals import notify
+# from notify.signals import notify
 def user_login(request):
 
     if request.method == 'POST':
@@ -22,11 +28,11 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect(user_home, pk=user.id)
+                    return redirect(user_detail, pk=user.id)
                 else:
                     HttpResponse('User currently Inactive')
             else:
-                return HttpResponse('Invalid User')
+                messages.error(request, 'Invalid User')
     else:
         form = LoginForm()
     return render(request,
@@ -37,7 +43,7 @@ def logout_user(request):
     return render(request, 'home.html')
 
 
-@login_required
+
 def user_registration(request):
 
     if request.method == 'POST':
@@ -51,7 +57,13 @@ def user_registration(request):
             new_profile = profile.save(commit=False)
             new_profile.user = new_user
             new_profile.save()
+            users = User.objects.exclude(id=new_user.id)
+            users = list(users)
+            notify.send(new_user, recipient=users, verb='created a new account')
+
             return redirect(user_login)
+        else:
+            HttpResponse('Invalid form')
     else:
         user = UserForm()
         profile = ProfileForm()
@@ -76,16 +88,20 @@ def edit_profile(request):
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user,
                             data=request.POST)
-        profile_form = ProfileEditForm(instance=request.user.profile_user,
+
+
+        profile_form = ProfileEditForm(instance=request.user.profile_owner,
                                   data=request.POST,
                                   files=request.FILES)
 
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+            messages.success(request, "Your account was updated successfully")
+
     else:
         user_form = UserEditForm(instance=request.user)
-        profile_form = ProfileEditForm(instance=request.user.profile_user)
+        profile_form = ProfileEditForm(instance=request.user.profile_owner, nf_type ='account_creation')
     return render(
         request, 'account/edit.html',
         {'user_form':user_form,
@@ -99,18 +115,49 @@ def edit_profile(request):
 
 
 
-def user_home(request, pk):
+def user_detail(request, pk):
     user = get_object_or_404(User, pk=pk)
+    nfs = user.notifications.unread()
 
-    if user.is_authenticated and request.user.id == user.id:
+    if user.is_active:
         return render(request, 'account/user_home.html', {
-        'user': user
+        'user': user, 'nfs':nfs
     })
 
     else:
         raise PermissionDenied
 
 
+# AJAX view to follow and unfollow users
+
+
+@ajax_required
+@login_required
+@require_POST
+def user_follow(request):
+    # user_id = request.POST.get('id')
+    # action = request.POST.get('action')
+    # some = {'yeah': 'me'}
+
+    # if user_id and action:
+    #     try:
+    #         user = User.objects.get(id=user_id)
+    #
+    #         if action == 'follow':
+    #             Follow.objects.get_or_create(
+    #                 user_followed=user,
+    #                 user_following=request.user
+    #             )
+    #
+    #         else:
+    #             Follow.objects.filter(
+    #                 user_followed=user,
+    #                 user_following=request.user
+    #             ).delete()
+    #         return JsonResponse({'status': 'ok'})
+    #     except user.DoesNotExist:
+    #         return JsonResponse({'status':'ko'})
+    return JsonResponse({'status':'ko'})
 
 
 

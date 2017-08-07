@@ -1,7 +1,12 @@
+@import url(http://fonts.googleapis.com/css?family=Muli);
 
-body{
-    background: #f2f2f2!important;
+body {
+    margin:0;
+    padding:0;
+    font-family:helvetica, sans-serif;
+     background: #f2f2f2!important;
 }
+
 
 .caret {
   border-color: transparent !important;
@@ -10,12 +15,25 @@ body{
 .form-container{
     background: #fdfdfd;
 }
+.left-sidebar, .right-sidebar{
+    background: #ffffff;
+}
+
+.left-sidebar{
+    border-right: 8px solid  #f2f2f2;
+}
+
+.right-sidebar{
+    border-left: 8px solid #f2f2f2;
+}
 
 
 
 .dropdown-content li>a{
       color:#428bca;
 }
+
+
 #dropdown1{
     border-radius: 4px;
     box-shadow: none;
@@ -25,6 +43,18 @@ body{
     border: 1px solid #ccc;
 
 }
+
+ #dropdown2{
+     border-radius: 4px;
+    box-shadow: none;
+    margin-top: 50px;
+    width: 350px !important;
+    background: #f0f0f0 !important;
+    border: 1px solid #ccc;
+ }
+
+
+
 
 #dropdown1>li>a{
     color:#428bca;
@@ -161,4 +191,146 @@ ul.messages li a.close {
     border:0;
     box-shadow:none;
     text-shadow:none;
+}
+
+/*breadcrumbs*/
+
+/** Breadcrumb background color
+@breadcrumb-bg : #f5f5f5;
+//** Breadcrumb text color
+@breadcrumb-color : #ccc;
+//** Text color of current page in the breadcrumb
+@breadcrumb-active-color : @gray-light;
+//** Textual separator for between breadcrumb elements
+@breadcrumb-separator : "/";
+**/
+.breadcrumb{
+    background: #f5f5f5;
+    font-size: 5px;
+}
+
+
+/*Follower system*/
+
+.count {
+    color:#aaa;
+    border:3px solid #bbb;
+    border-radius:26px;
+    padding:10px 20px;
+    margin:20px 10px 0;
+}
+
+.follow {
+    /*float:right; margin-top:-8px;*/
+    /*padding: 4px !important;*/
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+    background: #12c064 !important;
+    border-radius: 4px;
+    font: 12px bold;
+}
+
+a {
+    color:#12c064;
+    text-decoration:none;
+}
+
+a:hover {
+    color:#00a74f;
+}
+
+.action {
+    clear:both;
+    overflow:auto;
+}
+
+.notifications{
+    color: red !important;
+}
+
+.no-notifications{
+    color: #003366;
+}
+
+/*notifications styling */
+
+.dropdown {
+    display:inline-block;
+    margin-left:20px;
+    /*padding:10px;*/
+  }
+
+
+.glyphicon-bell {
+
+    font-size:1.5rem;
+  }
+
+.notifications {
+   min-width:420px;
+  }
+
+  .notifications-wrapper {
+     overflow:auto;
+      max-height:250px;
+    }
+
+ .menu-title {
+     color:#ff7788;
+     /*font-size:1.2rem;*/
+      display:inline-block;
+      }
+
+.glyphicon-circle-arrow-right {
+      margin-left:7px;
+   }
+
+
+ .notification-heading, .notification-footer  {
+ 	padding:2px 5px;
+       }
+
+
+.dropdown-menu.divider {
+  margin:5px 0;
+  }
+
+.item-title {
+
+ font-size:1.3rem;
+ color:#000;
+
+}
+
+.notifications a.content {
+ text-decoration:none;
+ background:#ccc;
+
+ }
+
+.notification-item {
+ padding:10px;
+ margin:5px;
+ background:#ccc;
+ border-radius:4px;
+ }
+
+
+.notification-dropdown-li a:hover{
+    text-decoration: none;
+}
+
+.notification-dropdown-li{
+     border-bottom: 1px solid #fff !important;
+}
+
+
+.notification-dropdown-li:last-child{
+    border-bottom: none;
+}
+
+
+.small-image{
+    width: 90px;
+    height: 90px;
 }

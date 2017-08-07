@@ -173,7 +173,7 @@ class Bid(BaseModel):
                                 on_delete=models.CASCADE, null=True, related_name='bids')
     event = models.ForeignKey(AuctionEvent,
                               on_delete=models.CASCADE, null=True, related_name='bids')
-    created_at = models.DateTimeField(default=timezone.now(), blank=True)
+    created_at = models.DateTimeField(default=timezone.now, blank=True)
 
     class Meta:
         ordering = ('-created_at',)

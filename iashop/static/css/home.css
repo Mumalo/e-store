@@ -1,11 +1,32 @@
+@import url(http://fonts.googleapis.com/css?family=Muli);
 
-body{
-    background: #f0f0f0 !important;
+body {
+    margin:0;
+    padding:0;
+    font-family:helvetica, sans-serif;
+     background: #f2f2f2!important;
 }
+
 
 .caret {
   border-color: transparent !important;
 }
+
+.form-container{
+    background: #fdfdfd;
+}
+.left-sidebar, .right-sidebar{
+    background: #ffffff;
+}
+
+.left-sidebar{
+    border-right: 8px solid  #f2f2f2;
+}
+
+.right-sidebar{
+    border-left: 8px solid #f2f2f2;
+}
+
 
 
 .dropdown-content li>a{
@@ -103,13 +124,12 @@ body{
 
 
 
-.owl-carousel .item img{
+.owl-carousel .item img {
     width: 100%;
     height: 325px;
     max-height: 325px;
     display: block;
 }
-
 hr{
     /*margin-bottom: 0.5em;*/
     /*margin-top: 0.5em;*/
@@ -157,4 +177,59 @@ ul.messages li a.close {
     border:0;
     box-shadow:none;
     text-shadow:none;
+}
+
+/*breadcrumbs*/
+
+/** Breadcrumb background color
+@breadcrumb-bg : #f5f5f5;
+//** Breadcrumb text color
+@breadcrumb-color : #ccc;
+//** Text color of current page in the breadcrumb
+@breadcrumb-active-color : @gray-light;
+//** Textual separator for between breadcrumb elements
+@breadcrumb-separator : "/";
+**/
+.breadcrumb{
+    background: #f5f5f5;
+    font-size: 5px;
+}
+
+
+/*Follower system*/
+
+.count {
+    color:#aaa;
+    border:3px solid #bbb;
+    border-radius:26px;
+    padding:10px 20px;
+    margin:20px 10px 0;
+}
+
+.follow {
+    /*float:right; margin-top:-8px;*/
+    /*padding: 4px !important;*/
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+    background: #12c064 !important;
+    border-radius: 4px;
+    font: 12px bold;
+}
+
+a {
+    color:#12c064;
+    text-decoration:none;
+}
+
+a:hover {
+    color:#00a74f;
+}
+
+.action {
+    clear:both;
+    overflow:auto;
+}
+
+.notifications{
+    background-color: red !important;
 }

@@ -37,7 +37,8 @@ class UserForm(ModelForm):
     def __init__(self, *args, **kwargs):
 
         self.layout = Layout(
-                    Fieldset('username', 'email',
+                    Fieldset('Account Info',
+                        'username', 'email',
                              Row('password', 'password2')),
 
                     Fieldset('Pesonal details',

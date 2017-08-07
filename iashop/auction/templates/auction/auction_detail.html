@@ -1,12 +1,26 @@
 {% extends "base.html" %}
-{% load material_form %}
 {% load static %}
+{% load material_form %}
+
 {% block title %}{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-8">
+
+    <!--BBreadcrumb-->
+
+    <ul class="breadcrumb">
+              <li>
+                <a href="#">Home</a>
+              </li>
+              <li>
+                <a href="#">Auctions</a>
+              </li>
+              <li class="active">Auction detail</li>
+    </ul>
+
+    <div class="row left-sidebar">
+        <div class="col-sm-10">
             <div class="row">
                 <div class="col-sm-4">
                     <p>Item Image</p>
@@ -17,7 +31,9 @@
                         else %}{% static 'images/no_image.png' %}{% endif %}">
                 </div>
 
-                <div class="col-sm-8 form-container">
+
+
+                <div class="col-sm-8">
                     {% if messages %}
                             <ul class="messages">
                             {% for message in messages %}
@@ -27,21 +43,50 @@
                             </li>
                             {% endfor %}
                             </ul>
-                            {% endif %}
+                    {% endif %}
+
+                    <!--The form-->
+
                     <form method="post" class="viewform">
                         {% csrf_token %}
                         {% form form=bid_form %}{% endform %}
                         <button type="submit" name="_submit" class="btn">PLACE BID</button>
                     </form>
+
+
+
                 </div>
+
             </div>
         </div>
 
-        <div class="col-sm-4">
-           <div>Right Column Here</div>
-        </div>
+        <div class="col-sm-2 right-sidebar">
+            <ul >User information
+               <li>
+                   Posted By: <a href="#">{{auction.creator}}</a>
+               </li>
+               <li>
+                   <span class="glyphicon glyphicon-earphone">000000000</span>
+               </li>
 
+               <li>
+                   <span class="glyphicon glyphicon-envelope"></span>{{auction.creator.email}}
+               </li>
+
+               <li>
+                   <a href="{{ auction.creator.get_absolute_url }}">View all auctions by this user</a>
+               </li>
+                <li>some</li>
+                <li>some</li>
+                <li>some</li>
+
+           </ul>
+
+
+
+        </div>
     </div>
 
 </div>
+
 {% endblock %}

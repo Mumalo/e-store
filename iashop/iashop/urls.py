@@ -22,6 +22,7 @@ urlpatterns = [
     # url(r'ias/', include('shop.urls') ),
     url(r'', include('auction.urls')),
     url(r'', include('account.urls')),
+   url('^inbox/notifications/', include('notifications.urls', namespace='notifications')),
 ]
 
 if settings.DEBUG:
