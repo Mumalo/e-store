@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+{% load auction_tags %}
+{% load static %}
+{% load material_form %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <!--BBreadcrumb-->
+
+    <ul class="breadcrumb">
+              <li>
+                <a href="#">Home</a>
+              </li>
+              <li>
+                <a href="#">Auctions</a>
+              </li>
+              <li class="active">Auction detail</li>
+    </ul>
+
+    <div class="row">
+        <div class="col-md-1" style="width: 4%"></div>
+        <div class="col-sm-12 col-md-8 left-sidebar">
+            <div class="row">
+                <div class="col-xs-12 col-sm-5 col-md-5">
+                    <h5 class="auction-detail-heading">{{ auction }}</h5>
+                    <!--<p>Current bid at N{{auction.get_current_price}}</p>-->
+                    <!--<p>Winner: {{auction.winner}}</p>-->
+                    {% if auction.image %}
+                        <img src="{{ auction.image.url }}" class="auction-detail-image img-responsive img-thumbnail">
+                    {% else %}
+                        <img src="{% static 'images/no_image.png' %}" class="auction-detail-image img-responsive img-thumbnail">
+                    {% endif %}
+                </div>
+
+
+
+                <div class="col-xs-12 col-sm-7 col-md-7 bid-form-container">
+                    {% if messages %}
+                            <ul class="messages">
+                            {% for message in messages %}
+                                <li class="{{ message.tags }}">
+                            {{ message|safe }}
+                                <a href="#" class="close">✖</a>
+                            </li>
+                            {% endfor %}
+                            </ul>
+                    {% endif %}
+
+                    <!--The form-->
+
+                    <div class="row">
+                        <div class="hidden-xs-up col-sm-2 colmd-2"></div>
+
+                        <div class="colxs-12 col-sm-8 colmd-8">
+                            <form method="post" class="viewform">
+                                {% csrf_token %}
+                                {% form form=bid_form %}{% endform %}
+                                <button type="submit" name="_submit" class="btn waves-effect waves-teal">BID</button>
+                            </form>
+                        </div>
+
+                        <div class="hidden-xs-up col-sm-2 colmd-2"></div>
+
+                    </div>
+                </div>
+            </div> <!-- end of auction detail image row -->
+
+            <div class="row auction-detail-item-info">
+                <div class="col-xs-0 col-md-4" style="width: 277px"></div>
+                <div class="col-xs-12 col-md-8">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4">
+                                    #ID
+                                </div>
+                                <div class="col-xs-4 col-md-8">
+                                    <span>{{ auction.id }}</span>
+                                </div>
+                            </div>
+
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4">
+                                    Institution
+                                </div>
+                                <div class="col-xs-4 col-md-8">
+                                    <span>{{ auction.creator.profile.institution }}</span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4">
+                                    Location
+                                </div>
+                                <div class="col-xs-4 col-md-8">
+                                      <span>{{ auction.creator.profile.institution.state }}</span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4">
+                                     Current bid
+                                </div>
+                                <div class="col-xs-4 col-md-8">
+                                    <span>{{ auction.get_current_price }}</span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4">
+                                     Expires on
+                                </div>
+                                <div class="col-xs-4 col-md-8">
+                                      <span>{{ auction.end_time }}</span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4">
+                                     Time Remaining
+                                </div>
+                                <div class="col-xs-8 col-md-8" style="float: left">
+                                    <span>
+                                        <div class="row myClock" style="" data-action='{{ auction.end_time|to_json }}'>
+                                            <div class="row">
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 hours"></div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 minutes"></div>
+                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 seconds"></div>
+                                            </div>
+
+                                            <div class="row">
+                                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Days</div>
+                                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Hours</div>
+                                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Minutes</div>
+                                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
+                                            </div> <!-- counter text ends here -->
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul> <!-- end of item-menu ul -->
+                </div>
+            </div>
+            <!--End of item information -->
+        </div>
+
+        <div class="col-xs-12 col-sm-3 col-md-3 right-sidebar">
+            <h5 class="auction-detail-heading">More Information</h5>
+            <div class="container" style="margin-left: 21px; background-color: #c0d2bf">
+                <div class="row myClock" style="padding-left: 18px" data-action='{{ auction.end_time|to_json }}'>
+                    <div class="row">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 hours"></div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 minutes"></div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 seconds"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Days</div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Hours</div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Minutes</div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
+                    </div> <!-- counter text ends here -->
+                </div>
+            </div>
+            <!--Declare winner here -->
+            <div class="panel">
+                <div class="panel-body">
+                    <h6>Current bid at N{{auction.get_current_price}}</h6>
+                    <h6>Winner: {{auction.winner}}</h6>
+                </div>
+
+            </div>
+            <ul class="list-group" id="auction-detail-user-info">
+               <li class="list-group-item">
+                   Posted By: <a href="#">{{auction.creator}}</a>
+               </li>
+               <li class="list-group-item">
+                   <span class="glyphicon glyphicon-earphone"> {% if auction.creator.phone %}{{ auction.creator.phone }}{% else %} 00000000 {% endif %}</span>
+               </li>
+
+               <li class="list-group-item">
+                   <span class="glyphicon glyphicon-envelope"></span>   {{auction.creator.email}}
+               </li>
+
+               <li class="list-group-item">
+                   <a href="{{ auction.creator.get_absolute_url }}">View all auctions by this user</a>
+               </li>
+           </ul>
+        </div> <!-- end of right side bar -->
+    </div> <!-- end of main row -->
+
+    <!-- Item filtering row starts here -->
+    <div class="row">
+        <div class="col-md-1" style="width: 4%"></div>
+        <div class="col-xs-12 col-md-8 col-ld-8 left-sidebar">
+            <ul class="nav nav-tabs nav-justified">
+                <li><a  class="active" data-toggle="tab" href="#desc">Description</a></li>
+                <li><a data-toggle="tab" href="#best-offers">Best Offers</a></li>
+                <li><a data-toggle="tab" href="#comment">Comment</a></li>
+                <li><a data-toggle="tab" href="#private-message">Private Message</a></li>
+                 <li><a data-toggle="tab" href="#rate">Feedback</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="desc" class="tab-pane fade in active">
+                    <h4>Description here</h4>
+                </div>
+
+                <div id="best-offers" class="tab-pane fade">
+                    <h4>Best offers here </h4>
+                </div>
+
+                <div id="comment" class="tab-pane fade">
+                    <h4>Comment here</h4>
+                </div>
+
+                <div id="private-message" class="tab-pane fade">
+                    <h4>Private message here</h4>
+                </div>
+
+                <div id="rate" class="tab-pane fade">
+                    <h4>Private message here</h4>
+                </div>
+            </div> <!-- end of tab content -->
+        </div>
+    </div>
+     <!-- Item filtering row end here -->
+
+</div> <!-- end of main container -->
+
+{% endblock %}

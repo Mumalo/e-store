@@ -51,12 +51,9 @@ def user_registration(request):
         profile = ProfileForm(request.POST)
 
         if user.is_valid() and profile.is_valid():
-            new_user = user.save(commit=False)
+            new_user = user.save()
             new_user.set_password(user.cleaned_data['password'])
             new_user.save()
-            new_profile = profile.save(commit=False)
-            new_profile.user = new_user
-            new_profile.save()
             users = User.objects.exclude(id=new_user.id)
             users = list(users)
             notify.send(new_user, recipient=users, verb='created a new account')
@@ -83,30 +80,33 @@ def password_change(request):
     return render(request, 'account/change_password')
 
 @login_required
-def edit_profile(request):
+def edit_profile(request, pk):
+    user = get_object_or_404(User,  pk=pk)
 
-    if request.method == 'POST':
-        user_form = UserEditForm(instance=request.user,
+    if request.user.id == user.id:
+        if request.method == 'POST':
+            user_form = UserEditForm(instance=user,
                             data=request.POST)
 
-
-        profile_form = ProfileEditForm(instance=request.user.profile_owner,
+            profile_form = ProfileEditForm(instance=user.profile,
                                   data=request.POST,
                                   files=request.FILES)
 
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, "Your account was updated successfully")
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                messages.success(request, "Your account was updated successfully")
 
+        else:
+            user_form = UserEditForm(instance=request.user)
+            profile_form = ProfileEditForm(instance=request.user.profile)
+        return render(
+            request, 'account/edit.html',
+            {'user_form':user_form,
+            'profile_form':profile_form}
+        )
     else:
-        user_form = UserEditForm(instance=request.user)
-        profile_form = ProfileEditForm(instance=request.user.profile_owner, nf_type ='account_creation')
-    return render(
-        request, 'account/edit.html',
-        {'user_form':user_form,
-         'profile_form':profile_form}
-    )
+        raise PermissionDenied
 
 
 

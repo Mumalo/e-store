@@ -1,4 +1,57 @@
-#!c:\users\justice\pycharmprojects\ia-store\myvenv\scripts\python.exe
-# EASY-INSTALL-SCRIPT: 'pillow==4.2.1','pilfont.py'
-__requires__ = 'pillow==4.2.1'
-__import__('pkg_resources').run_script('pillow==4.2.1', 'pilfont.py')
+#!C:\Users\JUSTICE\PycharmProjects\IA-STORE\myvenv\Scripts\python.exe
+#
+# The Python Imaging Library
+# $Id$
+#
+# PIL raster font compiler
+#
+# history:
+# 1997-08-25 fl   created
+# 2002-03-10 fl   use "from PIL import"
+#
+
+from __future__ import print_function
+
+VERSION = "0.4"
+
+import glob
+import sys
+
+# drivers
+from PIL import BdfFontFile
+from PIL import PcfFontFile
+
+if len(sys.argv) <= 1:
+    print("PILFONT", VERSION, "-- PIL font compiler.")
+    print()
+    print("Usage: pilfont fontfiles...")
+    print()
+    print("Convert given font files to the PIL raster font format.")
+    print("This version of pilfont supports X BDF and PCF fonts.")
+    sys.exit(1)
+
+files = []
+for f in sys.argv[1:]:
+    files = files + glob.glob(f)
+
+for f in files:
+
+    print(f + "...", end=' ')
+
+    try:
+
+        fp = open(f, "rb")
+
+        try:
+            p = PcfFontFile.PcfFontFile(fp)
+        except SyntaxError:
+            fp.seek(0)
+            p = BdfFontFile.BdfFontFile(fp)
+
+        p.save(f)
+
+    except (SyntaxError, IOError):
+        print("failed")
+
+    else:
+        print("OK")

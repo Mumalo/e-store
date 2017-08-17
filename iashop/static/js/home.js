@@ -53,12 +53,12 @@
 //view.css('height', 400);
 //}
 //});
-$('.carousel.carousel-slider').carousel({fullWidth: true});
+//$('.carousel.carousel-slider').carousel({fullWidth: true});
 
-
-$('button.test').click(function(){
-    $(this).text('Unfollow')
-})
+//
+//$('button.test').click(function(){
+//    $(this).text('Unfollow')
+//})
 
 
 
@@ -115,3 +115,37 @@ $('button.test').click(function(){
 //        //}
 //    )
 //})
+
+
+//List and grid toggle function
+
+$(document).ready(function() {
+    $('#list').click(function(event){event.preventDefault();
+    $('#products .item').addClass('list-group-item');});
+    $('#grid').click(function(event){event.preventDefault();
+    $('#products .item').removeClass('list-group-item');
+    $('#products .item').addClass('grid-group-item');});
+
+
+
+});
+//
+//$('#myCounter').mbComingsoon({ expiryDate: new Date(2015, 0, 1, 9, 30), speed:100 });
+//            setTimeout(function () {
+//                $(window).resize();
+//            }, 200);
+jQuery(function($){
+	$('.myClock').flipcountdown({
+        size: "lg",
+        time:function(){
+		return new Date('5.10.2012 12:34:23');
+	}});
+})
+
+
+
+
+
+
+//Counter js
+

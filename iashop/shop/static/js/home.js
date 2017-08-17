@@ -53,12 +53,12 @@
 //view.css('height', 400);
 //}
 //});
-$('.carousel.carousel-slider').carousel({fullWidth: true});
+//$('.carousel.carousel-slider').carousel({fullWidth: true});
 
-
-$('button.test').click(function(){
-    $(this).text('Unfollow')
-})
+//
+//$('button.test').click(function(){
+//    $(this).text('Unfollow')
+//})
 
 
 
@@ -115,3 +115,44 @@ $('button.test').click(function(){
 //        //}
 //    )
 //})
+
+
+//List and grid toggle function
+
+$(document).ready(function() {
+    $('#list').click(function(event){event.preventDefault();
+    $('#products .item').addClass('list-group-item');});
+    $('#grid').click(function(event){event.preventDefault();
+    $('#products .item').removeClass('list-group-item');
+    $('#products .item').addClass('grid-group-item');});
+});
+
+
+//var countDownDate = new Date("Jan 5, 2018 15:37:25").getTime();
+
+var x = setInterval(function(){
+    var now = new Date().getTime()
+    $(".myClock").each(function(){
+        var dates = $(this).data('action')
+        var converted = parseInt(dates)
+        var newDate = new Date(converted)
+        distance = newDate - now
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        $(this).find(".days").text(days)
+        $(this).find(".hours").text(hours)
+        $(this).find(".minutes").text(minutes)
+        $(this).find(".seconds").text(seconds)
+    })
+
+
+
+},1000)
+
+
+
+
+//Counter js
+

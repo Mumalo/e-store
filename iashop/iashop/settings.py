@@ -45,9 +45,9 @@ INSTALLED_APPS = (
     'bootstrap3',
     'common',
     'shop',
-    'auction',
     'account',
     'base',
+    'auction',
     # 'notify',
     'notifications',
 )

@@ -154,7 +154,7 @@ class ProfileEditForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.layout = Layout(
-            'photo',
+            Row('photo','cover'),
             'phone',
             'institution',
             'gender',
@@ -164,7 +164,7 @@ class ProfileEditForm(ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('photo', 'phone', 'institution', 'gender', 'bio')
+        fields = ('photo','cover', 'phone', 'institution', 'gender', 'bio')
 
 
 

@@ -6,55 +6,55 @@
 {% block title %}{% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-
-          <h5 class="text-center" style="border-bottom: 1px solid  #ccc">{{user.first_name}}'s Profile</h5>
-
-    <div class="row" id="me">
-
-    <div class="col-sm-1">
-
-          <!--<button class="test">I am right here to be changed<button class="too">I am gonna change too</button></button>-->
+<div class="container-fluid" style="margin-top: -110px">
+    <div class="row profile-pics" style="padding-bottom: 15px;">
+        <div class="col-xs-1 col-md-1">
 
         </div>
-        <div class="container-fluid col-sm-7 right-sidebar">
-            <div class="containde-fluid row" style="margin-left: 0">
-                <div class="col-sm-6" style="padding-top: 8px; ">
-                    {% with total_followers=user.followers.count %}
-                            <span class="count">
-                                <span class="total">
-                                    {{total_followers}}
-                                </span>
-                                    follower{{ total_followers|pluralize }}
-                            </span>
-                            {% endwith %}
-                </div>
+        <div class="col-xs-8 col-md-8 img-responsive cover-image left-sidebar" style="height: 520px; border-bottom: 1px solid rgba(0, 0, 0, .4)">
+            {% if user.profile.cover %}
+                <a href="#"> <img src="{{ user.profile.cover.url }}" class="cover-image img-responsive"></a>
+            {% else %}
+                <a href="#"> <img src="{% static 'images/default/default_cover.png' %}" class="cover-image img-responsive"></a>
+            {% endif %}
+        </div> <!-- end of cover image -->
 
-                <div class="col-sm-6 text-right" style="padding-top: 8px">
-
-
-                    <a href="#" data-id="user.id" data-action="{% if request.user in user.followers.all %}un{% endif %}folow" class="btn btn-default follow" >
-                        {% if request.user not in user.followers.all %}
-                            Follow{% else %}
-                            Unfollow
-                        {% endif %}
-                    </a>
-
-                </div>
+        <div class="row">
+            <div class="col-xs-2 col-md-2 profile-image-cover" style="z-index: 2">
+                {% if user.profile.photo %}
+                    <a href="#"><img src="{{ user.profile.photo.url }}" class="inner img-responsive"></a>
+                {% else %}
+                    <a href="#"><img src="{% static 'images/default/default_profile.png' %}" class="inner img-responsive"></a>
+                {% endif %}
 
             </div>
 
-            {% if user.profile_owner.photo %}
-                <img src="{{user.profile_owner.photo.url}}" class="img-responsive img-circle img-thumbnail" style="width: 200px; height: 160px">
 
-            {% else %}
-                <img src="{% static 'images/no_image.png' %}" class="img-responsive img-circle img-thumbnail" style="width: 200px; height: 160px">
-            {% endif %}
+
+        </div> <!-- end of profile image -->
+
+        <div class="col-xs-3 col-md-3">
         </div>
-        <div class="col-sm-4">
+
+
+    </div> <!-- end of profile pics row -->
+
+    <!--Sub menu here -->
+    <div class="row" >
+        <div class="col-xs-2 col-md-2"></div>
+        <div class="col-xs-6 col-md-6  container-fluid user-profile-menu">
+            <nav class="navbar navbar-default">
+                <ul class="nav navbar-nav">
+                <li><a>Active Auctions</a></li>
+                <li><a>New Auctions</a></li>
+                <li><a>Three</a></li>
+                <li><a>Four</a></li>
+            </ul>
+            </nav>
         </div>
-    </div>
-</div>
+    </div> <!-- end of submenu container -->
+
+</div> <!-- end of main container -->
 
 {% endblock %}
 

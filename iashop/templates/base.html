@@ -12,13 +12,14 @@
 
 
     {% block head %}
-        <link href="{% static 'css/home.css' %}" rel="stylesheet" type="text/css">
-       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-
+        <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.flipcountdown.css' %}" />
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!--<link  href="{% static 'css/owlcarousel/owl.carousel.min.css' %}" rel="stylesheet">-->
         <!--<link  href="{% static 'css/owlcarousel/owl.theme.default.min.css' %}" rel="stylesheet">-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="{% static 'css/home.css' %}" rel="stylesheet" type="text/css">
+
+        <link rel="stylesheet" href="{% static 'css/flipclock.css' %}">
         {% include 'material/includes/material_css.html' %}
 
     {% block extrahead %}{% endblock %}
@@ -34,41 +35,22 @@
 
 
 
-   <div class="navbar navbar-default">
-       <div class="container-fluid">
+   <div class="navbar navbar-default" id="main-header" style="z-index: 4">
+       <div class="container-fluid header-content">
            <div class="navbar-header">
-               <a class="navbar-brand" href="{% url 'home' %}">Website Name</a>
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+               </button>
+               <a class="navbar-brand text" href="{% url 'home' %}" style="color: #fff">Website Name</a>
            </div>
 
+       <div class="collapse navbar-collapse" id="myNavbar">
+
            <ul class="nav navbar-nav">
-               <li><a href="{% url 'home' %}">Home</a></li>
-               <li><a href="#">About Us</a></li>
-
-               <li class="dropdown">
-                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Products
-                       <span class="caret"></span>
-                   </a>
-                   <ul class="dropdown-menu">
-                       <li><a href="#">Electronics</a></li>
-                       <li><a href="#">Fashion</a></li>
-                       <li><a href="#">Arts</a></li>
-                   </ul>
-               </li>
-
-               <li><a href="#">Services</a></li>
-
-               <li class="dropdown">
-                   <a class="dropdown-toggle" data-toggle="dropdown" href="#">Countries
-                       <span class="caret"></span>
-
-                   </a>
-
-                   <ul class="dropdown-menu">
-                       <li><a href="#">Nigeria</a></li>
-                       <li><a href="#">Ghana</a></li>
-                       <li><a href="#">South Africa</a></li>
-                   </ul>
-               </li>
+               <li><a href="{% url 'home' %}" class="text">Home</a></li>
+               <li><a href="#" class="text">About Us</a></li>
 
 
            </ul>
@@ -77,50 +59,35 @@
 
                {% if request.user.is_authenticated %}
 
-                     <li><a href="{% url 'list' %}" >All Auctions</a></li>
-                     <li><a href="{% url 'add_new_auction' %}">Add new auction</a></li>
+                     <li><a href="{% url 'list' %}" class="text">All Auctions</a></li>
+                     <li><a href="{% url 'add_new_auction' %}" class="text">Add new auction</a></li>
                      <!--<li class="ad"><a href="#"><button type="button" class="btn btn-primary btn-xs" href="#"  id="post-ad">Post Ad</button></a></li>-->
                {% else %}
-                <li><a href="{% url 'register' %}"><span class="glyphicon glyphicon-user"></span>Register</a></li>
-               <li><a href="{% url 'login' %}" class="profile-dropdown-li"><span class="glyphicon glyphicon-log-in pull-right">Login</span></a>
+                    <li><a href="{% url 'register' %}" class="text"><span class="glyphicon glyphicon-user"></span>Register</a></li>
+                    <li><a href="{% url 'login' %}" class="profile-dropdown-li text"><span class="glyphicon glyphicon-log-in pull-right">Login</span></a>
                {% endif %}
                <!--<li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span>Shop</a></li>-->
              {% if request.user.is_authenticated %}
-                <li class="list-unstyled">
-                     <a class='dropdown-button' href='#' data-activates='dropdown1' style="padding-left: 0; padding-right: 0">
-                        <span class="glyphicon glyphicon-triangle-bottom" style="color: #777;"></span>
-                    </a>
-
-                     <ul id="dropdown1" class="dropdown-content">
-                         <li><a href="{{ user.get_absolute_url }}" class="profile-dropdown-li">User<span class="glyphicon glyphicon-user pull-right"></span></a></li>
-                        <li><a href="{% url 'edit' %}" class="profile-dropdown-li">Profile settings<span class="glyphicon glyphicon-cog pull-right"></span></a></li>
-                        <li><a href="{% url 'logout' %}" class="profile-dropdown-li"><span class="glyphicon glyphicon-log-out pull-right"></span>Logout</a></li>
-                        <!--<li><a href="{% url 'login' %}" class="profile-dropdown-li"><span class="glyphicon glyphicon-log-in pull-right"></span>Login</a></li>-->
-                       <li><a href="#!" class="profile-dropdown-li">Items<span class="badge pull-right" style="color: #EDF3FE">42</span></a></li>
-                       <!--<li><a href="#!" class="profile-dropdown-li"><span></span>four</a></li>-->
-                       <!--<li class="profile-dropdown-li"><a href="#!"></a></li>-->
-                     </ul>
-               </li>
-
-                  {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' %}
-
-                        {% notifications_unread as unread_count %}
-               <li class="dropdown pagination-centered">
-                   <a href="#" class="dropdown-button" data-activates="dropdown2" style="padding-left: 0; padding-right: 0" id="dLabel" role="button">
-                        {% if unread_count == 0%}
-                            <span class="badge" style="color: #0a3880">
-                                {% live_notify_badge %}
-                            </span>
-                        {% else %}
-                            <span class="badge" style="color: #a30029">{% live_notify_badge %}</span>
-                        {% endif %}
-                   </a>
+                    {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' %}
+                    {% notifications_unread as unread_count %}
+                    <li class="dropdown pagination-centered">
+                        <a href="#" class="dropdown-button notification-badge" data-activates="dropdown2" style="padding-left: 0; padding-right: 0" id="dLabel" role="button">
+                            {% if unread_count > 0%}
+                                <i class="badge" style="background-color: #990000">
+                                    {% live_notify_badge %}
+                                </i>
+                            {% else %}
+                                <i class="badge">
+                                    {% live_notify_badge %}
+                                </i>
+                            {% endif %}
+                        </a>
 
 
                    <!--if there is an unread notification, show dropdown -->
-                    {% if user.notifications.unread  %}
 
                         <ul id="dropdown2" class="dropdown-content notifications" role="menu" aria-labelledby="dLabel">
+                            <!--<div class="row"><a href="{% url 'notifications:mark_all_as_read' %}">mark all as read</a></div>-->
                             <div class="notification-heading">
                                 <table style="border: none">
                                     <tr>
@@ -131,51 +98,61 @@
                             </div>
                             <li class="divider"></li>
 
-                            {% notifications_unread as unread_count %} <!-- left so for testing purposes -->
-                                {% if unread_count > 4 %}
-                                     {% for notification in user.notifications.unread|slice:":4" %}
+                                 <!-- left so for testing purposes -->
+                                {% notifications_unread as unread_count %}
+                                {% if unread_count %}
+                                     {% for notification in user.notifications.unread %}
                                         <li class="notification-dropdown-li">
-                                            <a href="#" >
-                                                <div class="row" >
-                                                    <div class="col-sm-4">
-                                                        {% if request.user.profile_owner %}
-                                                            {% if user.profile_owner.photo %}
-                                                                <img src="{{user.profile_owner.photo.url}}" class="img-responsive small-image">
-                                                            {% else %}
-                                                                <img src="{% static 'images/no_image.png' %}" class="img-responsive small-image">
-                                                            {% endif %}
+                                                <div class="row no-gutter" style="margin-bottom: 0px !important; margin-top: 0px !important;">
+                                                    <div class="col-xs-2 col-md-2 col-sm-2">
+                                                        {% if notification.actor.profile.photo %}
+                                                            <img src="{{ notification.actor.profile.photo.url}}" class="img-responsive small-image">
+                                                        {% else %}
+                                                            <img src="{% static 'images/no_image.png' %}" class="img-responsive small-image">
                                                         {% endif %}
+                                                        <p></p>
                                                     </div>
 
-                                                    <div class="col-sm-8">
-                                                        <p><a href="#">{{ notification.actor}}</a>  {{ notification.verb }}</p>
-                                                        <p>{{ notification.timesince }} ago </p>
+                                                    <div class="col-sm-10 col-xs-10 col-md-10">
+                                                        <p>
+                                                            <a href="#">{{ notification.actor}}</a>  {{ notification.verb }}
+                                                             {{ notification.timesince }} ago
+                                                        </p>
+
                                                     </div>
 
                                                 </div>  <!-- end the div row -->
                                             </a>
                                         </li>
                                     {% endfor  %}
-                                {% else %}
-                                    {% for notification in user.notifications.unread %}
-                                        <li class="notification-dropdown-li"><a href="#" >{{ notification }}</a></li>
-                                    {% endfor %}
-                                {% endif %}
+                                {% endif %}<!-- end if uncread_count -->
                         </ul>
-                   {% endif %}
+               </li> <!-- end of notification -->
+               <!--Drop down profile showing user's informaton -->
 
 
-               </li>
+               <li>
 
-               {% endif %}
+               </li> <!-- user's profile photo -->
+               <li class="list-unstyled" style="padding-left: 15px">
+                     <a class='dropdown-button' href='#' data-activates='dropdown1' style="padding-left: 0; padding-right: 0">
+                        <span class="glyphicon glyphicon-triangle-bottom" style="color: #777;"></span>
+                    </a>
 
-
-
-
-
+                     <ul id="dropdown1" class="dropdown-content">
+                            <li><a href="{{ user.get_absolute_url }}" class="profile-dropdown-li">User<span class="glyphicon glyphicon-user pull-right"></span></a></li>
+                            <li><a href="{% url 'edit' request.user.pk %}" class="profile-dropdown-li">Profile settings<span class="glyphicon glyphicon-cog pull-right"></span></a></li>
+                            <li><a href="{% url 'logout' %}" class="profile-dropdown-li"><span class="glyphicon glyphicon-log-out pull-right"></span>Logout</a></li>
+                            <!--<li><a href="{% url 'login' %}" class="profile-dropdown-li"><span class="glyphicon glyphicon-log-in pull-right"></span>Login</a></li>-->
+                            <li><a href="#!" class="profile-dropdown-li">Items<span class="badge pull-right" style="color: #EDF3FE">42</span></a></li>
+                     </ul>
+                </li>
+             {% endif %} <!-- end user authenticated -->
            </ul>
+
+       </div> <!-- end of nav-bar container -->
+
        </div>
-       <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
    </div>
 
        {% block content %}{% endblock %}
@@ -183,60 +160,27 @@
    <footer class="container-fluid text-center">
 
        {% block js %}
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+            <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
+            <!--<script src="{% static 'material/js/jquery.js' %}"></script>-->
              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-            <script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
+            {% include 'material/includes/material_js.html' %}
+
+
+            <script src="{% static 'js/countdown.js' %}"></script>
+            <!--<script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>-->
             <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
             <script type="text/javascript" src="https://simplewebrtc.com/latest-v2.js"></script>
-            <!--<script src="{% static 'js/owlcarousel/owl.carousel.min.js' %}"></script>-->
             <script src="{% static 'js/home.js' %}"></script>
-
-            {% include 'material/includes/material_js.html' %}
-            <script>
-                 $(document).ready(function() {
-                    $('select').material_select();
-                      $('.dropdown-toggle').dropdown();
-                });
-
-            </script>
-
-
-
-            <script>
-                var csrftoken = $.cookie('csrftoken');
-                function csrfSafeMethod(method) {
-                // these HTTP methods do not require CSRF protection
-                    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-                }
-                $.ajaxSetup({
-                     beforeSend: function(xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                    }
-                }
-                })
-            </script>
-
-            <!--<script src="{% static 'notify/notifyX.js' %}"></script>-->
-
-
+            <!--&lt;!&ndash;<script src="{% static 'js/owlcarousel/owl.carousel.min.js' %}"></script>&ndash;&gt;-->
 
             {% block extrajs %}{% endblock %}
 
        {% endblock %}
-
-
-       <!--Material form js-->
-
-
-
-
-
-
    </footer>
-
-
-
-
 </body>
 </html>

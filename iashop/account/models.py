@@ -7,6 +7,8 @@ from django.db import models
 from django.utils import timezone
 
 USER_GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
+DEFAULT_COVER = ('default/default_cover.png')
+DEFAULT_PROFILE = ('default/default_profile.png')
 
 class Institution(BaseModel):
     name = models.CharField(max_length=250, blank=False)
@@ -19,14 +21,25 @@ class Institution(BaseModel):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profile_owner')
-    photo = models.ImageField(blank=True, null=True, upload_to='profile/users')
-    phone = models.CharField(max_length=25, null=True, blank=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profile')
+    photo = models.ImageField(blank=True, null=True, upload_to='profile/users', default=DEFAULT_PROFILE)
+    cover = models.ImageField(blank=True, null=True, upload_to='cover/users', default=DEFAULT_COVER)
+    phone = models.CharField(max_length=25, null=True, blank=True, default='00000000')
     institution = models.ForeignKey(Institution,
                                     on_delete=models.CASCADE, null=True)
+
     gender = models.CharField(choices=USER_GENDER_CHOICES, max_length=10, null=True)
     bio = models.TextField(default='', blank=True)
 
+# Create signal to create profile model each time a new user is created
+
+def create_profle(sender, **kwargs):
+    user = kwargs['instance']
+    if kwargs['created']:
+        user_profile = Profile(user=user)
+        user_profile.save()
+
+post_save.connect(create_profle, sender=User)
 
 # Users can follow other users and be followed as well
 
@@ -53,6 +66,8 @@ User.add_to_class('following',
                                          symmetrical=False
                   )
 )
+
+
 
 
 

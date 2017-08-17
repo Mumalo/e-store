@@ -6,10 +6,10 @@
   <div class="container contaier-fluid">
       <div class="row">
           <div class="col-sm-2">
-              Right side bar
 
           </div>
-          <div class="col-sm-8">
+
+          <div class="col-sm-8 form-container" style="padding-top: 16px; padding-bottom: 16px">
               {% if messages %}
                             <ul class="messages">
                             {% for message in messages %}
@@ -21,7 +21,7 @@
                             </ul>
               {% endif %}
 
-              <form method="post" action="." enctype="multipart/form-data" class="viewform">
+              <form method="post" action="{% url 'edit' request.user.id %}" enctype="multipart/form-data" class="viewform">
                   {% csrf_token %}
                   {% form form=user_form %}{% endform %}
                   {% form form=profile_form %}{% endform %}
@@ -30,7 +30,7 @@
               </form>
           </div>
           <div class="col-sm-2">
-                Left side bar
+
           </div>
 
       </div>
