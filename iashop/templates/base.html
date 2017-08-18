@@ -43,13 +43,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                </button>
-               <a class="navbar-brand text" href="{% url 'home' %}" style="color: #fff">Website Name</a>
+               <a class="navbar-brand text" href="{% url 'auctions:home' %}" style="color: #fff">Website Name</a>
            </div>
 
        <div class="collapse navbar-collapse" id="myNavbar">
 
            <ul class="nav navbar-nav">
-               <li><a href="{% url 'home' %}" class="text">Home</a></li>
+               <li><a href="{% url 'auctions:home' %}" class="text">Home</a></li>
                <li><a href="#" class="text">About Us</a></li>
 
 
@@ -59,12 +59,12 @@
 
                {% if request.user.is_authenticated %}
 
-                     <li><a href="{% url 'list' %}" class="text">All Auctions</a></li>
-                     <li><a href="{% url 'add_new_auction' %}" class="text">Add new auction</a></li>
+                     <li><a href="{% url 'auctions:list' %}" class="text">All Auctions</a></li>
+                     <li><a href="{% url 'auctions:add_new_auction' %}" class="text">Add new auction</a></li>
                      <!--<li class="ad"><a href="#"><button type="button" class="btn btn-primary btn-xs" href="#"  id="post-ad">Post Ad</button></a></li>-->
                {% else %}
-                    <li><a href="{% url 'register' %}" class="text"><span class="glyphicon glyphicon-user"></span>Register</a></li>
-                    <li><a href="{% url 'login' %}" class="profile-dropdown-li text"><span class="glyphicon glyphicon-log-in pull-right">Login</span></a>
+                    <li><a href="{% url 'accounts:register' %}" class="text"><span class="glyphicon glyphicon-user"></span>Register</a></li>
+                    <li><a href="{% url 'accounts:login' %}" class="profile-dropdown-li text"><span class="glyphicon glyphicon-log-in pull-right">Login</span></a>
                {% endif %}
                <!--<li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span>Shop</a></li>-->
              {% if request.user.is_authenticated %}
@@ -141,9 +141,8 @@
 
                      <ul id="dropdown1" class="dropdown-content">
                             <li><a href="{{ user.get_absolute_url }}" class="profile-dropdown-li">User<span class="glyphicon glyphicon-user pull-right"></span></a></li>
-                            <li><a href="{% url 'edit' request.user.pk %}" class="profile-dropdown-li">Profile settings<span class="glyphicon glyphicon-cog pull-right"></span></a></li>
-                            <li><a href="{% url 'logout' %}" class="profile-dropdown-li"><span class="glyphicon glyphicon-log-out pull-right"></span>Logout</a></li>
-                            <!--<li><a href="{% url 'login' %}" class="profile-dropdown-li"><span class="glyphicon glyphicon-log-in pull-right"></span>Login</a></li>-->
+                            <li><a href="{% url 'accounts:edit' request.user.pk %}" class="profile-dropdown-li">Profile settings<span class="glyphicon glyphicon-cog pull-right"></span></a></li>
+                            <li><a href="{% url 'accounts:logout' %}" class="profile-dropdown-li"><span class="glyphicon glyphicon-log-out pull-right"></span>Logout</a></li>
                             <li><a href="#!" class="profile-dropdown-li">Items<span class="badge pull-right" style="color: #EDF3FE">42</span></a></li>
                      </ul>
                 </li>

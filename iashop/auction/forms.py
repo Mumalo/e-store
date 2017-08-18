@@ -1,5 +1,5 @@
 from decimal import Decimal
-from .models import AuctionEvent,   Bid
+from .models import AuctionEvent,   Bid, Advert, BudgetPlan
 from datetime import datetime
 from django.core.exceptions import ValidationError
 
@@ -173,3 +173,33 @@ class AdvancedSearchForm(forms.Form):
         )
 
 
+class AdvertForm(ModelForm):
+
+    class Meta:
+        model = Advert
+        fields = ['title', 'image', 'description', 'price', 'creator']
+
+    def __init__(self, *args, **kwargs):
+        super(AdvertForm, self).__init__(*args, **kwargs)
+        self.layout = Layout(
+            Fieldset('Place Ad Below',
+                     Row('title', 'image'),
+                     'price',
+                     'description')
+        )
+
+time_choice = ['years', 'months', 'weeks','days', 'hours', 'minutes', 'seconds' ]
+
+class BudgetForm(ModelForm):
+    range = forms.IntegerField()
+    time = forms.ChoiceField(choices=[(str(ch), str(ch)) for ch in time_choice])
+
+
+    def __init__(self, *args, **kwargs):
+        super(BudgetForm, self).__init__(*args, **kwargs)
+        self.fields['title'].label = 'item'
+
+
+    class Meta:
+        model = BudgetPlan
+        fields = ['title', 'description', 'price' ,'time', 'range']

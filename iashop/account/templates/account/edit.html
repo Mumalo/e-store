@@ -21,7 +21,7 @@
                             </ul>
               {% endif %}
 
-              <form method="post" action="{% url 'edit' request.user.id %}" enctype="multipart/form-data" class="viewform">
+              <form method="post" action="{% url 'accounts:edit' user.id %}" enctype="multipart/form-data" class="viewform">
                   {% csrf_token %}
                   {% form form=user_form %}{% endform %}
                   {% form form=profile_form %}{% endform %}

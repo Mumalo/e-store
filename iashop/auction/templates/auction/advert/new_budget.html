@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+{% load material_form %}
+
+{% block content %}
+<!--Main container -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-0 col-md-3"></div>
+        <div class="col-xs-12 col-md-6">
+            {% if messages %}
+                            <ul class="messages">
+                            {% for message in messages %}
+                                <li class="{{ message.tags }}">
+                            {{ message|safe }}
+                                <a href="#" class="close">✖</a>
+                            </li>
+                            {% endfor %}
+                            </ul>
+              {% endif %}
+        </div>
+        <div class="col-xs-0 col-md-3"></div>
+    </div>
+    <div class="row" style="margin-top: 75px">
+        <div class="col-xs-12 col-md-4">
+
+        </div>
+
+        <div class="col-xs-12 col-md-3 right-sidebar budget-plan-container">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ budget_form.non_field_errors }}
+                <h6 class="text-center">I plan to buy</h6>
+                    <div class="row fieldWrapper">
+                        <div class="col-xs-12 col-md-4" style="margin-top: 10px">
+                            {{ budget_form.title.label }}
+                        </div>
+
+                        <div class="col-xs-12 col-md-8 " style="margin-top: -22px">
+                            {{ budget_form.title }}
+                            <span class="errors">{{ budget_form.title.errors }}</span>
+                        </div>
+
+                    </div>
+
+                <h6 class="text-center" >For </h6>
+                    <div class="row fieldWrapper">
+                        <div class="col-xs-12 col-md-4" style="margin-top: 10px">
+                            {{ budget_form.price.label }}
+                        </div>
+
+                        <div class="col-xs-12 col-md-8" style="margin-top: -22px">
+                            {{ budget_form.price }}
+                            <span class="errors">{{ budget_form.price.errors }}</span>
+                        </div>
+
+                    </div>
+
+                <h6 class="text-center" >In the Next </h6>
+                    <div class="row fieldWrapper">
+                        <div class="col-xs-0 col-md-2"></div>
+                        <div class="col-xs-12 col-md-4" style="margin-top: -18px">
+                            {{ budget_form.range }}
+                            <span class="errors" style="margin-top: -5px"> {{ budget_form.range.errors }}</span>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4" style="margin-top: -18px">
+                            {{ budget_form.time }}
+                            <span class="errors"  style="margin-top: -5px">{{ budget_form.time.errors }}</span>
+                        </div>
+                    </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-md-1">
+
+                    </div>
+
+                    <div class="col-xs-12 col-md-5">
+                         <button type="submit" >SUBMIT</button>
+                    </div>
+
+                    <div class="col-xs-12 col-md-5">
+                        <button type="submit" >ADD PLAN</button>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+
+        <div class="col-xs-12 col-md-4">
+
+        </div>
+
+    </div>
+
+</div>
+<!--End container -->
+
+{% endblock %}

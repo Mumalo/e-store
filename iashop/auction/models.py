@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 from django.utils import timezone
 from base.models import BaseModel
+from django.conf import settings
 
 
 
@@ -178,12 +179,34 @@ class Bid(BaseModel):
 
 
 
+class Advert(BaseModel):
+    title = models.CharField(max_length=250, null=True)
+    image = models.ImageField(blank=True, null=True, upload_to='users/advert')
+    description = models.TextField(max_length=500, null=True, blank=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='advert')
+    available = models.BooleanField(default=False)
+
+
+    class Meta:
+        ordering = ('-last_created', )
+
+    def __str__(self):
+        return self.title
+
+class BudgetPlan(Advert):
+    pass
+
+
+
+
+
 
 
 
 
 
 class Ratings(models.Model):
-    pass
+    time_frame = models.CharField(max_length=125, null=True)
 
 

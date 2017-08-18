@@ -46,9 +46,9 @@
                     <div class="item  col-xs-12 col-md-3">
                         <div class="thumbnail">
                             {% if auction.image %}
-                                <a href="{% url 'bid' auction.id %}"><img class="group list-group-image" src="{{ auction.image.url }}" alt="" /></a>
+                                <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{{ auction.image.url }}" alt="" /></a>
                             {% else %}
-                                <a href="{% url 'bid' auction.id %}"></a><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" />
+                                <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" />
                             {% endif %}
                             <div class="caption">
                                 <h4 class="group inner list-group-item-heading">{{ auction.item }}</h4>

@@ -103,7 +103,8 @@ def edit_profile(request, pk):
         return render(
             request, 'account/edit.html',
             {'user_form':user_form,
-            'profile_form':profile_form}
+            'profile_form':profile_form,
+             'user':user}
         )
     else:
         raise PermissionDenied
@@ -114,12 +115,12 @@ def edit_profile(request, pk):
 
 
 
-
+@login_required
 def user_detail(request, pk):
     user = get_object_or_404(User, pk=pk)
     nfs = user.notifications.unread()
 
-    if user.is_active:
+    if user.is_authenticated and user.is_active:
         return render(request, 'account/user_home.html', {
         'user': user, 'nfs':nfs
     })

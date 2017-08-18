@@ -771,17 +771,23 @@ input{
 }
 
 .profile-image-cover{
-  width: 218px;
-  height: 218px;
-  left: 10%;
-  top: 308px !important;
-    position: absolute;
+  width: 70%;
+  height: 50%;
+    background: red !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: #fff;
+  margin-left: 35px !important;
+  /*left: 10%;*/
+  /*top: 308px !important;*/
+    /*position: absolute;*/
 }
 
 .profile-image-cover .inner{
   height: 160px;
   width: 160px;
-  background-color: #fff;
   border: 4px solid #fff;
   border-radius: 2px;
   /*margin: 12px;*/
@@ -807,15 +813,75 @@ input{
     white-space: nowrap;
 }
 
-.user-profile-menu a{
-    color: #365899 !important;
-    cursor: pointer;
+a:hover {
+    color: #4477bd;
     text-decoration: none;
+    background: transparent;
 }
 
-.user-profile-menu a:hover{
-    background-color: #ffffff;
+.user-home-side-menu{
+    width: 100%;
+    /*padding-left: 25px;*/
 }
+
+.user-home-side-menu  .panel-body{
+    border-bottom: 1px solid #ddd
+}
+
+.user-home-side-menu .panel-body:last-child{
+    border-bottom: none;
+}
+
+.user-home-side-menu a{
+    color: #606060 !important;
+    width: 100%;
+}
+
+.user-home-side-menu .heading{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.user-home-side-menu .heading h6{
+    color: #4477bd;
+    font-size: 18px !important;
+}
+
+
+/*.user-home-side-menu .list-group-item{*/
+    /*padding: 13px;*/
+    /*width: 70%;*/
+/*}*/
+
+.profile-edit-button{
+    padding: 7px !important;
+    font-size: 75% !important;
+    border-radius: 40% !important;
+    background: #e7e7e7 !important;
+    /*margin-top: -3px !important;*/
+    /*margin-bottom: -3px !important;*/
+    /*border-color: #4477bd !important;*/
+    height: 25% !important;
+    width: 100%; !important;
+    color: #606060 !important;
+}
+
+.profile-edit-button{
+    -webkit-transition-duration: 0.4s !important; /* Safari */
+    transition-duration: 0.4s !important;
+}
+
+.profile-edit-button:hover{
+    background: white !important;
+}
+.user-profile-menu a:hover{
+    color: #4477bd;
+    background: transparent;
+}
+
+/*.user-profile-menu a:hover{*/
+    /*background-color: #ffffff;*/
+/*}*/
 
 
 .user-profile-menu ul li{
@@ -836,4 +902,26 @@ input{
         max-width: 20%;
         background: blue;
     }
+}
+
+.budget-plan-container{
+    height: 480px;
+    /*background: red;*/
+}
+
+.budget-plan-container form{
+    /*background: blue !important;*/
+    height: 95%;
+}
+
+
+.budget-plan-container .fieldWrapper{
+    padding: 18px;
+}
+
+.budget-plan-container .errors{
+    color: #a30029;
+    font-size: 12px;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
 }

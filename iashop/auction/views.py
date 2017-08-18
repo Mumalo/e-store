@@ -1,13 +1,16 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
-from .forms import AuctionForm, BidForm, AdvancedSearchForm
+from .forms import AuctionForm, BidForm, AdvancedSearchForm, AdvertForm, BudgetForm
 # from .models import Buyer, Seller
 from django.contrib.auth.decorators import login_required
-from .models import AuctionEvent, Bid, Category
+from django.forms import formset_factory
+from .models import AuctionEvent, Bid, Category, Advert, BudgetPlan
 from django.contrib import messages
 
 from django.shortcuts import render
+from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import get_user
 from .models import User
+from django.views.generic.edit import DeleteView
 
 def home(request):
     return render(request, 'home.html')
@@ -67,21 +70,97 @@ def auction_detail(request, auction_id):
                   {'bid_form':bid_form,
                    'auction': auction,})
 
+@login_required
+def create_advert(request):
+
+    if request.method == 'POST':
+        advert_form = AdvertForm(request.POST)
+
+        if advert_form.is_valid():
+            new_advert = advert_form.save(commit=False)
+            new_advert.creator = request.user
+            new_advert.save()
+            return  messages.success(request, 'Advert added successfully')
+    else:
+        advert_form = AdvertForm()
+    return render(request, 'auction/advert/new_advert.html')
+
+@login_required
+def post_advert(request, advert_id):
+    advert = get_object_or_404(Advert, pk=advert_id)
+    advert.available = True
+
+
+def advert_list(request):
+    adverts = Advert.objects.filter(available=True)
+
+    return render(request, 'auction/adverts.html', {'adverts', adverts})
 
 
 
-# def add_bid(request):
-#
-#     if request.method == 'POST':
-#         bid_form = BidForm(request.POST)
-#
-#         if bid_form.is_valid():
-#             new_add_bid_form = BidForm(commit=False)
-#             new_add_bid_form.creator = request.user
-# #             Add this user to the seller database
-#     else:
-#         bid_form = BidForm()
-#     return render(request, 'auction/bid', {'bid_form': bid_form})
+
+
+
+@login_required
+def edit_advert(request, pk):
+
+    advert = get_object_or_404(Advert, pk=pk)
+    creator = advert.creator
+    if request.method == 'POST':
+        advert_form = AdvertForm(data=request.POST, instance=advert)
+        if advert_form.is_valid() and request.user.id == creator.id:
+            advert_form.creator = request.user
+            advert_form.save()
+    else:
+        advert_form = AdvertForm(instance=Advert)
+    return render(request, 'auction/edit_advert.html', {'advert_form': advert_form, 'creator':creator})
+
+class AdvertDelete(DeleteView):
+    model = Advert
+    success_url = reverse_lazy('account:user_detail')
+
+
+@login_required
+def create_budget_plan(request):
+    if request.method == 'POST':
+        budget_form = BudgetForm(data=request.POST)
+        if budget_form.is_valid():
+            new_budget = budget_form.save(commit=False)
+            new_budget.creator = request.user
+            new_budget.available = True
+            new_budget.save()
+            messages.success(request, 'budget added successfully')
+    else:
+        budget_form = BudgetForm()
+    return render(request, 'auction/advert/new_budget.html', {'budget_form': budget_form})
+
+@login_required
+def update_budget(request, budget_id):
+
+    budget = get_object_or_404(BudgetPlan, id=budget_id)
+    creator = budget.creator
+
+    if request.method == 'POST':
+        budget_form = BudgetForm(data=request.POST, instance=budget)
+
+        if budget.is_valid() and request.user.id == creator.id:
+            new_budget = budget_form.save(commit=False)
+            new_budget.creator = creator
+            new_budget.available = True
+            new_budget.save()
+    else:
+        budget_form = BudgetForm(instance=budget)
+    return render(request, 'auction/advert/budget_adit.html')
+
+class BudgetDelete(DeleteView):
+    model = BudgetPlan
+    success_url = reverse_lazy('account:user_detail')
+
+# Views for creating budget plan
+
+
+# Use Generic views for deleting objects
+
 
 
 

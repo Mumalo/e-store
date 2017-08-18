@@ -142,7 +142,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 ABSOLUTE_URL_OVERRIDES = {
-    'auth.user': lambda u: reverse_lazy('user_detail',
+    'auth.user': lambda u: reverse_lazy('accounts:user_detail',
     args=[u.id])
 }
 

@@ -20,8 +20,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     # url(r'ias/', include('shop.urls') ),
-    url(r'', include('auction.urls')),
-    url(r'', include('account.urls')),
+    url(r'', include('auction.urls', namespace='auctions')),
+    url(r'', include('account.urls', namespace='accounts')),
    url('^inbox/notifications/', include('notifications.urls', namespace='notifications')),
 ]
 

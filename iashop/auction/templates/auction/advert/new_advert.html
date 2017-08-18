@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% load material_form %}
+
+{% block content %}
+<!--Main container -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
+
+        </div>
+
+        <div class="col-xs-12 col-md-3 right-sidebar">
+            <form action="../" type="post">
+                {% form form=advert_form %}{% endform %}
+            </form>
+        </div>
+
+        <div class="col-xs-12 col-md-4">
+
+        </div>
+
+    </div>
+
+</div>
+<!--End container -->
+
+{% endblock %}
