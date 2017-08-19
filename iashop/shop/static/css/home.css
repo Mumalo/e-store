@@ -270,12 +270,12 @@ ul.messages li a.close {
 }
 
 a {
-    color:#12c064;
+    color:#4477bd;
     text-decoration:none;
 }
 
 a:hover {
-    color:#00a74f;
+    color:#4477bd;
 }
 
 .action {
@@ -548,7 +548,7 @@ a:hover {
 }
 
 .row .bid-info .lead{
-    font-size: 17px;
+    font-size: 13px;
 }
 
 
@@ -557,7 +557,7 @@ a:hover {
 .myClock{
     zoom: 0.4;
     -moz-transform: scale(0.5);
-    font-size: 14px;
+    /*font-size: 14px;*/
     font-size: 34px !important;
     color: #a8a7a7;
     font-weight: bold;
@@ -603,10 +603,12 @@ a:hover {
 
 .counter-text{
     font-size: 22px;
+    color: #1b1b1b;
+    margin-top: -4px;
 }
 
 .days, .hours, .minutes, .seconds{
-    color: #493547;
+    color: #080808;
     font-weight: bold;
 }
 
@@ -776,10 +778,10 @@ input{
     background: red !important;
   padding-top: 10px;
   padding-bottom: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 3px;
+  padding-right: -8px;
   background: #fff;
-  margin-left: 35px !important;
+  margin-left: 33px !important;
   /*left: 10%;*/
   /*top: 308px !important;*/
     /*position: absolute;*/
@@ -791,7 +793,7 @@ input{
   border: 4px solid #fff;
   border-radius: 2px;
   /*margin: 12px;*/
-  /*margin-left: 18px;*/
+  margin-left: 18px;
 }
 
 .profile-pics a{
@@ -847,7 +849,37 @@ a:hover {
     font-size: 18px !important;
 }
 
+.user-auctions .list-group-image{
+    height: 180px !important;
+}
 
+.auction-text{
+    font-size: 13px !important;
+    margin-bottom: -4px;
+}
+
+.user-auctions .list-group-item-heading{
+    padding-top: 3px;
+}
+
+
+
+.user-auctions .thumbnail{
+    width: 190px !important;
+    /*height: 100px;*/
+}
+
+.user-auctions .myClock{
+    height: 55px;
+    margin-top: -45px !important;
+}
+
+.user-auctions .caption{
+    margin-top: -10px;
+}
+.user-auctions.item{
+    padding-bottom: 10px;
+}
 /*.user-home-side-menu .list-group-item{*/
     /*padding: 13px;*/
     /*width: 70%;*/

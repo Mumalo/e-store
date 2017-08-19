@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% load material_form %}
+{% block title %}edit-auction{% endblock %}
+
+{% block content %}
+
+<div class="container container-fluid form-container">
+     <form method="post" class="viewform" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% form form=edit_form %}{% endform %}
+          <button type="submit" name="_submit" class="btn">Submit</button>
+    </form>
+
+</div>
+
+
+{% endblock %}

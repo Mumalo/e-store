@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load auction_tags %}
 {% load notifications_tags %}
 {% load static %}
 
@@ -12,7 +13,7 @@
         <div class="col-xs-12 col-md-4 col-lg-4 jumbotron" style="margin-left: 13px; padding-left: 19px; !important; width: 403px">
             <!--display the profile picture-->
             <div class="row">
-                <div class="col-xs-12 col-md-10 profile-image-cover">
+                <div class="col-xs-12 col-md-10 profile-image-cover text-center">
                         {% if user.profile.photo %}
                             <a href="#"><img src="{{ user.profile.photo.url }}" class="inner img-responsive img-thumbnail"></a>
                         {% else %}
@@ -106,21 +107,116 @@
 
                     <div class="tab-content" style="padding: 10px">
                         <div id="live" class="tab-pane fade in active">
-                            Live Auctions
-                        </div>
+                            <!--Display Live auctions here -->
+                                <div id="products" class="row list-group user-auctions">
+                                    {% live_auctions user 10 as live %}
+                                    {% for auction in live %}
+                                        <div class="item  col-xs-12 col-md-4">
+                                            <div class="thumbnail">
+                                                {% if auction.image %}
+                                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image img-thumbnail" src="{{ auction.image.url }}" alt="" /></a>
+                                                {% else %}
+                                                    <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image img-thumbnail" src="{% static 'images/no_image.png' %}" alt="" />
+                                                {% endif %}
+                                                <div class="caption">
+                                                    <h4 class="group inner list-group-item-heading" style="font-size: 13px">{{ auction.item|truncatewords:2 }}</h4>
+                                                    <p class="group inner list-group-item-text"></p>
+                                                    <div class="row auction-text" style="">
+                                                        <div class="col-xs-12 col-md-12 text-center">
+                                                            <p class="lead" style="font-size: 13px">N{{ auction.get_current_price }}</p>
+                                                        </div>
+                                                        <!--<div class="col-xs-12 col-md-6">-->
+                                                            <!--<a class="btn btn-flat" href="http://www.jquery2dotnet.com" style="font-size: 13px">BID</a>-->
+                                                        <!--</div>-->
+                                                    </div> <!-- end of row class for price and bid -->
+
+                                                    <div class="row myClock" style="margin-top: -65px" data-action='{{ auction.end_time|to_json }}'>
+                                                        <div class="row">
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 hours"></div>
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 minutes"></div>
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 seconds"></div>
+                                                        </div>
+
+                                                        <div class="row auction-text">
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Days</div>
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Hours</div>
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Minutes</div>
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
+                                                        </div> <!-- counter text ends here -->
+                                                    </div>
+                                                </div>  <!-- end of caption -->
+                                            </div> <!-- end of thumbnail -->
+                                        </div> <!-- end of column -->
+
+                                    {% endfor %}
+                                </div> <!-- end of product list group  -->
+                        </div> <!-- end of tab-pane -->
+
+
 
                         <div id="recent"  class="tab-pane fade">
-                            Recent Auctions
+                            <!-- Recent auctions here -->
+                            <div id="latest-deals" class="row list-group user-auctions">
+                                    {% latest_auctions user 10 as latest %}
+                                    {% for auction in latest %}
+                                        <div class="item  col-xs-12 col-md-4">
+                                            <div class="thumbnail">
+                                                {% if auction.image %}
+                                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image img-thumbnail" src="{{ auction.image.url }}" alt="" /></a>
+                                                {% else %}
+                                                    <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image img-thumbnail" src="{% static 'images/no_image.png' %}" alt="" />
+                                                {% endif %}
+                                                <div class="caption">
+                                                    <h4 class="group inner list-group-item-heading" style="font-size: 13px">{{ auction.item|truncatewords:2 }}</h4>
+                                                    <p class="group inner list-group-item-text"></p>
+                                                    <div class="row auction-text">
+                                                        <div class="col-xs-12 col-md-12 text-center">
+                                                            <p class="lead" style="font-size: 13px">N{{ auction.get_current_price }}</p>
+                                                        </div>
+                                                        <!--<div class="col-xs-12 col-md-6">-->
+                                                            <!--<a class="btn btn-flat" href="http://www.jquery2dotnet.com" style="font-size: 13px">BID</a>-->
+                                                        <!--</div>-->
+                                                    </div> <!-- end of row class for price and bid -->
+
+                                                    <div class="row myClock" style="margin-top: -49px" data-action='{{ auction.end_time|to_json }}'>
+                                                        <div class="row">
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 hours"></div>
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 minutes"></div>
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 seconds"></div>
+                                                        </div>
+
+                                                        <div class="row auction-text">
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Days</div>
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Hours</div>
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Minutes</div>
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
+                                                        </div> <!-- counter text ends here -->
+                                                    </div>
+                                                </div>  <!-- end of caption -->
+                                            </div> <!-- end of thumbnail -->
+                                        </div> <!-- end of column -->
+
+                                    {% endfor %}
+                            </div> <!-- end of product list group  -->
+
                         </div>
+                        <!-- end of second tab-pane -->
+
 
                         <div id="hottest" class="tab-pane fade">
                             Hottest deals
                         </div>
+                        <!--End of third tab-pane -->
 
                         <div id="ending-soon" class="tab-pane fade">
                             Ending Soon Deals
                         </div>
+                        <!--end of fourth tab-pane-->
+
                     </div>
+                    <!--Tab content ends here -->
                 </div>
             </div>
             <!--Row ends here -->
@@ -128,7 +224,7 @@
         <!--End of right side bar -->
 
         <div class="col-xs-12 col-md-2 jumbotron" style="padding: 8px">
-            <h6 class="text-center">Quick Notification</h6>
+            <h6 class="text-center">{{ user.username }}'s Budget Plan</h6>
 
         </div>
 

@@ -32,11 +32,12 @@ def add_new_auction(request):
         form = AuctionForm()
     return render(request, 'auction/new_auction.html',
                   {'form': form}, )
-
+@login_required
 
 def auction_list(request):
     categories = Category.objects.all()
-    auctions = AuctionEvent.objects.all()
+    # Edit this line of code later
+    auctions = AuctionEvent.objects.filter(available=True)
     match = None
 
     if request.method == 'POST':
@@ -49,6 +50,23 @@ def auction_list(request):
 
     return render(request, 'auction/list.html',
                   {'auctions': auctions, 'search_form': search_form, 'match': match, 'categories': categories})
+
+@login_required
+def edit_auction(request, auction_id):
+
+    auction = get_object_or_404(AuctionEvent, id=auction_id)
+    creator = auction.creator
+    if request.method == 'POST':
+        edit_form = AuctionForm(data=request.POST, instance=auction)
+
+        if edit_form.is_valid():
+            new_auction = edit_form.save(commit=False)
+            new_auction.creator = creator
+            new_auction.save()
+            return messages.success(request, 'auction updated successfully')
+    else:
+        edit_form = AuctionForm(instance=auction)
+    return render(request, 'auction/edit_auction.html', {'edit_form': edit_form})
 
 def auction_detail(request, auction_id):
     auction = get_object_or_404(AuctionEvent, id=auction_id)

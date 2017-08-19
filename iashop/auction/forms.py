@@ -46,7 +46,8 @@ class AuctionForm(ModelForm):
                 Row('item', 'category'),
                 Row('start_time', 'end_time'),
                 Row('target_price', 'start_price'),
-                'description',
+                    'available',
+                    'description',
             ),
             Fieldset(
                 "Add Your Item\'s image ",

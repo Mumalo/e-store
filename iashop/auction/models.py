@@ -63,9 +63,9 @@ class AuctionEvent(BaseModel):
     creator = models.ForeignKey(User,
                                 on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to='users/%Y/%m/%d',blank=True)
+    time = models.DateTimeField(default=timezone.now)
     available = models.BooleanField(default=True)
     description = models.TextField(max_length=250, null=True, blank=True)
-    time = models.DateTimeField(default=timezone.now)
 
     class Meta:
         ordering = ('-time',)
@@ -83,36 +83,20 @@ class AuctionEvent(BaseModel):
             raise ValidationError('Start time cannot be greater than end time')
 
     def has_started(self):
-        if self.start_time >= arrow.utcnow():
-            return True
+        return self.start_time >= arrow.utcnow()
 
-    def is_running(self):
-        current_time = arrow.utcnow()
-        if current_time >= self.start_time and current_time <= self.end_time:
-            return True
 
     def has_ended(self):
         current_time = arrow.utcnow()
-        if current_time > self.end_time:
-            return True
+        return  current_time > self.end_time
+
+    def is_running(self):
+        return self.has_started() and not self.has_ended()
+
     def time_left(self):
         if self.is_running():
-            time = ''
             diff = self.end_time - arrow.utcnow()
-            days = diff.day
-            hours = diff.hour
-            minutes = diff.minute
-            seconds = diff.second
-
-            if days:
-                time += '{} days'.format(days)
-            if hours:
-                time += '{} hours'.format(hours)
-            if minutes:
-                time += '{} minutes'.format(minutes)
-            if seconds:
-                time += '{} seconds'.format(seconds)
-            return time
+            return diff.day
         else:
             return 'ended'
 
@@ -163,7 +147,7 @@ class AuctionEvent(BaseModel):
 class Bid(BaseModel):
     amount = models.DecimalField(max_digits=8, decimal_places=2)
     bidder = models.ForeignKey(User,
-                                on_delete=models.CASCADE, null=True, related_name='bids')
+                                on_delete=models.CASCADE, null=True, related_name='bidder')
     event = models.ForeignKey(AuctionEvent,
                               on_delete=models.CASCADE, null=True, related_name='bids')
     created_at = models.DateTimeField(default=timezone.now, blank=True)
