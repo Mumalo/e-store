@@ -2,27 +2,55 @@
  * Created by JUSTICE on 7/22/2017.
  */
 
-//$(document).ready(function(){
-//    var owl = $(".owl-carousel")
-//    owl.owlCarousel({
-//        items:1,
-//        loop:true,
-//        margin:10,
-//        autoplay:true,
-//        autoplayTimeout:4000,
-//        autoplaySpeed: 5000,
-//        autoplayHoverPause:true,
-//        animateOut: 'fadeOut',
-//        animateIn: 'fadeIn',
-//
-//    })
-//});
+$(document).ready(function(){
+    var owl = $(".owl-carousel")
+    owl.owlCarousel({
+        items:1,
+        loop:true,
+        margin:10,
+        autoplay:true,
+        autoplayTimeout:4000,
+        autoplaySpeed: 5000,
+        autoplayHoverPause:true,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',
 
-//var form_options = {target: "#modal", success: function(response){}};
-//$('#modal').ajaxForm(form_options)
+    })
 
-//var form_options = { target: '#modal2', success: function(response) {} };
-//    $('#modal2').ajaxForm(form_options);
+
+    //$('.cat-list').hover(function(){
+    //    var el = $('#subcats');
+    //    var username = $(this).data('action');
+    //
+    //
+    //    //$.post("{% url 'auctions:select-by-category' %}",
+    //    //    { username:username},
+    //    //    function() {
+    //    //        alert('I am working')
+    //    //
+    //    //    });
+    //
+    //    //)
+    //    $(this).append(el)
+    //    el.css('display', 'inline-block')
+    //    el.css('position', 'absolute')
+    //    el.css('z-index', '3')
+    //},
+    //    function(){
+    //        //$( this ).find( '.sub-cat-on-hover:last' ).remove();
+    //        $( this ).find( '#subcats' ).css('display', 'none')
+    //    }
+    //)
+
+
+
+
+
+})
+
+
+
+
 
 
 

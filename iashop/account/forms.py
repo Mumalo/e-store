@@ -5,7 +5,7 @@ from .models import Profile
 from django.contrib.auth.models import User
 # from crispy_forms.layout import Layout, Fieldset, Row
 # from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout
+# from crispy_forms.layout import Layout
 # from crispy_forms.helper import FormHelper
 from django.utils.translation import ugettext_lazy as _
 from material import Layout, Row, Fieldset

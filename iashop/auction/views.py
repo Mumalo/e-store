@@ -3,36 +3,91 @@ from .forms import AuctionForm, BidForm, AdvancedSearchForm, AdvertForm, BudgetF
 # from .models import Buyer, Seller
 from django.contrib.auth.decorators import login_required
 from django.forms import formset_factory
-from .models import AuctionEvent, Bid, Category, Advert, BudgetPlan
+from .models import AuctionEvent, Bid, Category, Advert, BudgetPlan, SubCategory
 from django.contrib import messages
-
+from django.views.generic.edit import CreateView
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth import get_user
 from .models import User
 from django.views.generic.edit import DeleteView
+from django.http import JsonResponse
+import json
+from django.core import serializers
+from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
+
+def sub_cats_for_cats(request):
+    data = request.POST.get('cat')
+    new_data = None
+    sub = []
+    items = {}
+
+    if data:
+        new_data = data
+        subs = SubCategory.objects.filter(category__name=new_data)
+        for s in subs:
+            sub_category = str(s)
+            items[sub_category] = [str(item) for item in AuctionEvent.objects.filter(sub_category__name=sub_category)]
+
+    # subs = SubCategory.objects.filter(category=data)
+
+    return JsonResponse(items, safe=False)
+
+def select_by_category(request):
+    submitted_cat = request.POST.get('category')
+    result_set = []
+    # data = None
+
+    if submitted_cat:
+        try:
+            cat = Category.objects.get(name=submitted_cat)
+            for s in cat.subcat.all():
+                result_set.append(str(s.name))
+            # data = serializers.serialize("json", list(cat.subcat.all()))
+        except:
+            pass
+
+    return JsonResponse(result_set, safe=False)
+
 
 def home(request):
     return render(request, 'home.html')
 
-login_required
+@login_required
 def add_new_auction(request):
 
     if request.method == 'POST':
-        form = AuctionForm(request.POST, request.FILES)
+        form = AuctionForm(request,request.POST, request.FILES)
 
         if form.is_valid():
+            cleaned_sub = form.cleaned_data.get('sub_category2')
+
             new_form = form.save(commit=False)
             current_user = get_user(request)
             new_form.creator = current_user
+
+            if cleaned_sub:
+                sub_cat = SubCategory.objects.filter(name=cleaned_sub)[0]
+            else:
+                sub_cat = None
+
+            new_form.sub_category = sub_cat
+
+
+
+
             new_form.save()
 
             return render(request, 'auction/auction_complete.html')
     else:
-        form = AuctionForm()
+        form = AuctionForm(request)
     return render(request, 'auction/new_auction.html',
                   {'form': form}, )
-@login_required
+
+# ajax view to select by category
+
+
 
 def auction_list(request):
     categories = Category.objects.all()
@@ -49,7 +104,7 @@ def auction_list(request):
 
 
     return render(request, 'auction/list.html',
-                  {'auctions': auctions, 'search_form': search_form, 'match': match, 'categories': categories})
+                  {'auctions': auctions, 'search_form': search_form, 'match': match, 'categories': categories, })
 
 @login_required
 def edit_auction(request, auction_id):

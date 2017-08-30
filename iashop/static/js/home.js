@@ -2,20 +2,24 @@
  * Created by JUSTICE on 7/22/2017.
  */
 
+$(document).ready(function(){
+    var owl = $(".owl-carousel")
+    owl.owlCarousel({
+        items:1,
+        loop:true,
+        margin:10,
+        autoplay:true,
+        autoplayTimeout:4000,
+        autoplaySpeed: 5000,
+        autoplayHoverPause:true,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',
+
+    })
+});
+
 //$(document).ready(function(){
-//    var owl = $(".owl-carousel")
-//    owl.owlCarousel({
-//        items:1,
-//        loop:true,
-//        margin:10,
-//        autoplay:true,
-//        autoplayTimeout:4000,
-//        autoplaySpeed: 5000,
-//        autoplayHoverPause:true,
-//        animateOut: 'fadeOut',
-//        animateIn: 'fadeIn',
-//
-//    })
+//  $(".owl-carousel").owlCarousel();
 //});
 
 //var form_options = {target: "#modal", success: function(response){}};
@@ -125,24 +129,31 @@ $(document).ready(function() {
     $('#grid').click(function(event){event.preventDefault();
     $('#products .item').removeClass('list-group-item');
     $('#products .item').addClass('grid-group-item');});
-
-
-
 });
-//
-//$('#myCounter').mbComingsoon({ expiryDate: new Date(2015, 0, 1, 9, 30), speed:100 });
-//            setTimeout(function () {
-//                $(window).resize();
-//            }, 200);
-jQuery(function($){
-	$('.myClock').flipcountdown({
-        size: "lg",
-        time:function(){
-		return new Date('5.10.2012 12:34:23');
-	}});
-})
 
 
+//var countDownDate = new Date("Jan 5, 2018 15:37:25").getTime();
+
+var x = setInterval(function(){
+    var now = new Date().getTime()
+    $(".myClock").each(function(){
+        var dates = $(this).data('action')
+        var converted = parseInt(dates)
+        var newDate = new Date(converted)
+        distance = newDate - now
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        $(this).find(".days").text(days)
+        $(this).find(".hours").text(hours)
+        $(this).find(".minutes").text(minutes)
+        $(this).find(".seconds").text(seconds)
+    })
+
+
+
+},1000)
 
 
 

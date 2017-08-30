@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect, HttpResponse, get_object_or_404
+from django.shortcuts import render,redirect, HttpResponse, get_object_or_404, HttpResponseRedirect
 from .forms import ProfileForm, LoginForm, UserForm, PasswordChangeForm, UserEditForm, ProfileEditForm
 from django.contrib.auth import login, authenticate, logout
 from django.core.exceptions import PermissionDenied
@@ -10,8 +10,10 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from common.decorators import ajax_required
+from django.core.urlresolvers import reverse
 from .models import Follow
 from notifications.signals import notify
+
 # from notify.signals import notify
 def user_login(request):
 
@@ -28,7 +30,7 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect(user_detail, pk=user.id)
+                    return HttpResponseRedirect(reverse('accounts:user_detail', args=[user.id]) )
                 else:
                     HttpResponse('User currently Inactive')
             else:
@@ -58,7 +60,7 @@ def user_registration(request):
             users = list(users)
             notify.send(new_user, recipient=users, verb='created a new account')
 
-            return redirect(user_login)
+            return HttpResponseRedirect(reverse('accounts:login'))
         else:
             HttpResponse('Invalid form')
     else:

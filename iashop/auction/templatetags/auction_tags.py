@@ -1,7 +1,9 @@
 import datetime, time
 from django import template
-from ..models import AuctionEvent, Bid
+from ..models import AuctionEvent, Bid, Category, SubCategory
 from django.db.models import Count
+from django.shortcuts import get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 
 
 register = template.Library()
@@ -14,6 +16,7 @@ def to_json(t):
         return 'Wrong format'
 
 
+
 # return total auctions for a particular user or general if user object is not passed
 
 @register.simple_tag
@@ -23,6 +26,15 @@ def total_auctions(user=None):
         return AuctionEvent.objects.filter(available=True, creator=user).count()
     else:
         return AuctionEvent.objects.filter(available=True).count()
+
+@register.assignment_tag
+def product_categories():
+    return Category.objects.all()
+
+@register.assignment_tag
+def auctions_in_category(category=None):
+    return AuctionEvent.objects.filter(category=category)
+
 
 @register.assignment_tag
 def live_auctions(user=None, count=10):
@@ -74,9 +86,11 @@ def ended_auctions(user=None):
     return ended_list
 
 
-
-
-#     Filter bids for whatever event has been chosen
+# @register.inclusion_tag('auction/sub_cat_for_cat.html', takes_context=True)
+# def sub_cats_for_cats(context):
+#     request = context['request']
+#     category = request.POST.get('category')
+#     return {'category': category}
 
 
 

@@ -1,49 +1,36 @@
 from decimal import Decimal
-from .models import AuctionEvent,   Bid, Advert, BudgetPlan
+from .models import AuctionEvent,   Bid, Advert, BudgetPlan, Category, SubCategory
 from datetime import datetime
 from django.core.exceptions import ValidationError
 
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, Textarea
 from material import Layout, Fieldset, Row
 import arrow
 
-# class ItemAddForm(ModelForm):
-#
-#
-#     def __init__(self, *args, **kwargs):
-#         self.layout = Layout(
-#             Fieldset(
-#                 'Product Informaation',
-#                 Row('category', 'name'),
-#                 'condition',
-#                 'status'
-#                 'description',
-#             )
-#         )
-#
-#         super(ItemAddForm, self).__init__(*args, **kwargs)
-#
-#     class Meta:
-#         model = Item
-#         fields = ['name', 'category', 'condition', 'status', 'description']
-#         labels = {
-#             'status': 'Is this item available for auction?'
-#         }
+    # def get_item_label(self, item):
+    #     return "{}, {}".format(item.name, item.category)
 
+     # def get_item_label(self, item):
+     #     return "{}, {}" .format (item.name, item.category)
 
 
 
 
 
 class AuctionForm(ModelForm):
+    sub_category2 = forms.CharField(max_length=250, widget=forms.Select, required=False)
 
-
-    def __init__(self, *args, **kwargs):
+    def __init__(self, request, *args, **kwargs):
+        super(AuctionForm, self).__init__(*args, **kwargs)
+        # self.fields['sub_category2'].queryset = SubCategory.objects.none()
+        self.fields['category'].widget.attrs.update({'id':'cat-select','class': 'browser-default'})
+        self.fields['description'].widget.attrs.update({'class':'description', })
+        self.fields['sub_category2'].widget.attrs.update({'id':'sub-cat-select','class': 'browser-default'})
         self.layout = Layout(
             Fieldset(
                 'Auction Information',
-                Row('item', 'category'),
+                Row('item', 'category', 'sub_category2'),
                 Row('start_time', 'end_time'),
                 Row('target_price', 'start_price'),
                     'available',
@@ -54,7 +41,7 @@ class AuctionForm(ModelForm):
                 'image'
             ),
         )
-        super(AuctionForm, self).__init__(*args, **kwargs)
+
 
     def clean_start_time(self):
         start_time = self.cleaned_data.get('start_time')
@@ -86,10 +73,15 @@ class AuctionForm(ModelForm):
 
 
 
+
+
     class Meta:
         model = AuctionEvent
-        fields = ['item', 'category', 'target_price', 'start_price', 'start_time', 'end_time', 'available', 'description', 'image']
-
+        fields = ['item', 'category', 'sub_category2' ,'target_price', 'start_price', 'start_time', 'end_time', 'available', 'description', 'image']
+        exclude = ['subcategory']
+        # widgets = {
+        #     'sub_category': autocomplete.ModelSelect2(url='auctions:subcategory-autocomplete', forward=['category'])
+        # }
 class BidForm(ModelForm):
     def __init__(self, data=None, auction=None, bidder=None, *args, **kwargs):
         self.event = auction

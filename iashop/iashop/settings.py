@@ -35,7 +35,6 @@ INSTALLED_APPS = (
     'material',
     'material.frontend',
     'material.admin',
-    # 'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,14 +42,25 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
+    # 'bootstrap3',
+     # 'jquery',
+    # 'staticfiles_select2',
+    # 'smart_selects',
     'common',
     'shop',
     'account',
     'base',
     'auction',
+    # 'selectable',
+    # 'selectable_select2',
     # 'notify',
+    'smart_selects',
     'notifications',
 )
+
+
+SELECTABLE_ESCAPED_KEYS = ('label', 'value')
+
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -84,7 +94,10 @@ TEMPLATES = [
 ]
 
 
+CATEGORY_SESSION_ID = 'c_name'
 
+
+USE_DJANGO_JQUERY = True
 
 
 WSGI_APPLICATION = 'iashop.wsgi.application'
@@ -99,6 +112,22 @@ WSGI_APPLICATION = 'iashop.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": "redis://127.0.0.1:6379/1",
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         }
+#     },
+#     'select2': {
+#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#         'LOCATION': '127.0.0.1:11211',
+#     }
+# }
+
+# SELECT2_CACHE_BACKEND = 'select2'
 
 
 DATABASES = {

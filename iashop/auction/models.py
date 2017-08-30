@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from base.models import BaseModel
 from django.conf import settings
+from smart_selects.db_fields import ChainedForeignKey
 
 
 
@@ -35,6 +36,19 @@ class Category(BaseModel):
     name = models.CharField(max_length=250)
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=250, null=True)
+
+    # return all subcategories under this category
+    def custom_queryset(self):
+        return self.subcategory.all()
+
+    def __str__(self):
+        return self.name
+
+class SubCategory(BaseModel):
+    name = models.CharField(max_length=250)
+    slug = models.SlugField(max_length=250, null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True,related_name='subcat')
+
     def __str__(self):
         return self.name
 
@@ -55,7 +69,16 @@ class Category(BaseModel):
 
 class AuctionEvent(BaseModel):
     item = models.CharField(max_length=125, blank=False, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=False, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=False, null=True, related_name='cat_products')
+    sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, blank=True, null=True, related_name='sub_products')
+    # sub_category = ChainedForeignKey(
+    #     SubCategory,
+    #     chained_field='category',
+    #     chained_model_field='category',
+    #     show_all=False,
+    #     auto_choose=True,
+    #     sort=True,
+    # )
     target_price = models.DecimalField(max_digits=8, decimal_places=2)
     start_price = models.DecimalField(max_digits=8, decimal_places=2)
     start_time = models.DateTimeField()
@@ -123,12 +146,6 @@ class AuctionEvent(BaseModel):
                 winner = bids.order_by('-amount')[0].bidder
         else:
             return "No Winner yet"
-
-
-
-
-
-
 
 
     def __str__(self):
