@@ -1,4 +1,5 @@
 import datetime, time
+import arrow
 from django import template
 from ..models import AuctionEvent, Bid, Category, SubCategory
 from django.db.models import Count
@@ -28,8 +29,8 @@ def total_auctions(user=None):
         return AuctionEvent.objects.filter(available=True).count()
 
 @register.assignment_tag
-def product_categories():
-    return Category.objects.all()
+def product_categories(count=10):
+    return Category.objects.all()[:count]
 
 @register.assignment_tag
 def auctions_in_category(category=None):
@@ -48,18 +49,20 @@ def live_auctions(user=None, count=10):
     return live_list[:count]
 
 @register.assignment_tag
-def hottest_deals(user=None, count=10):
+def hottest_deals(user=None, count=5):
     auctions = AuctionEvent.objects.filter(available=True)
+    list = []
     if user is not None:
         auctions = AuctionEvent.objects.filter(available=True, creator=user)
     return auctions.annotate(total_bids=Count('bids')).order_by('-total_bids')[:count]
 
+
 @register.assignment_tag
-def latest_auctions(user=None, count=10):
+def latest_auctions(user=None, count=5):
     auctions = AuctionEvent.objects.filter(available=True)
     if user is not None:
         auctions = AuctionEvent.objects.filter(available=True, creator=user)
-    return auctions.order_by('time')[:count]
+    return auctions.order_by('-time')[:count]
 
 
 
@@ -69,12 +72,12 @@ def ending_soon(user=None, count=10):
     auctions = AuctionEvent.objects.filter(available=True)
     if user is not None:
         auctions = AuctionEvent.objects.filter(available=True, creator=user)
-        for a in auctions:
-            now = datetime.datetime.now()
-            diff = a.end_time.day - now.day
-            if diff > 0 and diff <= 1:
-                ending_soon_list.append(a)
-    return ending_soon_list[:count]
+    for a in auctions:
+        now = datetime.datetime.now()
+        diff = a.end_time - arrow.utcnow()
+        if diff.days == 0:
+            ending_soon_list.append(a)
+    return ending_soon_list
 
 @register.assignment_tag
 def ended_auctions(user=None):

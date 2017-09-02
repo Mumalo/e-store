@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import  Category, AuctionEvent, Bid, SubCategory
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['id','name', 'description']
+    list_display = ['id','name', 'image','description', 'slug']
     prepopulated_fields = {'slug':('name',)}
     # readonly_fields = {'slug', ('name',)}
 

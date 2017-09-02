@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}all-categories{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid all-categories">
+
+    <div class="page-heading container-fluid">
+        <div class="text-center ">
+            <h5>All Categories</h5>
+        </div>
+    </div>
+
+    <ul class="breadcrumb">
+              <li>
+                <a href="{% url 'auctions:home' %}">Home</a>
+              </li>
+              <li>
+                <a href="{% url 'auctions:all_categories' %}">categories</a>
+              </li>
+              <li class="active">{{ category }}</li>
+    </ul>
+
+    <div class="row">
+        {% for c in categories %}
+                <div class="col-xs-12 col-sm-12 col-md-3 left-sidebar">
+                        {% if c.image %}
+                            <img src="{{c.image.url}}" class="img-responsive">
+                        {% else %}
+                            <!--<img src="{% static 'images/background/category-default1.jpg' %}" class="img-responsive">-->
+                        {% endif %}
+
+                        <div class="category-content">
+                            <h2>{{ c }}</h2>
+
+                            <ul class="">
+                                {% for sub in c.subcat.all %}
+                                    <li><a>{{ sub }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                </div>
+        {% endfor %}
+    </div>
+
+    {% block extrajs %}
+
+    {% endblock %}
+
+</div>
+
+
+
+{% endblock %}

@@ -50,13 +50,13 @@
        <div class="collapse navbar-collapse" id="myNavbar">
 
            <ul class="nav navbar-nav">
-               <li><a href="{% url 'auctions:home' %}" class="text">Home</a></li>
-               <li><a href="#" class="text">About Us</a></li>
+               <!--<li><a href="{% url 'auctions:home' %}" class="text">Home</a></li>-->
+               <!--<li><a href="#" class="text">About Us</a></li>-->
 
 
            </ul>
 
-           <ul class="nav navbar-nav navbar-right">
+           <ul class="nav navbar-nav navbar-right right-header">
 
                {% if request.user.is_authenticated %}
 
@@ -154,6 +154,15 @@
 
        </div>
    </div>
+   <div class="jumbotron sub-header">
+        <div class="row text-center" style="padding-top: -10px">
+            <h5><span>WELCOME TO</span> <span>IASTORE</span></h5>
+        </div>
+    </div>
+
+   <div class="navbar navbar-default">
+
+    </div>
 
        {% block content %}{% endblock %}
 
@@ -237,21 +246,36 @@
                             if (jQuery.isEmptyObject(data)){
                                 el.css('display', 'none')
                             }
+                            var items_array = []
+
                             for (val in data){
                                 id_val = val
+                                json_parsed_items = JSON.parse(data[val])
                                  var heads = $('<div class="col-md-4" id="' + id_val +'"></div>')
-                                 heads.append('<h6 style="color: #333; font-weight: bold; border-bottom: 1px solid #337ab7; text-transform: capitalize">' + val + '</h6>')
-
+                                 heads.append('<h6 style="border-bottom: 1px solid #337ab7; text-transform: capitalize">' + val + '</h6>')
+                                 items_array.push(json_parsed_items)
                                  item_ids = val + 'item'
-                                 item = $('<div class="list-group row"  id="' + item_ids + '"></div>')
-                                 links = $('<a class="" style="color: #333">'+ data[val].join('<br>')  + '</a>')
-                                 item.append(links)
+                                 el.append(heads)
 
-                                 if (item.attr('id').includes(heads.attr('id'))){
-                                     heads.append(item)
-                                 }
-                                el.append(heads)
+                                 item = $('<div class="list-group row"  id="' + item_ids + '"></div>')
+
+
+                                for (i in json_parsed_items ){
+                                    item_key = json_parsed_items[i]["pk"]
+                                    var url = "{% url 'auctions:bid' 12 %}".replace(12, item_key)
+//                                    alert(url)
+                                    link = $('<a class="" style="color: white !important; display: block; padding: 6px" href="' + url+ '" >'+ json_parsed_items[i]["fields"]["item"] + '</a>')
+                                    item.append(link)
+                                }
+
+                                if (item.attr('id').includes(heads.attr('id'))){
+                                    heads.append(item)
+                                }
+
+
                             }
+
+
 
 
 

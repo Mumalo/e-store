@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from base.models import BaseModel
 from django.conf import settings
+from django.db.models import Count
 from smart_selects.db_fields import ChainedForeignKey
 
 
@@ -36,6 +37,7 @@ class Category(BaseModel):
     name = models.CharField(max_length=250)
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=250, null=True)
+    image = models.ImageField(upload_to='category/%Y/%m/%d',blank=True, null=True)
 
     # return all subcategories under this category
     def custom_queryset(self):
@@ -46,7 +48,7 @@ class Category(BaseModel):
 
 class SubCategory(BaseModel):
     name = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250, null=True, blank=True)
+    slug = models.SlugField(max_length=250, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True,related_name='subcat')
 
     def __str__(self):
@@ -90,6 +92,7 @@ class AuctionEvent(BaseModel):
     available = models.BooleanField(default=True)
     description = models.TextField(max_length=250, null=True, blank=True)
 
+
     class Meta:
         ordering = ('-time',)
 
@@ -107,6 +110,7 @@ class AuctionEvent(BaseModel):
 
     def has_started(self):
         return self.start_time >= arrow.utcnow()
+
 
 
     def has_ended(self):
@@ -132,6 +136,9 @@ class AuctionEvent(BaseModel):
             return bids[0].amount
         else:
             return self.start_price
+
+    def total_bids(self):
+        return Bid.objects.filter(event=self).count()
 
     def winner(self):
         bids = Bid.objects.filter(event=self)

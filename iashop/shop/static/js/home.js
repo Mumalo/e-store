@@ -3,7 +3,7 @@
  */
 
 $(document).ready(function(){
-    var owl = $(".owl-carousel")
+    var owl = $("#carousel1")
     owl.owlCarousel({
         items:1,
         loop:true,
@@ -16,6 +16,22 @@ $(document).ready(function(){
         animateIn: 'fadeIn',
 
     })
+
+    var owl2 = $("#carousel2, #carousel3")
+
+    owl2.owlCarousel({
+        items:5,
+        loop:true,
+        margin:10,
+        autoplay:true,
+        autoplayTimeout:4000,
+        autoplaySpeed: 5000,
+        autoplayHoverPause:true,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',
+
+    })
+
 
 
     //$('.cat-list').hover(function(){

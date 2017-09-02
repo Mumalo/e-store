@@ -5,7 +5,26 @@
 
 {% block content %}
 
+<div class="page-heading container-fluid">
+        <div class="text-center ">
+            <h5>Add New Auction</h5>
+        </div>
+    </div>
+
+    <ul class="breadcrumb">
+              <li>
+                <a href="{% url 'auctions:home' %}">Home</a>
+              </li>
+              <li>
+                <a href="{% url 'auctions:list' %}">auctions</a>
+              </li>
+
+            <li>
+                <a href="#">new auction</a>
+            </li>
+    </ul>
 <div class="container container-fluid form-container">
+
      <form method="post" class="viewform" enctype="multipart/form-data">
       {% csrf_token %}
       {% form form=form %}{% endform %}

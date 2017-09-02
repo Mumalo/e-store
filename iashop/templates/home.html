@@ -6,25 +6,25 @@
 {% block title %}{% endblock %}
 
 {% block content %}
-    <div class="jumbotron sub-header">
-        <div class="row text-center" style="padding-top: -10px">
-            <h5>WELCOME TO <br><br> BIDZONE</h5>
-        </div>
-    </div>
+    <!--<div class="jumbotron sub-header">-->
+        <!--<div class="row text-center" style="padding-top: -10px">-->
+            <!--<h5><span>WELCOME TO</span> <span>IASTORE</span></h5>-->
+        <!--</div>-->
+    <!--</div>-->
 
-    <div class="navbar navbar-default">
+    <!--<div class="navbar navbar-default">-->
 
-    </div>
+    <!--</div>-->
 
-    <div class="container-fluid text-center">
-        <div class="row content">
-            <div class="col-xs-4 col-nd-4 right-sidenav" >
+    <div class="container-fluid text-center" style="margin-top: -10px; width: 100%; padding-left: 0; padding-right: 0 !important;">
+        <div class="row content main-slider" style="width: 100%;">
+            <div class="col-xs-4 col-nd-4 right-sidenav" style="border-left: none !important;">
                 <div class="panel panel-default left-sidebar categories-main" style="background-color: #f3f4f7 !important;">
-                    <div class="panel-heading text-left">CATEGORIES<span class="text-right"><a href="#">see all></a></span></div>
+                    <div class="panel-heading text-left">CATEGORIES<span class="text-right"><a href="{% url 'auctions:all_categories' %}">see all></a></span></div>
                     <div class="panel-body">
-                        {% product_categories as category %}
+                        {% product_categories 10 as category %}
                              {% for c in category %}
-                                <div data-action="{{c}}" class="text-left cat-list" style="padding: 7px; width: 225px;" id="category_list"><a href="#"s >{{ c }}</a></div>
+                                <div data-action="{{c}}" class="text-left cat-list"  id="category_list"><a href="#"s >{{ c }}</a></div>
                                     <div class="container-fluid text-left sub-cat-on-hover row"  id="subcats">
 
                                     </div>
@@ -33,8 +33,8 @@
                 </div>
             </div>
 
-            <div class="col-xs-6 col-md-6">
-                <div class="owl-carousel owl-theme" id="demo">
+            <div class="col-xs-6 col-md-6 no-gutter" style="margin-left: -20px; margin-right: -20px">
+                <div class="owl-carousel owl-theme" id="carousel1">
                     <div class="item"><img src="{% static 'images/home1.jpg' %}"></div>
                     <div class="item"><img src="{% static 'images/home2.jpg' %}" class="img-responsive"></div>
                     <div class="item"><img src="{% static 'images/home3.jpg' %}"  class="img-responsive"></div>
@@ -42,25 +42,65 @@
                 </div>
             </div>
 
-            <div class="col-xs-2 col-md-2 left-sidenav">
-                <div class="well"><a>Link 1</a></div>
+            <div class="col-xs-2 col-md-2 left-sidenav" style="border: none !important;">
+                <div class="well" ><a>Link 1</a></div>
                 <div class="well"><a>Link 2</a></div>
                 <div class="well"><a>Link 3</a></div>
             </div>
 
         </div>
-               <!--<video height="300" id="localVideo"></video>-->
-                <!--<div id="remotesVideos"></div>-->
+        <hr style="border-bottom: 2px solid #e62e04; width: 93%"/>
 
-           </div>
-           <hr/>
+        <div class="row left-sidebar" style="width: 93%">
+            <ul class="nav nav-pills " style="color: #333 !important;">
+                <li style="width: 180px" class="text-center">
+                    <a class="active" data-toggle="pill" href="#ending-soon">Ending Today</a>
+                </li>
+
+                <li style="width: 180px" class="text-center">
+                    <a class="" data-toggle="pill" href="#top-deals" >Top Deals</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" style="padding-bottom: 15px">
+                <div class="tab-pane fade in active" id="ending-soon">
+                    <h5>Ending Today deals</h5>
+                    <div class="owl-carousel owl-theme" id="carousel2">
+                        {% ending_soon as soon %}
+                        {% for item in soon %}
+                            {% if item.image %}
+                               <img  src="{{ item.image.url }}"  class="img-responsive img-thumbnail">
+
+                            {% else %}
+                                <img  src="{% static 'images/no_image.png' %}" class="img-responsive img-thumbnail">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="top-deals">
+                    {% hottest_deals as top %}
+                    <h5>Hottest deals</h5>
+                    <div class="owl-carousel owl-theme" id="carousel3">
+                        {% for item in top %}
+                            {% if item.image %}
+                               <img src="{{ item.image.url }}"  class="img-responsive img-thumbnail" style="width: 200px; height: 200px">
+
+                            {% else %}
+                                <img  src="{% static 'images/no_image.png' %}" class="img-responsive img-thumbnail" style="width: 200px; height: 200px">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     {% endblock %}
 
 
    <footer class="container-fluid text-center">
-       <!--{% block extrajs %}-->
-         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>-->
-       <!--{% endblock %}-->
 
    </footer>
 

@@ -28,7 +28,7 @@ def sub_cats_for_cats(request):
         subs = SubCategory.objects.filter(category__name=new_data)
         for s in subs:
             sub_category = str(s)
-            items[sub_category] = [str(item) for item in AuctionEvent.objects.filter(sub_category__name=sub_category)]
+            items[sub_category] = [serializers.serialize("json", AuctionEvent.objects.filter(sub_category__name=sub_category))]
 
     # subs = SubCategory.objects.filter(category=data)
 
@@ -53,6 +53,30 @@ def select_by_category(request):
 
 def home(request):
     return render(request, 'home.html')
+
+def all_categories(request):
+    categories = Category.objects.all()
+    items = AuctionEvent.objects.all()
+
+    return render(request,"auction/category/category_list.html",
+                  {'categories':categories, 'items':items})
+
+def category_detail(request, category_id, category_slug):
+
+    category = None
+    items = None
+    sub_category = None
+    try:
+        category = Category.objects.get(id=category_id, slug=category_slug)
+        items = AuctionEvent.objects.filter(category=category)
+    except ObjectDoesNotExist:
+        pass
+
+    return render(request, "auction/category/category_detail.html",
+                  {'category': category, 'items': items,})
+
+
+
 
 @login_required
 def add_new_auction(request):
@@ -104,7 +128,7 @@ def auction_list(request):
 
 
     return render(request, 'auction/list.html',
-                  {'auctions': auctions, 'search_form': search_form, 'match': match, 'categories': categories, })
+                  {'auctions': auctions, 'search_form': search_form, 'match': match, 'category': categories, })
 
 @login_required
 def edit_auction(request, auction_id):

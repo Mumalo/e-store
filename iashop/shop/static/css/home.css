@@ -8,28 +8,159 @@ body {
     font-size: 14px;
 }
 
+
+.breadcrumb{
+    font-size: 12px !important;
+}
 @media screen and (max-width: 768px)  {
     body{
         background: red;
+    }
+
+    .all-categories .left-sidebar{
+        width: 100% !important;
+        margin-right: 0 !important;
+        margin-right: 0 !important;
+        /*background: blue !important;*/
     }
 
 
 }
 
 
+.page-heading {
+    padding: 0px;
+    font-size: 28px;
+    font-weight: 700;
+    /*z-index: 4;*/
+    line-height: 75px;
+    margin-left: -20px;
+    margin-right: -20px;
+    position: relative;
+    background-image: url('../images/background/header2.jpg');
+    color: #f1f8e9;
+
+}
+
+.page-heading div{
+    padding: 6px;
+    height: 100%;
+    background-color: #4267b2;
+    opacity: 0.9;
+}
+
+/*.page-heading h5{*/
+     /*background: red;*/
+    /*!*position: relative;*!*/
+    /*height: 100%;*/
+/*}*/
+
+
 
 
 .sub-cat-on-hover{
-     background: #f3f4f7; /* fallback color */
+     /*background: #f3f4f7; !* fallback color *!*/
     /*padding: 20px;*/
+    background: rgb(0, 0, 0); /* fallback color */
+    background: rgba(0, 0, 0, 0.7);
     display: none;
     position: absolute;
-    left: 85% !important;
-    min-width: 600px ;
+    left: 90% !important;
+    top: 0;
+    width: 682px ;
     /*add DOM break point for this style*/
     padding: 10px;
     opacity: 0.8;
+    height: 350px;
+    /*color: white !important;*/
 }
+
+/*.sub-cat-on-hover a:hover{*/
+    /*color: red; !important;*/
+/*}*/
+
+.all-categories .category-content{
+    padding-top: 15px ;
+    padding-bottom: 20px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.all-categories .category-content h2{
+    /*color:  #e62e04;*/
+    color: #428bca;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.category-content ul li{
+    padding: 4px;
+}
+
+.all-categories .left-sidebar{
+    /*background: red;*/
+    margin-right: 10px !important;
+    margin-right: 10px !important;
+    width: 18%;
+    margin-bottom: 25px;
+}
+
+.all-categories .row{
+    margin-left: 50px;
+    margin-right: 50px
+}
+
+.all-categories .row:last-child{
+
+}
+
+/*.all-categories .left-sidebar {*/
+    /*background: red !important;*/
+/*}*/
+
+.all-categories .left-sidebar img{
+   width: 100%;
+}
+.category-content a{
+    color: #333;
+}
+
+.category-content a:hover{
+    text-decoration: none;
+    cursor: pointer;
+    color:  #e62e04 !important;
+}
+
+
+.category-detail .left-sidebar{
+    padding: 10px;
+    /*background: red !important;*/
+}
+
+.category-detail .category-heading{
+    border-bottom: 1px solid #428bca;
+    padding-bottom: 10px;
+    color: #428bca;
+    font-size: 20px;
+    position: relative;
+    margin-right: -10px;
+    margin-left: -10px;
+    margin-bottom: 4px;
+
+}
+
+.category-detail div a{
+    /*border: 2px solid #f1f1f1;*/
+    border-left: none !important;
+    border-right: none !important;
+
+}
+
+.category-detail div a:first-child{
+    border-top: none !important;
+}
+
 
 /*testing media queries */
 
@@ -192,7 +323,7 @@ body {
 
 
 
-.owl-carousel .item img {
+.owl-carousel .item img, .owl-carousel img {
     width: 750px;;
     height: 400px;
     position: relative;
@@ -205,10 +336,23 @@ body {
     z-index: 1;
 }
 
+#carousel2 img{
+    width: 200px !important;
+    height: 200px !important;
+}
+
+#carousel3 img{
+    width: 200px !important;
+    height: 200px !important;
+}
+
+
+
+
 .right-sidenav{
    width: 280px;
-    margin-left: 72px;
-    margin-right: -35px;
+    margin-left: 78px;
+    /*margin-right: -32px;*/
 
 }
 
@@ -223,6 +367,61 @@ body {
     color: #333;
     border-bottom: 1px solid #e9e9e9;
 }
+
+.main-slider .right-sidenav{
+    /*margin-left: -26px !important;*/
+}
+
+.main-slider{
+    background-image: url('../images/background/body1.jpg');
+    opacity: 0.9;
+     /*background-repeat: no-repeat;*/
+    /*background-size: 100% 100%;*/
+    /*margin-right: 20px !important;*/
+    padding-right: 0 !important;
+    background-blend-mode: color-dodge;
+}
+
+
+.categories-main a:hover{
+    text-decoration: none;
+    color: #e62e04 !important;
+    cursor: pointer !important;
+}
+
+.categories-main .panel-body .cat-list{
+    padding: 9px 0 10px;
+    width: 225px !important;
+}
+
+
+.categories-main a{
+    color: #333 !important;
+}
+
+.nav-pills li{
+    color: #333 !important;
+    font-weight: bold;
+}
+
+.tab-content h5{
+    color: #e62e04;
+    font-weight: bold;
+    /*border-bottom: 2px solid #e62e04 ;*/
+    margin-left: 35%;
+    margin-right: 35%;
+    padding-bottom: 4px;
+    margin-bottom: 10px;
+}
+
+
+
+.nav-pills li a:active{
+    color: #fffee8 !important;
+}
+
+
+
 
 /*.cat-select{*/
     /*background: red !important;*/
@@ -311,6 +510,10 @@ ul.messages li a.close {
 .breadcrumb{
     background: #f5f5f5;
     font-size: 5px;
+}
+
+.breadcrumb a{
+    color: #333 !important;
 }
 
 
@@ -489,12 +692,12 @@ a:hover {
 
 
 .advanced-search{
-    width: 275px;
+    /*width: 290px;*/
     color: #ffffff;
     font-weight: bold;
     margin-top: 6%;
     margin-left: 0;
-    margin-right: -1px;
+    /*margin-right: -1px;*/
 }
 
 .main-product-list-row{
@@ -515,6 +718,43 @@ a:hover {
     padding: 0 25px 10px 15px;
     margin: 0
 }
+
+.product-list-category{
+    width: 100%;
+    position: relative;
+    /*padding-left: 8px;*/
+    /*padding-right: 8px;*/
+}
+
+.product-list-category li:first-child a{
+    color: #428bca !important;
+    /*border-bottom: 1px solid #337ab7 !important;*/
+}
+
+.product-list-category li a:hover{
+    color: #428bca !important;
+}
+
+.product-list-category li:first-child{
+    /*border-bottom: 1px solid #E62E04 !important;*/
+}
+
+.product-list-category li:nth-child(2){
+    border-top: 1px solid #428bca !important;
+}
+
+.product-list-category .list-group-item{
+    border-right: none;
+    border-left: none;
+    /*border-bottom: 1px solid red !important;*/
+    /*border-top: 1px solid red !important;*/
+
+}
+
+.product-list-category .list-group-item a{
+    color: #333 !important;
+    font-weight: 400;
+}
 /*advanced search ends */
 
 .grid-switch-button{
@@ -532,14 +772,40 @@ a:hover {
     padding: 0 0 0 0;
 }
 
+
+.product-item-container{
+    margin-bottom: 5px;
+    /*border: 1px solid red;*/
+    padding-bottom: -30px;
+}
+
+.watch-auction{
+    /*color: #E62E04;*/
+
+    position: relative;
+    top: -200px;
+    left: 180px;
+    z-index: 5;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.watch-auction:hover{
+    cursor: pointer;
+
+}
+
+
+
 /* grid and list view css */
-.thumbnail
+.product-item-container .thumbnail
 {
-    margin-bottom: 0;
+    padding-bottom: -10px;
     padding: 0px;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
+    /*border: 1px solid red;*/
 }
 
 
@@ -560,7 +826,12 @@ a:hover {
 
 .list-group-image{
     width: 400px !important;
-    height: 250px !important;
+    height: 190px !important;
+}
+
+.category-detail .sub-cats .list-group-image{
+    width: 300px !important;
+    height: 150px !important;
 }
 
 .item.list-group-item .thumbnail {
@@ -605,6 +876,10 @@ a:hover {
     padding: 0;
     /*margin-left: -10px*/
 }
+
+/*.product-container .well-sm{*/
+    /*margin-left: ;*/
+/*}*/
 /*grid list view ends */
 
 .row .bid-info{
@@ -613,7 +888,20 @@ a:hover {
 }
 
 .row .bid-info .lead{
-    font-size: 13px;
+    font-size: 10px;
+}
+
+.lead{
+    font-size: 12px;
+    color: #333;
+    font-weight: 600;
+    /*margin-left: 22px;*/
+}
+
+.lead-container{
+    margin-bottom: -20px;
+    /*background: red;*/
+    padding-bottom: 0px
 }
 
 
@@ -638,6 +926,8 @@ a:hover {
     margin-bottom: 0;
     margin-top: 0;
 }
+
+
 
 
 .watch a{
@@ -685,8 +975,8 @@ a:hover {
 }
 
 .btn-group .btn{
-    background-color: #fff;
-    color: #080808;
+    background-color: #337ab7;
+    color: #fffee8;
 }
 
 .btn-group a:hover, .btn-group a:active{
@@ -708,9 +998,14 @@ a:hover {
 
 
 #main-header{
-    background:#4267b2;
+    /*background:#4267b2;*/
     padding-bottom: -4px;
     border-bottom: 1px solid #4267b2;
+    background-color: #4267b2;
+    /*background: url('../images/background/header3.jpg');*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: 100%;*/
+    /*opacity: 0.8;*/
 }
 
 .header-content .text{

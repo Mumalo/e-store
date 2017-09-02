@@ -19,6 +19,10 @@ urlpatterns = [
      url(r'^budget/create/$', views.create_budget_plan, name='budget'),
      url(r'^advert/create/$', views.create_advert, name='advert'),
 
+#      Categories
+     url(r'^category/all/$', views.all_categories, name='all_categories'),
+     url(r'^category/(?P<category_id>[0-9]+)/(?P<category_slug>[-\w]+)', views.category_detail, name='category_detail'),
+
 
 
 ]

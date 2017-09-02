@@ -9,6 +9,11 @@
 <div class="container-fluid">
 
     <!--BBreadcrumb-->
+    <div class="page-heading container-fluid">
+        <div class="text-center ">
+            <h5>Place Bid for {{auction}}</h5>
+        </div>
+    </div>
 
     <ul class="breadcrumb">
               <li>
@@ -162,7 +167,7 @@
 
         <div class="col-xs-12 col-sm-3 col-md-3 right-sidebar">
             <h5 class="auction-detail-heading">More Information</h5>
-            <div class="container" style="margin-left: 21px; background-color: silver">
+            <div class="container" style="margin-left: 21px; background-color: #eee">
                 <div class="row myClock" style="padding-left: 18px; margin-bottom: -5px" data-action='{{ auction.end_time|to_json }}'>
                     <div class="row">
                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
