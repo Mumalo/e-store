@@ -36,6 +36,7 @@
 
 
 
+<div class="main-deader-container">
    <div class="navbar navbar-default" id="main-header" style="z-index: 4">
        <div class="container-fluid header-content">
            <div class="navbar-header">
@@ -44,7 +45,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                </button>
-               <a class="navbar-brand text" href="{% url 'auctions:home' %}" style="color: #fff">Website Name</a>
+               <a class="navbar-brand text" href="{% url 'auctions:home' %}" style="color: #fff"><img src="{% static 'images/background/logo.jpg' %}" class="img-responsive logo"><span class="logo-text">IA STORE</span></a>
            </div>
 
        <div class="collapse navbar-collapse" id="myNavbar">
@@ -59,27 +60,17 @@
            <ul class="nav navbar-nav navbar-right right-header">
 
                {% if request.user.is_authenticated %}
-
-                     <li><a href="{% url 'auctions:list' %}" class="text">All Auctions</a></li>
-                     <li><a href="{% url 'auctions:add_new_auction' %}" class="text">Add new auction<span class=""></span></a></li>
-                     <!--<li class="ad"><a href="#"><button type="button" class="btn btn-primary btn-xs" href="#"  id="post-ad">Post Ad</button></a></li>-->
-               {% else %}
-                    <li><a href="{% url 'accounts:register' %}" class="text"><span class="glyphicon glyphicon-user"></span>Register</a></li>
-                    <li><a href="{% url 'accounts:login' %}" class="profile-dropdown-li text"><span class="glyphicon glyphicon-log-in pull-right">Login</span></a>
-               {% endif %}
-               <!--<li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span>Shop</a></li>-->
-             {% if request.user.is_authenticated %}
-                    {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' %}
+                     {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' %}
                     {% notifications_unread as unread_count %}
                     <li class="dropdown pagination-centered">
                         <a href="#" class="dropdown-button notification-badge" data-activates="dropdown2" style="padding-left: 0; padding-right: 0" id="dLabel" role="button">
                             {% if unread_count > 0%}
-                                <i class="badge" style="background-color: #990000">
-                                    {% live_notify_badge %}
+                                <i class="glyphicon glyphicon-bell">
+                                    <div class="notification-count text-center" style="color: #fff; background: #990000">{% live_notify_badge %}</div>
                                 </i>
                             {% else %}
-                                <i class="badge">
-                                    {% live_notify_badge %}
+                                <i class="glyphicon glyphicon-bell">
+                                    <div class="notification-count text-center" style="color: #333">{% live_notify_badge %}</div>
                                 </i>
                             {% endif %}
                         </a>
@@ -129,6 +120,17 @@
                                 {% endif %}<!-- end if uncread_count -->
                         </ul>
                </li> <!-- end of notification -->
+
+                     <li><a href="{% url 'auctions:list' %}" class="text">All Auctions</a></li>
+                     <li><a href="{% url 'auctions:add_new_auction' %}" class="text">Add new auction<span class=""></span></a></li>
+                     <!--<li class="ad"><a href="#"><button type="button" class="btn btn-primary btn-xs" href="#"  id="post-ad">Post Ad</button></a></li>-->
+               {% else %}
+                    <li><a href="{% url 'accounts:register' %}" class="text"><span class="glyphicon glyphicon-user"></span>Register</a></li>
+                    <li><a href="{% url 'accounts:login' %}" class="profile-dropdown-li text"><span class="glyphicon glyphicon-log-in pull-right">Login</span></a>
+               {% endif %}
+               <!--<li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span>Shop</a></li>-->
+             {% if request.user.is_authenticated %}
+
                <!--Drop down profile showing user's informaton -->
 
 
@@ -137,7 +139,7 @@
                </li> <!-- user's profile photo -->
                <li class="list-unstyled" style="padding-left: 15px">
                      <a class='dropdown-button' href='#' data-activates='dropdown1' style="padding-left: 0; padding-right: 0">
-                        <span class="glyphicon glyphicon-triangle-bottom" style="color: #777;"></span>
+                        <span class="glyphicon glyphicon-user" style="color: #F3DAA0;"></span>
                     </a>
 
                      <ul id="dropdown1" class="dropdown-content">
@@ -154,13 +156,14 @@
 
        </div>
    </div>
-   <div class="jumbotron sub-header">
-        <div class="row text-center" style="padding-top: -10px">
-            <h5><span>WELCOME TO</span> <span>IASTORE</span></h5>
-        </div>
-    </div>
+</div>
+   <!--<div class="jumbotron sub-header">-->
+        <!--<div class="row text-center" style="padding-top: -10px">-->
+            <!--<h5 style="color: rgba(73, 31, 3, 0.85)"><span style="margin-right: 4px">IA</span> <span>STORE</span></h5>-->
+        <!--</div>-->
+    <!--</div>-->
 
-   <div class="navbar navbar-default">
+   <div class="navbar navbar-default search-box-container">
 
     </div>
 
@@ -251,7 +254,7 @@
                             for (val in data){
                                 id_val = val
                                 json_parsed_items = JSON.parse(data[val])
-                                 var heads = $('<div class="col-md-4" id="' + id_val +'"></div>')
+                                 var heads = $('<div class="col-md-4" id="' + id_val +'" style="color: white !important;"></div>')
                                  heads.append('<h6 style="border-bottom: 1px solid #337ab7; text-transform: capitalize">' + val + '</h6>')
                                  items_array.push(json_parsed_items)
                                  item_ids = val + 'item'

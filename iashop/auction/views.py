@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
-from .forms import AuctionForm, BidForm, AdvancedSearchForm, AdvertForm, BudgetForm
+from .forms import AuctionForm, BidForm, AdvancedSearchForm, AdvertForm, BudgetForm, EmailPostForm
 # from .models import Buyer, Seller
 from django.contrib.auth.decorators import login_required
 from django.forms import formset_factory
@@ -16,6 +16,9 @@ import json
 from django.core import serializers
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail, BadHeaderError
+
+
 
 def sub_cats_for_cats(request):
     data = request.POST.get('cat')
@@ -149,23 +152,50 @@ def edit_auction(request, auction_id):
 
 def auction_detail(request, auction_id):
     auction = get_object_or_404(AuctionEvent, id=auction_id)
-
+    sent = False
     if request.method == 'POST':
         bid_form = BidForm(data=request.POST, auction=auction, bidder=request.user)
+        private_message = EmailPostForm(data=request.POST)
+        sender = request.user
+
+        try:
+            creator = AuctionEvent.objects.get(id=auction_id).creator
+        except:
+            creator = None
+
+
+        if private_message.is_valid():
+            message = private_message.cleaned_data.get('message')
+
+            if creator and sender and message:
+                from_email = settings.EMAIL_HOST_USER
+                to_email = creator.email
+                subject = "{}, {}is interested in {}".format(sender, sender.email, auction.item)
+                message = "{}".format(message)
+                try:
+                    send_mail(subject, message, from_email, [to_email])
+                except BadHeaderError:
+                    return HttpResponse('Invalid Header found')
+                sent = True
+
         if bid_form.is_valid():
             bid = bid_form.save()
             # return render(request, 'auction/bid_confirm.html', {'auction':auction})
             messages.success(request, 'Your Bid was submitted')
         else:
             messages.error(request, 'error')
+
     else:
         bid_form = BidForm(auction=auction, bidder=request.user)
+        private_message = EmailPostForm()
 
 
 
     return render(request, 'auction/auction_detail.html',
                   {'bid_form':bid_form,
-                   'auction': auction,})
+                   'auction': auction,
+                   'private_message':private_message,
+                   'sent': sent})
 
 @login_required
 def create_advert(request):

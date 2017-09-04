@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-from .secret import DATABASE_NAME, PASSWORD, USER, SECRET_KEY
+from .secret import DATABASE_NAME, PASSWORD, USER, SECRET_KEY, EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, EMAIL_USE_TLS
 from django.core.urlresolvers import reverse_lazy
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -192,3 +192,12 @@ NOTIFICATIONS_USE_JSONFIELD=True
 #
 # NOTIFY_DELETE_NF_CLASS_SELECTOR = '.delete-notification'
 # NOTIFY_UPDATE_TIME_INTERVAL = ''
+
+
+# Email settings
+
+EMAIL_HOST = EMAIL_HOST
+EMAIL_HOST_USER = EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
+EMAIL_PORT = EMAIL_PORT
+EMAIL_USE_TLS = EMAIL_USE_TLS

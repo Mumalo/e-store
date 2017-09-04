@@ -15,6 +15,19 @@ import arrow
      #     return "{}, {}" .format (item.name, item.category)
 
 
+class EmailPostForm(forms.Form):
+    message = forms.CharField(widget=Textarea, required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(EmailPostForm, self).__init__(*args, **kwargs)
+        self.fields['message'].widget.attrs.update({'class': 'browser-default'})
+        self.layout = Layout(
+            Fieldset('',
+                     'message')
+        )
+
+
+
 
 
 
