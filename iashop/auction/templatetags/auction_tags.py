@@ -5,8 +5,8 @@ from ..models import AuctionEvent, Bid, Category, SubCategory
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
-
-
+from django.template import Context
+from ..forms import GeneralSearchForm
 register = template.Library()
 
 @register.filter(name='to_json')
@@ -15,6 +15,29 @@ def to_json(t):
         return '{}'.format(int(time.mktime(t.timetuple()))*1000)
     else:
         return 'Wrong format'
+
+
+@register.inclusion_tag(file_name="auction/search.html", takes_context=True)
+def search_form(context):
+    request = context["request"]
+
+
+    if request.method == 'GET':
+        form = GeneralSearchForm(data=request.GET)
+
+        if form.is_valid():
+            search = form.search()
+            cat = form.search()
+    else:
+        form = GeneralSearchForm()
+        search = None
+        cat = None
+    return {'request': request,
+        'form':form, 'search':search, 'cat':cat}
+
+
+
+
 
 
 

@@ -1,13 +1,13 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse
-from .forms import AuctionForm, BidForm, AdvancedSearchForm, AdvertForm, BudgetForm, EmailPostForm
+from django.shortcuts import render, get_object_or_404, HttpResponse, HttpResponseRedirect
+from .forms import AuctionForm, BidForm, AdvancedSearchForm, AdvertForm, BudgetForm, EmailPostForm, GeneralSearchForm
 # from .models import Buyer, Seller
 from django.contrib.auth.decorators import login_required
 from django.forms import formset_factory
 from .models import AuctionEvent, Bid, Category, Advert, BudgetPlan, SubCategory
 from django.contrib import messages
 from django.views.generic.edit import CreateView
-from django.shortcuts import render
-from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import render, render_to_response
+from django.core.urlresolvers import reverse_lazy, reverse
 from django.contrib.auth import get_user
 from .models import User
 from django.views.generic.edit import DeleteView
@@ -17,6 +17,7 @@ from django.core import serializers
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail, BadHeaderError
+from  django.template import RequestContext
 
 
 
@@ -56,6 +57,14 @@ def select_by_category(request):
 
 def home(request):
     return render(request, 'home.html')
+
+def custom_processor(request):
+    main_search_form = GeneralSearchForm()
+    return {
+        'app': 'auction',
+        'main_search_form':main_search_form
+    }
+
 
 def all_categories(request):
     categories = Category.objects.all()

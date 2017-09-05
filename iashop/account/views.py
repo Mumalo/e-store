@@ -40,6 +40,7 @@ def user_login(request):
     return render(request,
                   'account/login.html', {'form': form})
 
+@login_required
 def logout_user(request):
     logout(request)
     return render(request, 'home.html')

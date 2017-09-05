@@ -1,0 +1,35 @@
+
+{% load static %}
+{% load material_form %}
+
+
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row">
+        <form method="post" >
+            {% csrf_token %}
+            <!--<div class="col-xs-8 col-sm-12 col-md-12">-->
+                <div class="input-group">
+                    <div class="row">
+                        <div class="search-category col-xs-2 col-sm-2">{{ form.in_category }}</div>
+                        <div class="search-key col-xs-10 col-sm-10 col-md-10">{{ form.key }}</div>
+                    </div>
+                </div>
+
+            <!--</div>-->
+        </form>
+
+
+    </div>
+
+</div>
+
+
+{% block extrajs %}
+
+{% endblock %}
+
+{% endblock %}
