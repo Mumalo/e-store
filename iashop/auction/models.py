@@ -83,6 +83,7 @@ class AuctionEvent(BaseModel):
     # )
     target_price = models.DecimalField(max_digits=8, decimal_places=2)
     start_price = models.DecimalField(max_digits=8, decimal_places=2)
+    current_price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     creator = models.ForeignKey(User,
@@ -133,6 +134,7 @@ class AuctionEvent(BaseModel):
         count = bids.count()
 
         if count:
+            current_price =  bids[0].amount
             return bids[0].amount
         else:
             return self.start_price

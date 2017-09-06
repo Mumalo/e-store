@@ -19,21 +19,38 @@ def to_json(t):
 
 @register.inclusion_tag(file_name="auction/search.html", takes_context=True)
 def search_form(context):
-    request = context["request"]
+    # request = context["request"]
+    form = GeneralSearchForm()
 
 
-    if request.method == 'GET':
-        form = GeneralSearchForm(data=request.GET)
+    # if request.method == 'GET':
+    #     form = GeneralSearchForm(data=request.GET)
+    #
+    #     if form.is_valid():
+    #         search = form.search()
+    #         cat = form.search()
+    # else:
+    #     form = GeneralSearchForm()
+    #     search = None
+    #     cat = None
+    return {'form':form}
 
-        if form.is_valid():
-            search = form.search()
-            cat = form.search()
-    else:
-        form = GeneralSearchForm()
-        search = None
-        cat = None
-    return {'request': request,
-        'form':form, 'search':search, 'cat':cat}
+# @register.assignment_tag(takes_context=True)
+# def search_results(context):
+#     request = context["request"]
+#
+#
+#     if register.method == 'GET':
+#         search = GeneralSearchForm(data=register.GET).search()
+#
+#
+#     else:
+#         search = None
+#
+#     return {'search_result':search}
+#
+#
+
 
 
 

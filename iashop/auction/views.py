@@ -58,12 +58,12 @@ def select_by_category(request):
 def home(request):
     return render(request, 'home.html')
 
-def custom_processor(request):
-    main_search_form = GeneralSearchForm()
-    return {
-        'app': 'auction',
-        'main_search_form':main_search_form
-    }
+# def custom_processor(request):
+#     main_search_form = GeneralSearchForm()
+#     return {
+#         'app': 'auction',
+#         'main_search_form':main_search_form
+#     }
 
 
 def all_categories(request):
@@ -128,19 +128,23 @@ def add_new_auction(request):
 def auction_list(request):
     categories = Category.objects.all()
     # Edit this line of code later
-    auctions = AuctionEvent.objects.filter(available=True)
-    match = None
+    auctions  = AuctionEvent.objects.filter(available=True)
+    # match = None
 
-    if request.method == 'POST':
-        search_form = AdvancedSearchForm(data=request.POST)
+    if request.method == 'GET':
+        search_form = AdvancedSearchForm(data=request.GET)
+        # general_search = GeneralSearchForm(data=request.GET)
         if search_form.is_valid():
-            match = search_form.search()
+            pass
+
     else:
         search_form = AdvancedSearchForm()
+        general_search = GeneralSearchForm()
+
 
 
     return render(request, 'auction/list.html',
-                  {'auctions': auctions, 'search_form': search_form, 'match': match, 'category': categories, })
+                  {'auctions': auctions, 'search_form': search_form,  'category': categories, })
 
 @login_required
 def edit_auction(request, auction_id):

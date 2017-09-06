@@ -26,7 +26,7 @@
             <ul class="list=group">
                 <li class="list-group-item advanced-search-form" style="background: #4267b2">ADVANCED SEARCH</li>
                 <li class="list-group-item">
-                    <form action="." method="post">
+                    <form method="get" >
                         {% csrf_token %}
                         {% form form=search_form %}{% endform %}
                         <button type="button" class="btn btn-primary" id="advanced-search-submit">SEARCH</button>
@@ -51,6 +51,7 @@
         </div>
 
         <div class="col-xs-12 col-md-9 product-container">
+            {{search}}
             <div class="well well-sm text-right">
                 <strong>Display</strong>
                 <div class="btn-group">

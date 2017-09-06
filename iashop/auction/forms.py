@@ -27,16 +27,14 @@ class EmailPostForm(forms.Form):
         )
 
 class GeneralSearchForm(forms.Form):
+    CHOICES = ((c.id, str(c.name)) for c in Category.objects.all())
     key = forms.CharField(required=False, max_length=240)
-    in_category = forms.ChoiceField(required=False)
+    in_category = forms.ChoiceField(required=False, choices=CHOICES)
 
     def __init__(self, *args, **kwargs):
         super(GeneralSearchForm, self).__init__(*args, **kwargs)
         self.fields['key'].widget.attrs.update({'class':'search-ke'})
         self.fields['in_category'].widget.attrs.update({'class': 'browser-default', 'id':'in_category_field'})
-
-    class Meta:
-        CHOICES = Category.objects.all()
 
         
 
@@ -49,7 +47,7 @@ class GeneralSearchForm(forms.Form):
             search = SubCategory.objects.filter(name__icontains=cleaned_key)
 
         if cleaned_key and cleaned_in_cat:
-            search = SubCategory.objects.filter(category__name=cleaned_in_cat, name__icontains=cleaned_key)
+            search = SubCategory.objects.filter(category__id=cleaned_in_cat, name__icontains=cleaned_key)
 
         return search
 
@@ -171,36 +169,37 @@ class AdvancedSearchForm(forms.Form):
     key = forms.CharField(max_length=200, required=False)
     max = forms.DecimalField(decimal_places=2, max_digits=8, required=False)
     min = forms.DecimalField(decimal_places=2, max_digits=8, required=False)
-    search=None
+
 
 
     def search(self):
         cleaned_key = self.cleaned_data.get('key')
         cleaned_max = self.cleaned_data.get('max')
         cleaned_min = self.cleaned_data.get('min')
-        current_price = AuctionEvent.get_current_price
+        # current_price = AuctionEvent.get_current_price
+        search_r=None
 
         if cleaned_key:
-            search = AuctionEvent.objects.filter(item__icontains=cleaned_key)
+            search_r = AuctionEvent.objects.filter(item__icontains=cleaned_key)
 
-        elif max:
-            search = AuctionEvent.objects.filter(current_price__lte=max)
+        elif cleaned_max:
+            search_r = AuctionEvent.objects.filter(current_price__lte=cleaned_max)
 
-        elif min:
-            search = AuctionEvent.objects.filter(current_price__gte=min)
+        elif cleaned_min:
+            search_r = AuctionEvent.objects.filter(current_price__gte=cleaned_min)
 
-        elif max and min:
-             search = AuctionEvent.objects.filter(current_price__gte=min, current_price__lte=max)
+        elif cleaned_max and cleaned_min:
+             search_r = AuctionEvent.objects.filter(current_price__gte=cleaned_min, current_price__lte=cleaned_max)
 
-        elif cleaned_key and  min:
-             search = AuctionEvent.objects.filter(current_price__gte=min, item__icontains=cleaned_key )
+        elif cleaned_key and  cleaned_min:
+             search_r = AuctionEvent.objects.filter(current_price__gte=cleaned_max, item__icontains=cleaned_key )
 
-        elif cleaned_key and max:
-            search = AuctionEvent.objects.filter(current_price__lte=max, item__icontains=cleaned_key)
+        elif cleaned_key and cleaned_max:
+            search_r = AuctionEvent.objects.filter(current_price__lte=cleaned_max, item__icontains=cleaned_key)
 
-        elif cleaned_key and max and min:
-            search = AuctionEvent.objects.filter(current_price__gte=min, current_price__lte=max, item__icontains=cleaned_key )
-        return search
+        elif cleaned_key and cleaned_max and cleaned_min:
+            search_r = AuctionEvent.objects.filter(current_price__gte=cleaned_min, current_price__lte=cleaned_max, item__icontains=cleaned_key )
+        return search_r
 
     def __init__(self, *args, **kwargs):
         super(AdvancedSearchForm, self).__init__(*args, **kwargs)

@@ -175,11 +175,15 @@
                    {% search_form %}
                </div>
 
-               <div class="col-xs-2 col-sm-2 col-md-2 search-icon text-center" style="background: black">
-                   <span class="glyphicon glyphicon-search"></span>
+               <div class="col-xs-2 col-sm-2 col-md-2 search-icon text-center">
+                   <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
                </div>
 
            </div>
+
+           <!--<h4>Welcome</h4>-->
+
+
        </div>
        <div class="col-sm-1 col-md-1">
 
@@ -188,7 +192,10 @@
 </div>
 
 
-       {% block content %}{% endblock %}
+
+       {% block content %}
+
+        {% endblock %}
 
    <footer class="container-fluid text-center">
 
