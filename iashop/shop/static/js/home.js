@@ -180,7 +180,7 @@ var x = setInterval(function(){
         var dates = $(this).data('action')
         var converted = parseInt(dates)
         var newDate = new Date(converted)
-        distance = newDate - now
+        var distance = newDate - now
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -189,7 +189,23 @@ var x = setInterval(function(){
         $(this).find(".hours").text(hours)
         $(this).find(".minutes").text(minutes)
         $(this).find(".seconds").text(seconds)
+
+
+        if (distance < 0){
+            $(this).find(".days").text(0)
+            $(this).find(".hours").text(0)
+            $(this).find(".minutes").text(0)
+            $(this).find(".seconds").text(0)
+        }
+        //if (distance < 0){
+        //    //clearInterval(x);
+        //    (this).find("time-info").text("Finished")
+        //}
+
+
     })
+
+
 
 
 

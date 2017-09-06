@@ -19,17 +19,38 @@
               <li>
                 <a href="{% url 'auctions:list' %}">auctions</a>
               </li>
+
+              {% if g_search != None or search != None %}
+                    <li>
+                        <a href="#">Search</a>
+                    </li>
+                    {% if g_search %}
+                        <li>
+                            <a href="#"  style="font-weight: 800">{{g_search.count}} items were found matching yoir query</a>
+                        </li>
+                    {% elif search %}
+                        <li>
+                            <a href="#"  style="font-weight: 800">{{search.count}} items were found ms were found matching yoir query</a>
+                        </li>
+                    {% endif %}
+              {% endif %}
+
+              {% if g_search.count == 0 or search.count == 0%}
+                    <li>
+                         <a href="{% url 'auctions:list' %}" style="font-weight: 800">0 items were found matching your query</a>
+                    </li>
+              {% endif %}
     </ul>
 
     <div class="row main-product-list-row">
         <div class="col-xs-12 col-md-3 advanced-search">
             <ul class="list=group">
-                <li class="list-group-item advanced-search-form" style="background: #4267b2">ADVANCED SEARCH</li>
+                <li class="list-group-item advanced-search-form" style="background: #1F0101; opacity: 0.9">ADVANCED SEARCH</li>
                 <li class="list-group-item">
                     <form method="get" >
                         {% csrf_token %}
                         {% form form=search_form %}{% endform %}
-                        <button type="button" class="btn btn-primary" id="advanced-search-submit">SEARCH</button>
+                        <button type="submit" class="btn btn-primary" id="advanced-search-submit" name="sub_search", value="submit2">SEARCH</button>
 
                     </form>
                 </li>
@@ -51,57 +72,31 @@
         </div>
 
         <div class="col-xs-12 col-md-9 product-container">
-            {{search}}
             <div class="well well-sm text-right">
                 <strong>Display</strong>
                 <div class="btn-group">
-                     <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
-                        </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th"></span>Grid</a>
+                     <a href="#" id="list" class="btn btn-default btn-sm">
+                         <span class="glyphicon glyphicon-th-list"></span>List
+                     </a>
+                    <a href="#" id="grid" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-th"></span>Grid
+                    </a>
                 </div>
             </div>
 
-            <div id="products" class="row list-group">
-                {% for auction in auctions %}
-                    <div class="item  col-xs-12 col-md-3 product-item-container">
-                        <div class="thumbnail" >
-                            {% if auction.image %}
-                                <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{{ auction.image.url }}" alt="" /></a>
-                            {% else %}
-                                <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" />
-                            {% endif %}
-                            <div class="caption">
-                                 <a hre="#" class="watch-auction"><span class="glyphicon glyphicon-eye-open "></span></a>
-                                <h4 class="group inner list-group-item-heading">{{ auction.item }}</h4>
-                                <p class="group inner list-group-item-text"></p>
-                                <div class="row">
-                                    <div class="col-xs-12 col-md-12 text-center lead-container">
-                                        <p class="lead">N{{ auction.get_current_price }}</p>
-                                    </div>
-                                    <!--<div class="col-xs-12 col-md-6">-->
-                                        <!--<a class="btn btn-flat" href="http://www.jquery2dotnet.com">BID</a>-->
-                                    <!--</div>-->
-                                </div> <!-- end of row class for price and bid -->
-                                <div class="row myClock" style="margin-top: -49px" data-action='{{ auction.end_time|to_json }}'>
-                                    <div class="row">
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 hours"></div>
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 minutes"></div>
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 seconds"></div>
-                                    </div>
+            <!--Call the template tage here to render items -->
+            {% if g_search  %}
+                {% product_list g_search %}
+            {% elif search  %}
+                {% product_list search %}
+            {% elif auctions %}
+                {% product_list auctions %}
+            {% endif %}
 
-                                    <div class="row">
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Days</div>
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Hours</div>
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Minutes</div>
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
-                                    </div> <!-- counter text ends here -->
-                                </div>
-                            </div>  <!-- end of caption -->
-                        </div> <!-- end of thumbnail -->
-                    </div> <!-- end of column -->
 
-                {% endfor %}
-            </div>
+
+
+
 
         </div> <!-- end of col-sm-8 -->
     </div>

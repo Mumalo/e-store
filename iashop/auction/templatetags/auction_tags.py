@@ -17,7 +17,7 @@ def to_json(t):
         return 'Wrong format'
 
 
-@register.inclusion_tag(file_name="auction/search.html", takes_context=True)
+@register.inclusion_tag(file_name="auction/tags/search.html", takes_context=True)
 def search_form(context):
     # request = context["request"]
     form = GeneralSearchForm()
@@ -28,12 +28,18 @@ def search_form(context):
     #
     #     if form.is_valid():
     #         search = form.search()
-    #         cat = form.search()
     # else:
     #     form = GeneralSearchForm()
     #     search = None
     #     cat = None
     return {'form':form}
+
+@register.inclusion_tag(file_name='auction/tags/product_list.html')
+
+def product_list(items):
+
+    if items is not None:
+        return {'items':items}
 
 # @register.assignment_tag(takes_context=True)
 # def search_results(context):

@@ -27,27 +27,30 @@ class EmailPostForm(forms.Form):
         )
 
 class GeneralSearchForm(forms.Form):
-    CHOICES = ((c.id, str(c.name)) for c in Category.objects.all())
-    key = forms.CharField(required=False, max_length=240)
+    first_choice = ('All','All')
+    CHOICES = [(c.id, str(c.name)) for c in Category.objects.all()]
+    CHOICES.insert(0, (None, 'All'))
+    s_key = forms.CharField(required=False, max_length=240)
     in_category = forms.ChoiceField(required=False, choices=CHOICES)
 
     def __init__(self, *args, **kwargs):
         super(GeneralSearchForm, self).__init__(*args, **kwargs)
-        self.fields['key'].widget.attrs.update({'class':'search-ke'})
+        self.fields['s_key'].widget.attrs.update({'class':'search-key'})
         self.fields['in_category'].widget.attrs.update({'class': 'browser-default', 'id':'in_category_field'})
 
         
 
     def search(self):
-        cleaned_key = self.cleaned_data.get('key')
+        cleaned_key = self.cleaned_data.get('s_key')
         cleaned_in_cat = self.cleaned_data.get('in_category')
         search = None
 
-        if cleaned_key:
-            search = SubCategory.objects.filter(name__icontains=cleaned_key)
+        if cleaned_key and not cleaned_in_cat:
+            search = AuctionEvent.objects.filter(item__icontains=cleaned_key)
+            # search = 'Me'
 
         if cleaned_key and cleaned_in_cat:
-            search = SubCategory.objects.filter(category__id=cleaned_in_cat, name__icontains=cleaned_key)
+            search = AuctionEvent.objects.filter(category__id=cleaned_in_cat, item__icontains=cleaned_key)
 
         return search
 

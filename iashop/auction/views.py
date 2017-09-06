@@ -58,12 +58,7 @@ def select_by_category(request):
 def home(request):
     return render(request, 'home.html')
 
-# def custom_processor(request):
-#     main_search_form = GeneralSearchForm()
-#     return {
-#         'app': 'auction',
-#         'main_search_form':main_search_form
-#     }
+
 
 
 def all_categories(request):
@@ -123,28 +118,44 @@ def add_new_auction(request):
 
 # ajax view to select by category
 
+def custom_processor(request):
+    auctions  = AuctionEvent.objects.filter(available=True)
+    search_form = AdvancedSearchForm()
+    # main_search_form = GeneralSearchForm()
+    return {
+        'app': 'auction',
+        'search_form':search_form,
+        'auctions':auctions,
+    }
 
 
 def auction_list(request):
     categories = Category.objects.all()
     # Edit this line of code later
-    auctions  = AuctionEvent.objects.filter(available=True)
+
     # match = None
 
-    if request.method == 'GET':
+    if "g_search" in request.GET or "sub_search" in request.GET:
+        general_search = GeneralSearchForm(data=request.GET)
         search_form = AdvancedSearchForm(data=request.GET)
-        # general_search = GeneralSearchForm(data=request.GET)
+
+        if general_search.is_valid():
+
+            g_search = general_search.search()
+            cat = general_search.category()
+            return render_to_response('auction/list.html', {'g_search':g_search}, context_instance=RequestContext(request, processors=[custom_processor]))
+
+
         if search_form.is_valid():
-            pass
+            search = search_form.search()
+            return render_to_response('auction/list.html', {'search':search}, context_instance=RequestContext(request, processors=[custom_processor]))
+
 
     else:
-        search_form = AdvancedSearchForm()
-        general_search = GeneralSearchForm()
-
-
-
-    return render(request, 'auction/list.html',
-                  {'auctions': auctions, 'search_form': search_form,  'category': categories, })
+        g_search = None
+        search = None
+        cat = None
+    return render_to_response('auction/list.html', context_instance=RequestContext(request, processors=[custom_processor]))
 
 @login_required
 def edit_auction(request, auction_id):
