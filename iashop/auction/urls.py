@@ -16,6 +16,8 @@ urlpatterns = [
      url(r'^subcats-cats/$', views.sub_cats_for_cats, name='subcats-for-cats'),
      url(r'^auction/(?P<auction_id>[0-9]+)/bid/$', views.auction_detail, name='bid'),
      url(r'^auction/(?P<auction_id>[0-9]+)/edit/$', views.edit_auction, name='edit_auction'),
+
+
      url(r'^budget/create/$', views.create_budget_plan, name='budget'),
      url(r'^advert/create/$', views.create_advert, name='advert'),
 

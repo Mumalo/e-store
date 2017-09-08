@@ -141,6 +141,35 @@ def ended_auctions(user=None):
 #     category = request.POST.get('category')
 #     return {'category': category}
 
+@register.assignment_tag()
+
+def wond_bids(user=None):
+
+    bids = {}
+    won = [1233]
+    lost = []
+
+
+
+    if user is not None:
+        auctions = AuctionEvent.objects.filter(available=True)
+        bidders = [ bid.bidder for bid in Bid.objects.filter(bidder=user)]
+
+        for a in auctions:
+            if a.winner == user and user in bids:
+                won.append(a)
+                bids['won'] = won
+            elif a.has_ended() and a.winner != user and user in bidders:
+                lost.append(a)
+                bids['lost'] = lost
+    return bids
+
+
+
+
+
+
+
 
 
 

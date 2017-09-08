@@ -315,6 +315,55 @@
                         }
                     );
 
+//                    End of hover display function
+
+                    $('.follow-button').click(function(e){
+                        e.preventDefault
+                        var id = $(this).data('id')
+//                        alert(id)
+//                        alert($(this).data('action'))
+                        $.post('{% url "accounts:follow" %}',
+                                {
+                                    id: $(this).data('id'),
+                                    action:$(this).data('action')
+
+                                },
+
+                                function(data){
+//                                    alert(data['status'])
+                                    if (data['status'] == 'ok'){
+                                        var prev_action = $('.follow-button').data('action');
+
+//                                        toggle action
+
+                                        $('.follow-button').data('action',
+                                        prev_action == 'follow' ? 'unfollow': 'follow')
+
+//                                        Toggle the link text
+                                        $('.follow-button').text(
+                                                prev_action == 'follow' ? 'Unfollow': 'Follow'
+                                        )
+
+//                                        Update total followers
+
+                                        var prev_followers = parseInt($('.followers-count .total-followers').text());
+                                            $('.followers-count .total-followers').text(prev_action == 'follow' ?
+                                            prev_followers + 1: prev_followers -1);
+                                    }
+                                }
+                        )
+                    })
+
+//                    Initialize the modal plugin
+                     $('.modal').modal({
+                            dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                            opacity: .5, // Opacity of modal background
+                            inDuration: 400, // Transition in duration
+                            outDuration: 400, // Transition out duration
+                            startingTop: '4%', // Starting top style attribute
+                            endingTop: '10%',
+                     });
+
                     function getCookie(name) {
                         var cookieValue = null;
                         var i = 0;

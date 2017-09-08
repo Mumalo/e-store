@@ -8,11 +8,32 @@
 
 {% block content %}
 
-<div class="container-fluid left-sidebar">
+<div class="container-fluid">
     <div class="row">
         <div class="col-xs-12 col-md-4 col-lg-4 jumbotron" style="margin-left: 13px; padding-left: 19px; !important; width: 403px">
             <!--display the profile picture-->
             <div class="row">
+                {% with total_followers=user.followers.count %}
+                    <div class="row follow-user-container text-center" >
+                        <div class="col-xs-9 col-sm-9 col-md-9">
+                            <a class=" btn btn-small " style="margin-right: 15px !important;">
+                                <span class="followers-count">
+                                    <span class="total-followers">{{ total_followers }}</span>
+                                    follower{{ total_followers|pluralize }}
+                                </span>
+                            </a>
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3">
+                            <a class="btn-flat btn-small follow-button" data-id="{{ user.id }}" data-action="{% if request.user in user.followers.all %}unfollow{% else %}follow{% endif %}">
+                                {% if request.user not in user.followers.all %}
+                                    Follow
+                                {% else %}
+                                    Unfollow
+                                {% endif %}
+                            </a>
+                        </div>
+                    </div>
+                {% endwith %}
                 <div class="col-xs-12 col-md-10 profile-image-cover text-center">
                         {% if user.profile.photo %}
                             <a href="#"><img src="{{ user.profile.photo.url }}" class="inner img-responsive img-thumbnail"></a>
@@ -21,11 +42,11 @@
                         {% endif %}
 
                     <div class="col-md-2"></div>
-
                 </div>
+
             </div> <!-- end of profile image row -->
             <div class="container" style="padding-left: 5px">
-                 <h5 style="padding-left: 45px">{{ request.user.username }}</h5>
+                 <h5 style="padding-left: 5px; font-size: 12px">{{ user.username }}, {{ user.email }}</h5>
                 <!--if the user is not the owner of this profile dont see the buttons below-->
                 {% if request.user.id == user.id %}
                         <div class="row">
@@ -51,11 +72,11 @@
                 </div>
 
                 <div class="panel-body">
-                   <a href="#">Won Bids <span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
+                   <a href="#modal1" class="waves-effect waves-light modal-trigger">Won Bids <span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
                 </div>
 
                 <div class="panel-body">
-                    <a href="#">Lost Bids <span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
+                    <a  href="#modal2" class="waves-effect waves-light modal-trigger">Lost Bids <span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
                 </div>
 
                 <div class="panel-body">
@@ -81,22 +102,90 @@
         </div>  <!-- end of left side bar -->
         <!--Right side bar-->
         <div class="col-xs-12 col-md-6 col-lg-6 ">
+                <!--Modal1 contents here -->
+             <div class="modal modal-fixed-footer" id="modal1">
+                    <div class="modal-content">
+                        <h4 class="text-center">Won Bids</h4>
+                        {% wond_bids user as won_bids %}
+                        {% if bids.won %}
+                            <ul class="collection">
+                            {% for item in bids.won %}
+                                <li class="collection-item avatar">
+                                    <img class="circle" src="{{ item.image.url }}" alt="">
+                                    <span class="title">{{ item }}</span>
+                                    <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p><br />
+                                    <a href="#" class="secondary-content">
+                                        <i class="material-icons">grade</i>
+                                    </a>
+
+                                </li>
+
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                            <div class="text-center">
+                                You have not won any bid yet
+                                <a href="{% url 'auctions:list' %}">start bidding here</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer" >
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                    </div>
+                </div>
+            <!--Modal1 ends here -->
+
+               <!--Modal2 contents here -->
+             <div class="modal modal-fixed-footer" id="modal2">
+                    <div class="modal-content">
+                        <h4 class="text-center">Lost</h4>
+                        {% wond_bids user as bids %}
+                        {% if bids.lost %}
+                        <ul class="collection">
+                            {% for item in bids.lost %}
+                                <li class="collection-item avatar">
+                                    <img class="circle" src="{{ item.image.url }}" alt="">
+                                    <span class="title">{{ item }}</span>
+                                    <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p><br />
+                                    <a href="#" class="secondary-content">
+                                        <i class="material-icons">grade</i>
+                                    </a>
+
+                                </li>
+
+                            {% endfor %}
+                        </ul>
+
+                        {% else %}
+                            <div class="text-center">
+                                You have not lost any bid yet
+                                <a href="{% url 'auctions:list' %}">start bidding here</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer" >
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                    </div>
+                </div>
+            <!--Modal2 ends here -->
+
             <div class="jumbotron" style="padding-top: 3px; padding-left: 3px; padding-right: 10px; padding-bottom: 18px">
+
                 <h6 class="text-center" style="font: 18px bold">Bio</h6>
                 <div class="container right-sidebar" style="width: 100%; height: 80%">
-                      {{ request.user.bio }}
-                    <p>In one of his articles,
-                        Jakob Nielsen writes about command links,
-                        which are a blend of links and buttons.
-                        But he recommended that command links be
-                        limited to actions with minor consequences and to
-                        secondary commands. To learn more about primary and secondary
-                        commands (and actions), check out Primary and Secondary Actions
-                        in Web Forms by Luke Wroblewski. To learn </p>
+                      {{ user.bio }}
+                    <!--<p>In one of his articles,-->
+                        <!--Jakob Nielsen writes about command links,-->
+                        <!--which are a blend of links and buttons.-->
+                        <!--But he recommended that command links be-->
+                        <!--limited to actions with minor consequences and to-->
+                        <!--secondary commands. To learn more about primary and secondary-->
+                        <!--commands (and actions), check out Primary and Secondary Actions-->
+                        <!--in Web Forms by Luke Wroblewski. To learn </p>-->
                 </div>
             </div>
             <!--Row starts here -->
-            <div class="row">
+            <div class="row" style="margin-left: -13px !important; margin-right: -13px !important;">
                 <div class="col-xs-12 col-md-12">
                     <ul class="nav nav-pills nav-justified">
                         <li><a href="#live" data-toggle="pill" class="active">Live Auctions</a></li>
@@ -105,7 +194,7 @@
                         <li><a href="#ending-soon" data-toggle="pill">Ending Soon</a></li>
                     </ul>
 
-                    <div class="tab-content" style="padding: 10px">
+                    <div class="tab-content left-sidebar" style="padding: 10px">
                         <div id="live" class="tab-pane fade in active">
                             <!--Display Live auctions here -->
                                 <div id="products" class="row list-group user-auctions">

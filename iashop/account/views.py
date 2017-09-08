@@ -123,6 +123,7 @@ def user_detail(request, pk):
     user = get_object_or_404(User, pk=pk)
     nfs = user.notifications.unread()
 
+
     if user.is_authenticated and user.is_active:
         return render(request, 'account/user_home.html', {
         'user': user, 'nfs':nfs
@@ -139,28 +140,29 @@ def user_detail(request, pk):
 @login_required
 @require_POST
 def user_follow(request):
-    # user_id = request.POST.get('id')
-    # action = request.POST.get('action')
-    # some = {'yeah': 'me'}
+    user_id = request.POST.get('id')
+    action = request.POST.get('action')
 
-    # if user_id and action:
-    #     try:
-    #         user = User.objects.get(id=user_id)
-    #
-    #         if action == 'follow':
-    #             Follow.objects.get_or_create(
-    #                 user_followed=user,
-    #                 user_following=request.user
-    #             )
-    #
-    #         else:
-    #             Follow.objects.filter(
-    #                 user_followed=user,
-    #                 user_following=request.user
-    #             ).delete()
-    #         return JsonResponse({'status': 'ok'})
-    #     except user.DoesNotExist:
-    #         return JsonResponse({'status':'ko'})
+
+    if user_id and action:
+
+        try:
+            user = User.objects.get(id=user_id)
+
+            if action == 'follow':
+                Follow.objects.get_or_create(
+                    user_followed=user,
+                    user_following=request.user
+                )
+
+            else:
+                Follow.objects.filter(
+                    user_followed=user,
+                    user_following=request.user
+                ).delete()
+            return JsonResponse({'status': 'ok'})
+        except user.DoesNotExist:
+            return JsonResponse({'status':'ko'})
     return JsonResponse({'status':'ko'})
 
 

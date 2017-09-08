@@ -123,42 +123,6 @@ $(document).ready(function(){
 
 
 
-//$(".follow").click(function(e){
-//    //alert("Hello")
-//    e.preventDefault()
-//     //alert($.post('{% url "user_follow" %}),
-//    $.post('{% url "follow" %}',
-//        {
-//            id: $(this).data('id'),
-//            action: $(this).data('action')
-//        },
-//        function(data){
-//            alert(data['status']=='ok')
-//        }
-//
-            //if (data['status']=='ok'){
-            //    var prev_action = $('.follow').data('action');
-            //
-            //    //toggle data action
-            //    $('.follow').data('action',
-            //    prev_action == 'follow' ? 'unfollow': 'follow');
-            //
-            //    //toggle text
-            //
-            //    $('.follow').text(
-            //        prev_action == 'follow' ? 'unfollow' : 'follow');
-            //
-            //    //update total followers
-            //
-            //    var previous_followers = parseInt(
-            //        $('span.count .total').text()
-            //    );
-            //    $('span.count .total').text(prev_action == 'follow' ?
-            //    previous_followers + 1 : previous_followers - 1);
-//            //}
-//        //}
-//    )
-//})
 
 
 //List and grid toggle function

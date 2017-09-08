@@ -18,9 +18,9 @@ from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail, BadHeaderError
 from  django.template import RequestContext
+from common.decorators import ajax_required
 
-
-
+@ajax_required
 def sub_cats_for_cats(request):
     data = request.POST.get('cat')
     new_data = None
@@ -38,6 +38,8 @@ def sub_cats_for_cats(request):
 
     return JsonResponse(items, safe=False)
 
+@ajax_required
+@login_required
 def select_by_category(request):
     submitted_cat = request.POST.get('category')
     result_set = []

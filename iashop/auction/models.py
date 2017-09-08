@@ -152,7 +152,7 @@ class AuctionEvent(BaseModel):
             elif count == 1:
                 return bids[0].bidder
             else:
-                winner = bids.order_by('-amount')[0].bidder
+                return bids.order_by('-amount')[0].bidder
         else:
             return "No Winner yet"
 
