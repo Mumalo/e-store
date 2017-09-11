@@ -118,6 +118,8 @@ class AuctionEvent(BaseModel):
         current_time = arrow.utcnow()
         return  current_time > self.end_time
 
+
+
     def is_running(self):
         return self.has_started() and not self.has_ended()
 
@@ -160,8 +162,11 @@ class AuctionEvent(BaseModel):
     def __str__(self):
         return self.item
 
+class WatchList(BaseModel):
 
-
+    creator = models.ForeignKey(User,
+                                on_delete=models.CASCADE, null=True)
+    items = models.ManyToManyField(AuctionEvent)
 
 
 

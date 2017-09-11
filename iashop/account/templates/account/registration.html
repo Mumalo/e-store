@@ -15,8 +15,27 @@
                 {% csrf_token %}
                 {% form form=user %}{% endform %}
                 {% form form=profile %}{% endform %}
+                <p><a href="#tacs">terms and conditions</a></p>
                 <button type="submit" name="_submit" class="btn">Submit</button>
             </form>
+
+            <div class="modal modal-fixed-footer" id="tacs">
+                <div class="modal-content">
+                    <h4>Terms and Conditions</h4>
+
+                    <ul class="collection">
+                        <li class="collection-item">
+                            <!--Please Do not pay money to any seller untill you have recieved your item-->
+                        </li>
+
+                    </ul>
+                </div>
+
+               <div class="modal-footer" >
+                   <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+               </div>
+
+            </div>
 
         </div>
         <div class="col-sm-2">

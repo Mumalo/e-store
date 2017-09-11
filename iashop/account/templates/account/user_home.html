@@ -72,16 +72,13 @@
                 </div>
 
                 <div class="panel-body">
-                   <a href="#modal1" class="waves-effect waves-light modal-trigger">Won Bids <span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
+                   <a href="#won-bids" class="waves-effect waves-light modal-trigger">Won Bids <span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
                 </div>
 
                 <div class="panel-body">
-                    <a  href="#modal2" class="waves-effect waves-light modal-trigger">Lost Bids <span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
+                    <a  href="#lost-bids" class="waves-effect waves-light modal-trigger">Lost Bids <span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
                 </div>
 
-                <div class="panel-body">
-                   <a href="#">Watch List <span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
-                </div>
             </div> <!-- end of user-home-side-menu for bids -->
 
             <div class="panel panel-default user-home-side-menu">
@@ -91,11 +88,19 @@
                 </div>
 
                 <div class="panel-body">
-                   <a href="#">Scheduled Auctions <span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
+                   <a href="#all-auctions">All Auctions<span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
                 </div>
 
                 <div class="panel-body">
-                    <a href="#">Expired Auctions <span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
+                   <a href="#scheduled-auctions">Scheduled Auctions <span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
+                </div>
+
+                <div class="panel-body">
+                    <a href="#expired-auctions">Expired Auctions <span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
+                </div>
+
+                 <div class="panel-body">
+                   <a href="#watch-list">Watch List <span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
                 </div>
 
             </div> <!-- end of user-home-side-menu for auctions -->
@@ -103,7 +108,7 @@
         <!--Right side bar-->
         <div class="col-xs-12 col-md-6 col-lg-6 ">
                 <!--Modal1 contents here -->
-             <div class="modal modal-fixed-footer" id="modal1">
+             <div class="modal modal-fixed-footer" id="won-bids">
                     <div class="modal-content">
                         <h4 class="text-center">Won Bids</h4>
                         {% wond_bids user as won_bids %}
@@ -136,7 +141,7 @@
             <!--Modal1 ends here -->
 
                <!--Modal2 contents here -->
-             <div class="modal modal-fixed-footer" id="modal2">
+             <div class="modal modal-fixed-footer" id="lost-bids">
                     <div class="modal-content">
                         <h4 class="text-center">Lost</h4>
                         {% wond_bids user as bids %}
@@ -169,19 +174,146 @@
                 </div>
             <!--Modal2 ends here -->
 
+              <!--Modal3 contents here -->
+             <div class="modal modal-fixed-footer" id="watch-list">
+                    <div class="modal-content">
+                        <h4 class="text-center">Watch List</h4>
+                        <!--{% for i in list %}-->
+                            <!--{{i.product}}-->
+                        <!--{% endfor %}-->
+                        <!--{{list}}-->
+                        <ul class="collection">
+                                    {% for list in lists %}
+                                        {% for item in list.items.all %}
+                                            <div class="watch-list-content">
+                                                 <li class="collection-item avatar" id="{{item.id}}">
+                                                    <img class="circle" src="{{ item.image.url }}" alt="">
+                                                    <span class="title">{{ e}}</span>
+                                                    <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>
+                                                    <p class="title">current Bid at N {{ item.current_bid_at}}</p><br />
+                                                    <p><span class="watch-auction" data-action="unwatch" data-id="{{item.id}}">Unwatch</span></p>
+                                                    <a href="#" class="secondary-content">
+                                                        <i class="material-icons">grade</i>
+                                                    </a>
+
+                                                 </li>
+                                            </div>
+                                        {% endfor %}
+                                    {% endfor %}
+                            </ul>
+
+                    </div>
+                    <div class="modal-footer" >
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                    </div>
+                </div>
+            <!--Modal3 ends here -->
+
+             <!--Modal4 contents here -->
+             <div class="modal modal-fixed-footer" id="expired-auctions">
+                    <div class="modal-content">
+                        <h4 class="text-center">Expired Auctions</h4>
+                        <!--{% for i in list %}-->
+                            <!--{{i.product}}-->
+                        <!--{% endfor %}-->
+                        <!--{{list}}-->
+                        <ul class="collection">
+                                    {% for item in expired_auctions %}
+                                            <div class="watch-list-content">
+                                                 <li class="collection-item avatar">
+                                                    <img class="circle" src="{{ item.image.url }}" alt="">
+                                                    <span class="title">{{ e}}</span>
+                                                    <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>
+                                                    <p class="title">current Bid at N {{ item.current_bid_at}}</p><br />
+                                                    <a href="#" class="secondary-content">
+                                                        <i class="material-icons">create</i>
+                                                    </a>
+
+                                                 </li>
+                                            </div>
+                                    {% endfor %}
+                            </ul>
+
+                    </div>
+                    <div class="modal-footer" >
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                    </div>
+                </div>
+            <!--Modal4 ends here -->
+
+            <!--Modal5 contents here -->
+             <div class="modal modal-fixed-footer" id="scheduled-auctions">
+                    <div class="modal-content">
+                        <h4 class="text-center">Scheduled Auctions</h4>
+                        <!--{% for i in list %}-->
+                            <!--{{i.product}}-->
+                        <!--{% endfor %}-->
+                        <!--{{list}}-->
+                        <!--<ul class="collection">-->
+                                    <!--{% for item in all_auctions %}-->
+                                            <!--<div class="watch-list-content">-->
+                                                 <!--<li class="collection-item avatar">-->
+                                                    <!--<img class="circle" src="{{ item.image.url }}" alt="">-->
+                                                    <!--<span class="title">{{ e}}</span>-->
+                                                    <!--<p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>-->
+                                                    <!--<p class="title">current Bid at N {{ item.current_bid_at}}</p><br />-->
+                                                    <!--<a href="#" class="secondary-content">-->
+                                                        <!--<i class="material-icons">grade</i>-->
+                                                    <!--</a>-->
+
+                                                 <!--</li>-->
+                                            <!--</div>-->
+                                    <!--{% endfor %}-->
+                            <!--</ul>-->
+
+                    </div>
+                    <div class="modal-footer" >
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                    </div>
+                </div>
+            <!--Modal5 ends here -->
+
+            <!--Modal6 contents here -->
+             <div class="modal modal-fixed-footer" id="all-auctions">
+                    <div class="modal-content">
+                        <h4 class="text-center">All Auctions here</h4>
+                        <!--{% for i in list %}-->
+                            <!--{{i.product}}-->
+                        <!--{% endfor %}-->
+                        <!--{{list}}-->
+                        <ul class="collection">
+                                    {% for item in all_auctions %}
+                                            <div class="watch-list-content">
+                                                 <li class="collection-item avatar">
+                                                    <img class="circle" src="{{ item.image.url }}" alt="">
+                                                    <span class="title">{{ item }}</span>
+                                                    <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>
+                                                    <p class="title">current Bid at N {{ item.current_bid_at}}</p><br />
+                                                    <a href="#" class="secondary-content">
+                                                        <i class="material-icons">create</i>
+                                                    </a>
+
+                                                 </li>
+                                            </div>
+                                    {% endfor %}
+                            </ul>
+
+                    </div>
+                    <div class="modal-footer" >
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                    </div>
+                </div>
+            <!--Modal6 ends here -->
+
+
+
+
             <div class="jumbotron" style="padding-top: 3px; padding-left: 3px; padding-right: 10px; padding-bottom: 18px">
 
                 <h6 class="text-center" style="font: 18px bold">Bio</h6>
                 <div class="container right-sidebar" style="width: 100%; height: 80%">
                       {{ user.bio }}
-                    <!--<p>In one of his articles,-->
-                        <!--Jakob Nielsen writes about command links,-->
-                        <!--which are a blend of links and buttons.-->
-                        <!--But he recommended that command links be-->
-                        <!--limited to actions with minor consequences and to-->
-                        <!--secondary commands. To learn more about primary and secondary-->
-                        <!--commands (and actions), check out Primary and Secondary Actions-->
-                        <!--in Web Forms by Luke Wroblewski. To learn </p>-->
+
                 </div>
             </div>
             <!--Row starts here -->

@@ -4,8 +4,19 @@
 
 
 {% block content %}
+<!--{{c}}-->
+<!--{{ca}}-->
+<!--{{owner}}-->
+<!--{{list}}-->
+<!--{{pr}}-->
+<!--{{watch_list}}-->
+<!--{% for i in watch_list %}-->
+<!--{{i.creator}}-->
+<!--{% endfor %}-->
     <div id="products" class="row list-group">
+
                 {% for auction in items %}
+                {% if auction.available %}
                     <div class="item  col-xs-12 col-md-3 product-item-container">
                         <div class="thumbnail" >
                             {% if auction.image %}
@@ -14,12 +25,22 @@
                                 <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" />
                             {% endif %}
                             <div class="caption">
-                                 <a hre="#" class="watch-auction"><span class="glyphicon glyphicon-eye-open "></span></a>
+                                 <a hre="#" class="watch-auction" data-action="{%  if auction in watch_list and request.user in owner %}unwatch{% else %}watch{% endif %}" data-id="{{auction.id}}" id="{{auction.id}}">
+                                     <span>
+                                         {% if auction in watch_list and request.user in owner %}
+                                            Unwatch
+                                         {% else %}
+                                            Watch
+                                         {% endif %}
+                                     </span>
+                                     <!--<span class="glyphicon glyphicon-eye-open "></span>-->
+                                 </a>
                                 <h4 class="group inner list-group-item-heading">{{ auction.item }}</h4>
                                 <p class="group inner list-group-item-text"></p>
                                 <div class="row">
                                     <div class="col-xs-12 col-md-12 text-center lead-container">
-                                        <p class="lead">N{{ auction.get_current_price }}</p>
+                                        <p class="lead">N{{ auction.get_current_price }} {{auction.available}}</p>
+
                                     </div>
                                     <!--<div class="col-xs-12 col-md-6">-->
                                         <!--<a class="btn btn-flat" href="http://www.jquery2dotnet.com">BID</a>-->
@@ -43,7 +64,7 @@
                             </div>  <!-- end of caption -->
                         </div> <!-- end of thumbnail -->
                     </div> <!-- end of column -->
-
+                {% endif %}
                 {% endfor %}
             </div>
             <!--End of products -->

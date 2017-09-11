@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  Category, AuctionEvent, Bid, SubCategory
+from .models import  Category, AuctionEvent, Bid, SubCategory, WatchList
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['id','name', 'image','description', 'slug']
@@ -17,10 +17,16 @@ class SubCategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
+class WatchListAdmin(admin.ModelAdmin):
+    list_display = [ 'id', 'creator']
+    # prepopulated_fields = {'slug': ('name',)}
+
+
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(AuctionEvent, AuctionAdmin)
 admin.site.register(Bid, BidAdmin)
 admin.site.register(SubCategory, SubCategoryAdmin)
+admin.site.register(WatchList, WatchListAdmin)
 
 
 

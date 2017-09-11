@@ -35,7 +35,8 @@ class UserForm(ModelForm):
 
 
     def __init__(self, *args, **kwargs):
-
+        super(UserForm, self).__init__(*args, **kwargs)
+        self.fields['password2'].label = 'Repeat Password'
         self.layout = Layout(
                     Fieldset('Account Info',
                         'username', 'email',
@@ -46,7 +47,8 @@ class UserForm(ModelForm):
                              )
         )
 
-        super(UserForm, self).__init__(*args, **kwargs)
+
+
 
 
 
@@ -81,15 +83,23 @@ class ProfileForm(ModelForm):
         self.layout = Layout(
            Fieldset('',
                     'institution',
-                    'gender'),
+                    'gender',
+                    'agree_to_terms'),
         )
         super(ProfileForm, self).__init__(*args, **kwargs)
+
+     def clean_agree_to_terms(self):
+
+         if self.cleaned_data.get('agree_to_terms') is False:
+             raise ValidationError('Click to agree to terms and conditions')
+
+
 
 
 
      class Meta:
          model = Profile
-         fields = ('institution', 'gender')
+         fields = ('institution', 'gender','agree_to_terms')
 
 
 

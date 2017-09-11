@@ -420,7 +420,7 @@ body {
     box-shadow: none;
     margin-top: 50px;
     width: 200px !important;
-    background: #f0f0f0 !important;
+    background: #D7D9C3 !important;
     border: 1px solid #ccc;
 
 }
@@ -431,14 +431,14 @@ body {
     margin-top: 50px;
     width: 380px !important;
     background: #f0f0f0 !important;
-    border: 1px solid #ccc;
+    border: 1px solid #fff;
  }
 
 
 
 
 #dropdown1>li>a{
-    color:#428bca;
+    color: #333 !important;
 }
 
 #dropdown1>li>a:hover{
@@ -1029,14 +1029,26 @@ a:hover {
 
     position: relative;
     top: -200px;
-    left: 180px;
+    left: 140px;
     z-index: 5;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 900;
+    color: #F1DAA5 !important;
+    background: #1F0101;
+    opacity: 0.8;
+    padding: 5px;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+.collection .watch-auction{
+    position: static !important;
 }
 
 .watch-auction:hover{
     cursor: pointer;
+    color: #F1DAA5;
+    background: #1F0101;
 
 }
 

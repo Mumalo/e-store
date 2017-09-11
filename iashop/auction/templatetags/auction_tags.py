@@ -1,11 +1,12 @@
 import datetime, time
 import arrow
 from django import template
-from ..models import AuctionEvent, Bid, Category, SubCategory
+from ..models import AuctionEvent, Bid, Category, SubCategory, WatchList
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import Context
+# from cart.cart import Cart
 from ..forms import GeneralSearchForm
 register = template.Library()
 
@@ -34,12 +35,27 @@ def search_form(context):
     #     cat = None
     return {'form':form}
 
-@register.inclusion_tag(file_name='auction/tags/product_list.html')
+@register.inclusion_tag(file_name='auction/tags/product_list.html', takes_context=True)
 
-def product_list(items):
+def product_list(context, items):
 
     if items is not None:
-        return {'items':items}
+        request = context["request"]
+        lists = WatchList.objects.filter(creator=request.user)
+        watch_list = []
+
+        for l in lists:
+            for item in l.items.all():
+                watch_list.append(item)
+
+        list_owner = [w.creator for w in lists][:1]
+
+
+
+
+        # watching = cart.watching()
+
+        return {'request':request,'items':items, 'list':list, 'owner':list_owner, 'watch_list':watch_list}
 
 # @register.assignment_tag(takes_context=True)
 # def search_results(context):
@@ -146,7 +162,7 @@ def ended_auctions(user=None):
 def wond_bids(user=None):
 
     bids = {}
-    won = [1233]
+    won = []
     lost = []
 
 

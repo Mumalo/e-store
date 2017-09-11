@@ -27,6 +27,7 @@ class Profile(models.Model):
     phone = models.CharField(max_length=25, null=True, blank=True, default='00000000')
     institution = models.ForeignKey(Institution,
                                     on_delete=models.CASCADE, null=True)
+    agree_to_terms = models.BooleanField(blank=False)
 
     gender = models.CharField(choices=USER_GENDER_CHOICES, max_length=10, null=True)
     bio = models.TextField(default='', blank=True)

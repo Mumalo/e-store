@@ -22,6 +22,7 @@ urlpatterns = [
      url(r'^chaining/', include('smart_selects.urls')),
     url(r'', include('auction.urls', namespace='auctions')),
     url(r'', include('account.urls', namespace='accounts')),
+    url(r'', include('cart.urls', namespace='shopping-cart')),
     url('^inbox/notifications/', include('notifications.urls', namespace='notifications')),
 ]
 

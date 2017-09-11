@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     'account',
     'base',
     'auction',
+    'cart',
     # 'selectable',
     # 'selectable_select2',
     # 'notify',
@@ -98,6 +99,7 @@ TEMPLATES = [
 # TEMPLATE_CONTEXT_PROCESSORS += ("django.core.context_processors.request",)
 
 CATEGORY_SESSION_ID = 'c_name'
+CART_SESSION_ID = 'cart'
 
 
 USE_DJANGO_JQUERY = True

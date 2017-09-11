@@ -126,8 +126,8 @@
                      <li><a href="{% url 'auctions:add_new_auction' %}" class="text">Add new auction<span class=""></span></a></li>
                      <!--<li class="ad"><a href="#"><button type="button" class="btn btn-primary btn-xs" href="#"  id="post-ad">Post Ad</button></a></li>-->
                {% else %}
-                    <li><a href="{% url 'accounts:register' %}" class="text"><span class="glyphicon glyphicon-user"></span>Register</a></li>
-                    <li><a href="{% url 'accounts:login' %}" class="profile-dropdown-li text"><span class="glyphicon glyphicon-log-in pull-right">Login</span></a>
+                    <li><a href="{% url 'accounts:register' %}" class="text"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                    <li><a href="{% url 'accounts:login' %}" class="text"><span class="glyphicon glyphicon-log-in pull-right"> Login</span></a>
                {% endif %}
                <!--<li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span>Shop</a></li>-->
              {% if request.user.is_authenticated %}
@@ -144,7 +144,7 @@
                     </a>
 
                      <ul id="dropdown1" class="dropdown-content">
-                            <li><a href="{{ user.get_absolute_url }}" class="profile-dropdown-li">User<span class="glyphicon glyphicon-user pull-right"></span></a></li>
+                            <li><a href="{{ user.get_absolute_url }}" class="profile-dropdown-li">User<span class="pull-right"><img src="{{request.user.profile.photo.url}}" class="img-responsive img-circle" style="width: 26px; height: 26px"></span></a></li>
                             <li><a href="{% url 'accounts:edit' request.user.pk %}" class="profile-dropdown-li">Profile settings<span class="glyphicon glyphicon-cog pull-right"></span></a></li>
                             <li><a href="{% url 'accounts:logout' %}" class="profile-dropdown-li"><span class="glyphicon glyphicon-log-out pull-right"></span>Logout</a></li>
                             <li><a href="#!" class="profile-dropdown-li">Items<span class="badge pull-right" style="color: #EDF3FE">{% total_auctions request.user %}</span></a></li>
@@ -319,9 +319,7 @@
 
                     $('.follow-button').click(function(e){
                         e.preventDefault
-                        var id = $(this).data('id')
-//                        alert(id)
-//                        alert($(this).data('action'))
+
                         $.post('{% url "accounts:follow" %}',
                                 {
                                     id: $(this).data('id'),
@@ -336,7 +334,7 @@
 
 //                                        toggle action
 
-                                        $('.follow-button').data('action',
+                                        $(".follow-button").data('action',
                                         prev_action == 'follow' ? 'unfollow': 'follow')
 
 //                                        Toggle the link text
@@ -353,6 +351,52 @@
                                 }
                         )
                     })
+
+//                    Watch auction function
+
+
+                    $('.watch-auction').click(function(e){
+                        e.preventDefault
+//                            alert($(this).data('id'))
+//                        alert($(this).find('.action').text())
+                        $.post('{% url "shopping-cart:watch" %}',
+                                {
+                                    id: $(this).data('id'),
+                                    action: $(this).data('action')
+                                },
+                                function(data){
+//                                    alert("I am working")
+//                                    alert($(this).attr('class'))
+
+//
+                                        if (data['status'] == 'ok'){
+                                            id = String(data['id'])
+//                                            alert(id)
+//                                            Toggle the data
+                                           var  prev_action = $('#' +id).data('action')
+//                                            alert(prev_action)
+//                                            alert(id)
+
+                                            $('#' +id).data('action',
+                                            prev_action == 'watch' ? 'unwatch' : 'watch')
+
+//                                            Toggle the text
+
+                                            $('#' +id).text(
+                                                    prev_action == 'watch' ? 'Unwatch': 'Watch'
+                                            )
+
+
+
+                                        }
+                                }
+                        )
+                        id = $(this).data('id')
+                        $('.watch-list-content').find("#" +id).fadeOut(1000)
+                    }
+                    )
+
+
 
 //                    Initialize the modal plugin
                      $('.modal').modal({

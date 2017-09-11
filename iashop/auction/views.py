@@ -121,9 +121,15 @@ def add_new_auction(request):
 # ajax view to select by category
 
 def custom_processor(request):
-    auctions  = AuctionEvent.objects.filter(available=True)
+    auctions  = AuctionEvent.objects.all()
+
+    for auction in auctions:
+        if auction.has_ended():
+            auction.available = False
+            auction.save()
     search_form = AdvancedSearchForm()
-    # main_search_form = GeneralSearchForm()
+    # available_auctions = AuctionEvent.objects.filter(available=True)
+
     return {
         'app': 'auction',
         'search_form':search_form,

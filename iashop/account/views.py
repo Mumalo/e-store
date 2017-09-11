@@ -13,6 +13,8 @@ from common.decorators import ajax_required
 from django.core.urlresolvers import reverse
 from .models import Follow
 from notifications.signals import notify
+from auction.models import WatchList, AuctionEvent
+# from cart.cart import Cart
 
 # from notify.signals import notify
 def user_login(request):
@@ -122,11 +124,15 @@ def edit_profile(request, pk):
 def user_detail(request, pk):
     user = get_object_or_404(User, pk=pk)
     nfs = user.notifications.unread()
-
+    lists = WatchList.objects.filter(creator=user)
+    all_auctions = AuctionEvent.objects.filter(creator=user, available=False)
+    expired_auctions = AuctionEvent.objects.filter(creator=user, available=False)
 
     if user.is_authenticated and user.is_active:
         return render(request, 'account/user_home.html', {
-        'user': user, 'nfs':nfs
+        'user': user, 'nfs':nfs,'lists':lists,
+        'expired_auctions':expired_auctions,
+        'all_auctions':all_auctions,
     })
 
     else:
