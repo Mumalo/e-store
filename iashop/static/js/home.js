@@ -3,7 +3,7 @@
  */
 
 $(document).ready(function(){
-    var owl = $(".owl-carousel")
+    var owl = $("#carousel1")
     owl.owlCarousel({
         items:1,
         loop:true,
@@ -16,17 +16,57 @@ $(document).ready(function(){
         animateIn: 'fadeIn',
 
     })
-});
 
-//$(document).ready(function(){
-//  $(".owl-carousel").owlCarousel();
-//});
+    var owl2 = $("#carousel2, #carousel3")
 
-//var form_options = {target: "#modal", success: function(response){}};
-//$('#modal').ajaxForm(form_options)
+    owl2.owlCarousel({
+        items:5,
+        loop:true,
+        margin:10,
+        autoplay:true,
+        autoplayTimeout:4000,
+        autoplaySpeed: 5000,
+        autoplayHoverPause:true,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',
 
-//var form_options = { target: '#modal2', success: function(response) {} };
-//    $('#modal2').ajaxForm(form_options);
+    })
+
+
+
+    //$('.cat-list').hover(function(){
+    //    var el = $('#subcats');
+    //    var username = $(this).data('action');
+    //
+    //
+    //    //$.post("{% url 'auctions:select-by-category' %}",
+    //    //    { username:username},
+    //    //    function() {
+    //    //        alert('I am working')
+    //    //
+    //    //    });
+    //
+    //    //)
+    //    $(this).append(el)
+    //    el.css('display', 'inline-block')
+    //    el.css('position', 'absolute')
+    //    el.css('z-index', '3')
+    //},
+    //    function(){
+    //        //$( this ).find( '.sub-cat-on-hover:last' ).remove();
+    //        $( this ).find( '#subcats' ).css('display', 'none')
+    //    }
+    //)
+
+
+
+
+
+})
+
+
+
+
 
 
 
@@ -83,42 +123,6 @@ $(document).ready(function(){
 
 
 
-//$(".follow").click(function(e){
-//    //alert("Hello")
-//    e.preventDefault()
-//     //alert($.post('{% url "user_follow" %}),
-//    $.post('{% url "follow" %}',
-//        {
-//            id: $(this).data('id'),
-//            action: $(this).data('action')
-//        },
-//        function(data){
-//            alert(data['status']=='ok')
-//        }
-//
-            //if (data['status']=='ok'){
-            //    var prev_action = $('.follow').data('action');
-            //
-            //    //toggle data action
-            //    $('.follow').data('action',
-            //    prev_action == 'follow' ? 'unfollow': 'follow');
-            //
-            //    //toggle text
-            //
-            //    $('.follow').text(
-            //        prev_action == 'follow' ? 'unfollow' : 'follow');
-            //
-            //    //update total followers
-            //
-            //    var previous_followers = parseInt(
-            //        $('span.count .total').text()
-            //    );
-            //    $('span.count .total').text(prev_action == 'follow' ?
-            //    previous_followers + 1 : previous_followers - 1);
-//            //}
-//        //}
-//    )
-//})
 
 
 //List and grid toggle function
@@ -140,7 +144,7 @@ var x = setInterval(function(){
         var dates = $(this).data('action')
         var converted = parseInt(dates)
         var newDate = new Date(converted)
-        distance = newDate - now
+        var distance = newDate - now
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -149,7 +153,23 @@ var x = setInterval(function(){
         $(this).find(".hours").text(hours)
         $(this).find(".minutes").text(minutes)
         $(this).find(".seconds").text(seconds)
+
+
+        if (distance < 0){
+            $(this).find(".days").text(0)
+            $(this).find(".hours").text(0)
+            $(this).find(".minutes").text(0)
+            $(this).find(".seconds").text(0)
+        }
+        //if (distance < 0){
+        //    //clearInterval(x);
+        //    (this).find("time-info").text("Finished")
+        //}
+
+
     })
+
+
 
 
 
