@@ -24,6 +24,17 @@
                 <a href="#">new auction</a>
             </li>
     </ul>
+
+    {% if messages %}
+                            <ul class="messages">
+                            {% for message in messages %}
+                                <li class="{{ message.tags }}">
+                            {{ message|safe }}
+                                <a href="#" class="close">✖</a>
+                            </li>
+                            {% endfor %}
+                            </ul>
+              {% endif %}
 <div class="container container-fluid form-container">
 
      <form method="post" class="viewform" enctype="multipart/form-data">

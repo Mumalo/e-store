@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 {% load static %}
 {% load material_form %}
@@ -5,14 +6,39 @@
 
 {% block content %}
 
+<div class="container-fluid">
+    <div class="page-heading container-fluid">
+        <div class="text-center ">
+            <h5>Edit Auction</h5>
+        </div>
+    </div>
+
+    <ul class="breadcrumb">
+              <li>
+                <a href="{% url 'auctions:home' %}">Home</a>
+              </li>
+              <li>
+                <a href="{% url 'auctions:list' %}">auctions</a>
+              </li>
+
+            <li>
+                <a href="#">edit auction</a>
+            </li>
+    </ul>
 <div class="container container-fluid form-container">
+
      <form method="post" class="viewform" enctype="multipart/form-data">
       {% csrf_token %}
-      {% form form=edit_form %}{% endform %}
+      {% form form=edit_form  %}{% endform %}
           <button type="submit" name="_submit" class="btn">Submit</button>
     </form>
 
+    {% block extrajs %}
+
+    {% endblock %}
+
 </div>
+
 
 
 {% endblock %}

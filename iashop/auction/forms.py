@@ -67,7 +67,7 @@ class GeneralSearchForm(forms.Form):
 class AuctionForm(ModelForm):
     sub_category2 = forms.CharField(max_length=250, widget=forms.Select, required=False)
 
-    def __init__(self, request, *args, **kwargs):
+    def __init__(self, data=None, *args, **kwargs):
         super(AuctionForm, self).__init__(*args, **kwargs)
         # self.fields['sub_category2'].queryset = SubCategory.objects.none()
         self.fields['category'].widget.attrs.update({'id':'cat-select','class': 'browser-default'})
@@ -158,9 +158,11 @@ class BidForm(ModelForm):
 
     def save(self ,commit=True):
         bid = super(BidForm, self).save(commit=False)
-        bid.event = self.event
-        bid.bidder = self.bidder
-        bid.save()
+
+        if self.bidder != self.event.creator:
+            bid.event = self.event
+            bid.bidder = self.bidder
+            bid.save()
 
 
 

@@ -92,6 +92,7 @@ class ProfileForm(ModelForm):
 
          if self.cleaned_data.get('agree_to_terms') is False:
              raise ValidationError('Click to agree to terms and conditions')
+         return self.cleaned_data.get('agree_to_terms')
 
 
 

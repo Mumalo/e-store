@@ -6,6 +6,7 @@ body {
     font-family:helvetica, "Helvetica Neue", Helvetica, Arial, sans-serif;
      background: #D7D9C3 ;
     font-size: 14px;
+    overflow-x: hidden;
 }
 
 .main-header-container{
@@ -24,30 +25,162 @@ body {
     /*opacity: 0.9;*/
 }
 
+#main-header .right-header{
+    /*background: red !important;*/
+    position: relative;
+    left: 85px;
+    /*padding-left: 0px;*/
+}
+
+
+/*#main-header .right-header li:first-child{*/
+    /*!*background: red !important;*!*/
+    /*position: relative;*/
+    /*left: 55px;*/
+    /*!*padding-left: 0px;*!*/
+/*}*/
+
+
+
 
 #main-header .glyphicon-bell{
     color: #F3DAA0 !important;
     font-size: 18px;
+    position: relative;
+    /*right: 135px;*/
+    left: -80px;
+    top: 3px;
 }
+
+#main-header .glyphicon-globe{
+    position: relative;
+    right: 80px;
+    top: 28px;
+    font-size: 18px;
+}
+
+.fa-shield{
+    transform: scaleY(1.2);
+    position: relative;
+    top: 30px;
+    left: 190px;
+    /*transform: scaleX(1);*/
+    /*right: 100px;*/
+    /*left: -5px;*/
+    font-size: 18px !important;
+}
+
+.fa-shield span{
+    font-size: 12px;
+    font-weight: 300 !important;
+    position: relative;
+    margin-left: 13px;
+}
+
+#main-header .right-header .nigeria-flag{
+    width: 50px;
+    height: 20px;
+    position: relative;
+    top: 30px;
+    /*right: 75px;*/
+    left: 270px;
+}
+
+@media screen and (max-width: 768px){
+    .fa-shield{
+        top: 18px !important;
+        left: -58px !important;
+    }
+
+    #main-header .right-header .nigeria-flag{
+        top: -10px !important;
+        left: 64% !important;
+        width: 20px !important;
+        height: 20px !important;
+    }
+
+    #main-header .glyphicon-bell{
+        /*position: relative;*/
+        top: 5px !important;
+        left: -85px !important;
+    }
+
+    #main-header .glyphicon-heart{
+        position: relative;
+        /*top: -120px !important;*/
+        /*bottom: 40px !important;*/
+        left: 20% !important;
+        /*background: red !important;*/
+        /*left: -20px !important;*/
+    }
+
+    #main-header .glyphicon-user{
+        top: -90px !important;
+        left: 68% !important;
+        /*background: red !important;*/
+        /*right: 3% !important;*/
+    }
+
+    #main-header .register{
+        top: -83px !important;
+        right: -15% !important;
+        /*right: 5% !important;*/
+        /*left: 0 !important;*/
+    }
+
+    #main-header .login{
+        top: -132px !important;
+        left: 22% !important;
+    }
+
+}
+
+.user-notifications a:hover{
+    cursor: pointer !important;
+
+}
+
+.user-notifications a{
+    color: #1F0101 !important;
+}
+
 
 .home-page-nav-pills-container{
    /*background: red !important;*/
     /*background: url('../images/background/water.jpg');*/
     background: #D7D9C3;
-    background-size: 100% 100%;
-    opacity: 0.9;
-    padding: 10px;
-    margin-top: -20px;
+    /*background-size: 100% 100%;*/
+    /*opacity: 0.9;*/
+    /*padding: 10px;*/
+    /*margin-top: -20px;*/
 }
 
 .home-page-nav-pills-container .row{
-    margin-top: -10px;
+    /*margin-top: -10px;*/
     /*opacity: 1;*/
+}
+
+@media screen and (max-width: 768px){
+    .home-page-nav-pills-container .row{
+        /*margin-top: 0;*/
+        /*padding: 30px;*/
+
+    }
 }
 
 .home-page-nav-pills-container .row ul{
     background: #1F0101 !important;
+    /*background: red !important;*/
     margin-right: -7px;
+}
+
+@media screen and (max-width: 768px){
+    .home-page-nav-pills-container .row ul{
+        margin-right: 0;
+        padding-bottom: 70px;
+        /*background: red !important;*/
+    }
+
 }
 
 
@@ -82,9 +215,85 @@ body {
     top: 14px;
 }
 
-#main-header .glyphicon-user{
-    top: 5px !important;
+#main-header .glyphicon-user {
+    top: 55px;
+    position: relative;
+    /*right: 80px !important;*/
+    /*right: 225px;*/
+    left: -130px;
+    font-size: 18px;
+    /*line-height: 33px;*/
+    transform: scaleY(1.5);
+    /*height: 20px !important;*/
 }
+
+.login{
+    position: relative;
+    top: 53px !important;
+    right: 210px;
+    /*font-size: 10px !important;*/
+    transform: scaleY(1.5);
+    font-weight: 300 !important;
+    /*background: red !important;*/
+    /*font-size: 40px !important;*/
+}
+
+
+.register{
+    position: relative;
+    top: 57px !important;
+    /*right: -3px;*/
+    right: 118px;
+    font-size: 10px !important;
+    transform: scaleY(1.5);
+    font-weight: 300 !important;
+}
+
+
+#main-header .all-auctions{
+    position: relative;
+    top: 120px;
+}
+
+#main-header .glyphicon-heart{
+    top: 50px !important;
+    font-size: 20px;
+    transform: scaleY(1.5);
+    position: relative;
+    left: -120px;
+    /*right: 248px !important;*/
+    /*color: #E62E04!important;*/
+}
+
+.user-logged-in{
+    margin-right: 160px;
+    /*position: absolute;*/
+    /*right: 300px !important;*/
+    /*background: red !important;*/
+}
+
+#main-header .glyphicon-heart span{
+
+    font-size: 10px !important;
+    font-weight: 300 !important;
+    color: #F1DAA5; !important;
+    position: relative;
+    top: -12px !important;
+    left: 10px;
+}
+
+#main-header .glyphicon-heart span span{
+    position: relative;
+    top: 11px !important;
+    left: -32px !important;
+}
+
+
+
+
+/*#main-header .login span, .glyphicon-user span{*/
+    /*top: 6px ;*/
+/*}*/
 .header-content .text{
     color: #F1DAA5 !important;
     font-size: 12px;
@@ -127,17 +336,35 @@ body {
 
 }
 
+@media screen and (max-width: 768px) {
+    .search-box-container .search-form{
+        margin-left: 0px !important;
+        position: relative;
+        top: 5px;
+        left: 38px;
+    }
+
+}
+
+.secondary-content{
+    color: #1F0101 !important;
+}
+
+
 .search-box-container .search-category #in_category_field{
     background: #F1DAA5 !important;
     height: 31px;
     margin-top: 15px;
-    width: 60px;
-    margin-left: 20px;
+    width: 90px;
+    margin-left: 40px;
     border: 1px solid #F1DAA5;
+    border-radius: 5px;
     /*margin-right: -10px;*/
     /*opacity: 0.6;*/
     /*padding: 3px;*/
 }
+
+
 
 .search-box-container .search-icon button[type=submit]{
      background: #F1DAA5 !important;
@@ -147,8 +374,25 @@ body {
     padding: 7px;
     width: 40px;
     float: left;
+    margin-left: -15px;
     border: 1px solid #F1DAA5;
+    border-radius: 5px;
 }
+
+@media screen and (max-width: 768px){
+
+   .search-box-container .search-category #in_category_field{
+        width: 90px;
+        margin-left: -30px;
+    }
+
+    .search-box-container .search-icon button[type=submit]{
+        margin-left: -50px !important;
+    }
+
+
+}
+
 
 
 
@@ -162,17 +406,27 @@ body {
 .search-box-container form input[type=text]{
     background: #D7D9C3;
     padding: 3px;
-    width: 700px;
+    width: 420px;
     height: 23px;
     margin-top: 15px;
     border: 1px solid white;
     position: relative;
-    left: -70px;
-    margin-right: 156px;
+    left: -20px;
+    margin-right: 170px;
+    /*border-radius: 5px;*/
     /*margin-left: -10px;*/
     color: #333 !important;
 
 }
+
+
+@media screen and (max-width: 768px){
+    .search-box-container form input[type=text]{
+        width: 100%;
+    }
+
+}
+
 .search-box-container {
     /*padding-left: 70px;*/
     /*margin-right: 20px;*/
@@ -192,6 +446,202 @@ body {
     /*background-repeat: repeat-y;*/
     /*background: red !important;*/
 }
+
+/*.home-page-auctions{*/
+    /*position: absolute;*/
+    /*top: 80px;*/
+    /*left: 43%;*/
+
+/*}*/
+
+.home-page-auctions{
+    margin-right: 40px;
+    /*background: blue !important;*/
+    margin-top: -200px !important;
+    height: 220px !important;
+    /*margin-bottom: -20px !important;*/
+}
+
+.home-page-auctions .all-auctions{
+    padding-left: 40%;
+}
+
+.home-page-auctions .new-auction{
+    padding-left: 5%;
+}
+
+
+
+@media screen and (max-width: 768px) {
+    /*.home-page-auctions .all-auctions{*/
+        /*margin-right: 0px !important;*/
+        /*position: relative;*/
+        /*left: -80px;*/
+    /*}*/
+
+     .home-page-auctions .new-auction{
+         /*position: relative;*/
+         /*top: -19px;*/
+         /*left: 30px;*/
+         padding-left: 40%;
+
+     }
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+
+    .search-box-container .search-icon button[type=submit]{
+        margin-left: -30px !important;
+
+    }
+   .home-page-auctions .new-auction{
+       background: yellow !important;
+
+    }
+
+    .search-box-container form input[type=text]{
+        width: 400px !important;
+    }
+
+    .home-page-auctions .all-auctions{
+         padding-left: 38%;
+
+     }
+
+    .right-sidenav{
+        margin-left: 0 !important;
+        width: 205px !important;
+    }
+
+    .left-sidenav{
+        width: 180px !important;
+    }
+
+    #carousel1 .item img{
+        /*margin-left: -20px !important;*/
+    }
+
+    #main-header .navbar-right{
+        /*margin-right: 22% !important;*/
+        position: relative;
+        left: -15% !important;
+        /*padding-right: 130px !important;*/
+        /*background: red !important;*/
+    }
+
+    #main-header .glyphicon-bell{
+        left: -30px !important;
+    }
+
+    #main-header .glyphicon-heart{
+        top: 85px !important;
+        left: 15px !important;
+    }
+
+    #main-header .glyphicon-user{
+        top: 85px !important;
+        left: 30px !important;
+    }
+
+    #main-header .register{
+        top: 90px !important;
+        left: 33px !important;
+    }
+
+    #main-header .login{
+        top: 90px !important;
+        left: -58px !important;
+    }
+
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1255px) {
+    #main-header{
+        /*background: red !important;*/
+    }
+
+    /*#main-header .glyphicon-heart {*/
+        /*left: -150px !important;*/
+    /*}*/
+
+    /*#main-header .glyphicon-user{*/
+        /*!*left: 0px !important;*!*/
+        /*left: -140px !important;*/
+    /*}*/
+
+    .left-sidenav{
+        width: 200px !important;
+        /*background: red !important;*/
+    }
+
+    .right-sidenav{
+        margin-left: 0 !important;
+        width: 220px !important;
+    }
+
+    #main-header .nigeria-flag{
+        left: -20px !important;
+    }
+
+    #main-header .glyphicon-bell{
+        left: -350px !important;
+    }
+
+    #main-header .fa-shield{
+        left: -80px !important;
+    }
+
+    .search-form{
+        margin-left: 0 !important;
+        margin-right: 10px !important;
+    }
+
+}
+
+@media screen and  (min-width: 1025px) and (max-width: 1225px) {
+    #main-header{
+        background: blue !important;
+    }
+
+     #main-header .glyphicon-user{
+         top: 90px !important;
+         left: -300px !important;
+     }
+
+     #main-header .register{
+         top: 95px !important;
+         left: -290px !important;
+     }
+
+     #main-header .login{
+         top: 87px !important;
+         left: -380px !important;
+     }
+
+     #main-header .glyphicon-heart{
+         top: 90px !important;
+         left: -360px !important;
+     }
+
+}
+
+
+
+
+/*.home-page-auctions .new-auction{*/
+
+/*}*/
+
+/*.home-page-auctions li{*/
+    /*display: inline-block;*/
+/*}*/
+
+.home-page-auctions li a{
+    color: #F1DAA5;
+}
+
+
 
 
 .logo-text{
@@ -237,7 +687,7 @@ body {
 }
 
 .page-heading div{
-    font-size: 28px;
+    font-size: 14px !important;
     font-weight: 700;
     padding: 0px;
     height: 80%;
@@ -246,15 +696,17 @@ body {
     margin-left: 40%;
     width: 20%;
     position: relative;
-    top: -70px;
-    color: 	#F3DAA0;
+    top: -30px;
+    /*color: 	#F3DAA0;*/
 }
 
-/*.page-heading h5{*/
+.page-heading h5{
      /*background: red;*/
-    /*!*position: relative;*!*/
+    font-size: 18px !important;
+
+    /*position: relative;*/
     /*height: 100%;*/
-/*}*/
+}
 
 
 
@@ -419,9 +871,10 @@ body {
     border-radius: 4px;
     box-shadow: none;
     margin-top: 50px;
-    width: 200px !important;
+    width: 210px !important;
     background: #D7D9C3 !important;
     border: 1px solid #ccc;
+    margin-right: 20px !important;
 
 }
 
@@ -538,6 +991,13 @@ body {
     z-index: 1;
 }
 
+@media screen and (max-width: 768px){
+    #carousel1 .item{
+        width: 100%;
+        /*height: 250px;*/
+    }
+}
+
 #carousel2 img{
     width: 180px !important;
     height: 200px !important;
@@ -557,6 +1017,17 @@ body {
     /*margin-right: -32px;*/
 
 }
+
+@media screen and (max-width: 768px){
+    .right-sidenav{
+        margin-left: 0 !important;
+        width: 100%;
+    }
+
+}
+
+
+
 
 .categories-main .panel-heading{
     font-weight: 700;
@@ -581,7 +1052,7 @@ body {
     background: #D7D9C3;
     background-size: 100% 1000px;
     /*opacity: 0.8;*/
-    opacity: 0.9;
+    /*opacity: 0.9;*/
      /*background-repeat: no-repeat;*/
     /*background-size: 100% 100%;*/
     /*margin-right: 20px !important;*/
@@ -654,6 +1125,23 @@ body {
 
 }
 
+@media screen and (max-width: 768px){
+    .tab-content h5{
+        position: static !important;
+        margin-left: 0;
+        /*width: 100px;*/
+    }
+
+
+
+    .home-page-nav-pills-container ul li{
+        width: 100% !important;
+        margin-top: 10px;
+    }
+
+
+}
+
 
 
 
@@ -687,7 +1175,15 @@ body {
 .left-sidenav{
     width: 200px;
 }
-#demo{
+
+
+@media screen and (max-width: 768px){
+    .left-sidenav{
+        width: 100%;
+}
+
+}
+mo{
     height: 400px;
 }
 hr{
@@ -877,7 +1373,7 @@ a:hover {
 
 
  .menu-title {
-     color:#ff7788;
+     color: #1F0101;
      /*font-size:1.2rem;*/
       display:inline-block;
       }
@@ -885,6 +1381,14 @@ a:hover {
 .glyphicon-circle-arrow-right {
       margin-left:7px;
    }
+
+.mark-as-read{
+    font-size: 10px !important;
+    position: absolute;
+    left: 30px ;
+    z-index: 5;
+    display: none;
+}
 
 
  .notification-heading, .notification-footer  {
@@ -1607,15 +2111,15 @@ a:hover {
 .footer-container{
    /*background-image: url('../images/background/stars5.jpg');*/
    background-size: 100%;
-   margin-right: -20px;
-   margin-left: -20px;
+   margin-right: -3px;
+   margin-left: -3px;
     margin-top: 20px;
 }
 .footer{
     height: 270px;
     background: #1E0000;
-    margin-right: -20px;
-    margin-left: -20px;
+    margin-right: -13px;
+    margin-left: -13px;
     /*opacity: 0.9;*/
     /*margin-top: 30px;*/
     /*opacity: 0.8;*/

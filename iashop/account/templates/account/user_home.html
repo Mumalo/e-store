@@ -81,6 +81,7 @@
 
             </div> <!-- end of user-home-side-menu for bids -->
 
+        {% if user.id == request.user.id %}
             <div class="panel panel-default user-home-side-menu">
 
                 <div class="panel-body text-center heading">
@@ -104,6 +105,7 @@
                 </div>
 
             </div> <!-- end of user-home-side-menu for auctions -->
+        {% endif %}
         </div>  <!-- end of left side bar -->
         <!--Right side bar-->
         <div class="col-xs-12 col-md-6 col-lg-6 ">
@@ -225,7 +227,7 @@
                                                     <span class="title">{{ e}}</span>
                                                     <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>
                                                     <p class="title">current Bid at N {{ item.current_bid_at}}</p><br />
-                                                    <a href="#" class="secondary-content">
+                                                    <a href="{% url 'auctions:edit_auction' item.id %}" class="secondary-content">
                                                         <i class="material-icons">create</i>
                                                     </a>
 
@@ -282,14 +284,14 @@
                         <!--{% endfor %}-->
                         <!--{{list}}-->
                         <ul class="collection">
-                                    {% for item in all_auctions %}
+                                    {% for item in all %}
                                             <div class="watch-list-content">
                                                  <li class="collection-item avatar">
                                                     <img class="circle" src="{{ item.image.url }}" alt="">
                                                     <span class="title">{{ item }}</span>
                                                     <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>
-                                                    <p class="title">current Bid at N {{ item.current_bid_at}}</p><br />
-                                                    <a href="#" class="secondary-content">
+                                                    <!--<p class="title">current Bid at N {{ item.current_bid_at}}</p><br />-->
+                                                    <a href="{% url 'auctions:edit_auction' item.id %}" class="secondary-content">
                                                         <i class="material-icons">create</i>
                                                     </a>
 
@@ -427,12 +429,100 @@
 
 
                         <div id="hottest" class="tab-pane fade">
-                            Hottest deals
+                            <!--Hottest deals-->
+                            <div id="hottest-deals" class="row list-group user-auctions">
+                                    {% hottest_deals user 5 as hottest %}
+                                    {% for auction in hottest %}
+                                        <div class="item  col-xs-12 col-md-4">
+                                            <div class="thumbnail">
+                                                {% if auction.image %}
+                                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image img-thumbnail" src="{{ auction.image.url }}" alt="" /></a>
+                                                {% else %}
+                                                    <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image img-thumbnail" src="{% static 'images/no_image.png' %}" alt="" />
+                                                {% endif %}
+                                                <div class="caption">
+                                                    <h4 class="group inner list-group-item-heading" style="font-size: 13px">{{ auction.item|truncatewords:2 }}</h4>
+                                                    <p class="group inner list-group-item-text"></p>
+                                                    <div class="row auction-text">
+                                                        <div class="col-xs-12 col-md-12 text-center">
+                                                            <p class="lead" style="font-size: 13px">N{{ auction.get_current_price }}</p>
+                                                        </div>
+                                                        <!--<div class="col-xs-12 col-md-6">-->
+                                                            <!--<a class="btn btn-flat" href="http://www.jquery2dotnet.com" style="font-size: 13px">BID</a>-->
+                                                        <!--</div>-->
+                                                    </div> <!-- end of row class for price and bid -->
+
+                                                    <div class="row myClock" style="margin-top: -49px" data-action='{{ auction.end_time|to_json }}'>
+                                                        <div class="row">
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 hours"></div>
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 minutes"></div>
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 seconds"></div>
+                                                        </div>
+
+                                                        <div class="row auction-text">
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Days</div>
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Hours</div>
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Minutes</div>
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
+                                                        </div> <!-- counter text ends here -->
+                                                    </div>
+                                                </div>  <!-- end of caption -->
+                                            </div> <!-- end of thumbnail -->
+                                        </div> <!-- end of column -->
+
+                                    {% endfor %}
+                            </div> <!-- end of product list group  -->
+
                         </div>
                         <!--End of third tab-pane -->
 
                         <div id="ending-soon" class="tab-pane fade">
-                            Ending Soon Deals
+                            <!--Ending Soon Deals-->
+                            <div id="ending-soon-deals" class="row list-group user-auctions">
+                                    {% ending_soon user 5 as soon %}
+                                    {% for auction in soon %}
+                                        <div class="item  col-xs-12 col-md-4">
+                                            <div class="thumbnail">
+                                                {% if auction.image %}
+                                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image img-thumbnail" src="{{ auction.image.url }}" alt="" /></a>
+                                                {% else %}
+                                                    <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image img-thumbnail" src="{% static 'images/no_image.png' %}" alt="" />
+                                                {% endif %}
+                                                <div class="caption">
+                                                    <h4 class="group inner list-group-item-heading" style="font-size: 13px">{{ auction.item|truncatewords:2 }}</h4>
+                                                    <p class="group inner list-group-item-text"></p>
+                                                    <div class="row auction-text">
+                                                        <div class="col-xs-12 col-md-12 text-center">
+                                                            <p class="lead" style="font-size: 13px">N{{ auction.get_current_price }}</p>
+                                                        </div>
+                                                        <!--<div class="col-xs-12 col-md-6">-->
+                                                            <!--<a class="btn btn-flat" href="http://www.jquery2dotnet.com" style="font-size: 13px">BID</a>-->
+                                                        <!--</div>-->
+                                                    </div> <!-- end of row class for price and bid -->
+
+                                                    <div class="row myClock" style="margin-top: -49px" data-action='{{ auction.end_time|to_json }}'>
+                                                        <div class="row">
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 hours"></div>
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 minutes"></div>
+                                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 seconds"></div>
+                                                        </div>
+
+                                                        <div class="row auction-text">
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Days</div>
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Hours</div>
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Minutes</div>
+                                                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
+                                                        </div> <!-- counter text ends here -->
+                                                    </div>
+                                                </div>  <!-- end of caption -->
+                                            </div> <!-- end of thumbnail -->
+                                        </div> <!-- end of column -->
+
+                                    {% endfor %}
+                            </div> <!-- end of product list group  -->
+
                         </div>
                         <!--end of fourth tab-pane-->
 
@@ -444,10 +534,18 @@
         </div>
         <!--End of right side bar -->
 
-        <div class="col-xs-12 col-md-2 jumbotron" style="padding: 8px">
-            <h6 class="text-center">{{ user.username }}'s Budget Plan</h6>
+        {% if request.user.id == user.id %}
+            <div class="col-xs-12 col-md-2 jumbotron" style="padding: 8px">
+                <h6 class="text-center" style="color: #1F0101">{{request.user}}'s Budget Plan</h6>
+                <ul class="collection avatar">
+                    <li class="collection-item">
 
-        </div>
+                    </li>
+
+                </ul>
+
+            </div>
+        {% endif %}
 
 
 

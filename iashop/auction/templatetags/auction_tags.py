@@ -40,22 +40,19 @@ def search_form(context):
 def product_list(context, items):
 
     if items is not None:
-        request = context["request"]
-        lists = WatchList.objects.filter(creator=request.user)
-        watch_list = []
+        request = context['request']
+        user = request.user
+        watch_list = WatchList.objects.filter(creator=user)
+        watching = []
 
-        for l in lists:
-            for item in l.items.all():
-                watch_list.append(item)
-
-        list_owner = [w.creator for w in lists][:1]
-
-
+        for list in watch_list:
+            for item in list.items.all():
+                watching.append(item)
+        owner = [list.creator for list in watch_list][:1]
 
 
-        # watching = cart.watching()
+        return {'request':request,'items':items,'owner':owner, 'watch_list':watching}
 
-        return {'request':request,'items':items, 'list':list, 'owner':list_owner, 'watch_list':watch_list}
 
 # @register.assignment_tag(takes_context=True)
 # def search_results(context):
@@ -126,6 +123,14 @@ def latest_auctions(user=None, count=5):
         auctions = AuctionEvent.objects.filter(available=True, creator=user)
     return auctions.order_by('-time')[:count]
 
+@register.assignment_tag
+def best_offers(auction=None):
+    bids = None
+    if auction is not None:
+        bids = Bid.objects.filter(event=auction).order_by('-amount')[:3]
+
+    return bids
+
 
 
 @register.assignment_tag
@@ -179,6 +184,15 @@ def wond_bids(user=None):
                 lost.append(a)
                 bids['lost'] = lost
     return bids
+
+@register.assignment_tag
+def watch_list(user=None):
+
+    list = None
+    if user is not None:
+        list = WatchList.objects.filter(creator=user)
+    return list
+
 
 
 

@@ -125,14 +125,14 @@ def user_detail(request, pk):
     user = get_object_or_404(User, pk=pk)
     nfs = user.notifications.unread()
     lists = WatchList.objects.filter(creator=user)
-    all_auctions = AuctionEvent.objects.filter(creator=user, available=False)
+    all = AuctionEvent.objects.filter(creator=user)
     expired_auctions = AuctionEvent.objects.filter(creator=user, available=False)
 
     if user.is_authenticated and user.is_active:
         return render(request, 'account/user_home.html', {
         'user': user, 'nfs':nfs,'lists':lists,
         'expired_auctions':expired_auctions,
-        'all_auctions':all_auctions,
+        'all':all,
     })
 
     else:

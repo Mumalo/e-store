@@ -226,15 +226,28 @@
 
             <div class="tab-content">
                 <div id="desc" class="tab-pane fade in active">
-                    <h4>Description here</h4>
+                    <h6 class="text-center">Product Description</h6>
+                    {{auction.description}}
                 </div>
 
                 <div id="best-offers" class="tab-pane fade">
-                    <h4>Best offers here </h4>
+                    <h6 class="text-center">Best Offers </h6>
+                    <ul class="collection">
+                        {% best_offers auction as best %}
+                        {% for b in best %}
+                            <li class="collection-item avatar">
+                                <span class="title">{{b.amount}}</span>
+                                <a href="#" class="secondary-content">
+                                <i class="material-icons">grade</i>
+                            </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
                 </div>
 
                 <div id="comment" class="tab-pane fade">
-                    <h4>Comment here</h4>
+                    <h6 class="text-center">Drop Comment</h6>
                 </div>
 
                 <div id="private-message" class="tab-pane fade">

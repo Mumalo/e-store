@@ -19,6 +19,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail, BadHeaderError
 from  django.template import RequestContext
 from common.decorators import ajax_required
+from notifications.signals import notify
 
 @ajax_required
 def sub_cats_for_cats(request):
@@ -56,6 +57,46 @@ def select_by_category(request):
 
     return JsonResponse(result_set, safe=False)
 
+
+@login_required
+@ajax_required
+def mark_all_as_read(request):
+
+    action = request.POST.get('recipient')
+    user = None
+    nfs = None
+
+    if action:
+
+        try:
+            user = User.objects.get(username=action)
+            unread = user.notifications.unread()
+            unread.mark_all_as_read()
+        except ObjectDoesNotExist:
+            return JsonResponse({'status':'ko'})
+
+        return JsonResponse({'status':'ok'})
+    return JsonResponse({'status':'ko'})
+
+@login_required
+@ajax_required
+
+def mark(request):
+    id = request.POST.get('id')
+    user = request.user
+
+    if id and user:
+        try:
+            notification = user.notifications.filter(id=id)
+            notification.mark_all_as_read()
+            return JsonResponse({'status':'ok'})
+        except ObjectDoesNotExist:
+            return JsonResponse({'status':'ko'})
+    return JsonResponse({'status':'ko'})
+
+
+
+    # if id:
 
 def home(request):
     return render(request, 'home.html')
@@ -106,13 +147,13 @@ def add_new_auction(request):
                 sub_cat = None
 
             new_form.sub_category = sub_cat
-
-
-
-
             new_form.save()
+            users = User.objects.exclude(id=current_user.id)
+            users = list(users)
+            auction = new_form
+            notify.send(actor=current_user, recipient=users, verb='created a new item', target=auction)
 
-            return render(request, 'auction/auction_complete.html')
+            messages.success(request, 'Item added successfully')
     else:
         form = AuctionForm(request)
     return render(request, 'auction/new_auction.html',
@@ -171,6 +212,7 @@ def edit_auction(request, auction_id):
     auction = get_object_or_404(AuctionEvent, id=auction_id)
     creator = auction.creator
     if request.method == 'POST':
+        return HttpResponse('THE request is post')
         edit_form = AuctionForm(data=request.POST, instance=auction)
 
         if edit_form.is_valid():
@@ -179,7 +221,7 @@ def edit_auction(request, auction_id):
             new_auction.save()
             return messages.success(request, 'auction updated successfully')
     else:
-        edit_form = AuctionForm(instance=auction)
+        edit_form = AuctionForm(data=None, instance=auction)
     return render(request, 'auction/edit_auction.html', {'edit_form': edit_form})
 
 def auction_detail(request, auction_id):
@@ -211,9 +253,21 @@ def auction_detail(request, auction_id):
                 sent = True
 
         if bid_form.is_valid():
-            bid = bid_form.save()
-            # return render(request, 'auction/bid_confirm.html', {'auction':auction})
-            messages.success(request, 'Your Bid was submitted')
+            bidder = get_user(request)
+            bid_form.save(commit=False)
+
+            if auction.creator == bidder:
+                messages.error(request, 'You cannot Bid on your own item')
+            elif auction.creator != bidder:
+                users = User.objects.filter(id=auction.creator.id)
+                bidder = bid_form.bidder
+                users = list(users)
+                # notify.send(actor=current_user, recipient=users, verb='Placed a bid on', target=auction)
+                # return render(request, 'auction/bid_confirm.html', {'auction':auction})
+                return HttpResponse(bidder)
+                messages.success(request, 'Your Bid was submitted')
+
+
         else:
             messages.error(request, 'error')
 
