@@ -3,3 +3,4 @@ gitignore
 iashop/iashop/__pycache__/secret.cpython-35.pyc
 iashop/iashop/secret.py
 myvenv/Include/
+/myvenv/

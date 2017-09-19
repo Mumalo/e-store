@@ -2116,7 +2116,7 @@ a:hover {
     margin-top: 20px;
 }
 .footer{
-    height: 270px;
+    height: auto;
     background: #1E0000;
     margin-right: -13px;
     margin-left: -13px;
@@ -2136,5 +2136,7 @@ a:hover {
 }
 
 .footer a{
-    color: black;
+    color: #fff;
 }
+
+
