@@ -151,7 +151,7 @@ def add_new_auction(request):
             users = User.objects.exclude(id=current_user.id)
             users = list(users)
             auction = new_form
-            notify.send(actor=current_user, recipient=users, verb='created a new item', target=auction)
+            notify.send(current_user, recipient=users, verb='created a new item', target=auction)
 
             messages.success(request, 'Item added successfully')
     else:
@@ -174,7 +174,7 @@ def custom_processor(request):
     return {
         'app': 'auction',
         'search_form':search_form,
-        'auctions':auctions,
+         'auctions':auctions,
     }
 
 

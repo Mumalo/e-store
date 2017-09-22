@@ -15,42 +15,63 @@ body {
 }
 
 #main-header{
-    /*background:#4267b2;*/
     padding-bottom: -4px;
-    border-bottom: 1px solid #4267b2;
     background-color: #1E0000;
-    /*background: url('../images/background/header3.jpg');*/
-    /*background-repeat: no-repeat;*/
-    /*background-size: 100%;*/
-    /*opacity: 0.9;*/
+
 }
 
-#main-header .right-header{
-    /*background: red !important;*/
-    position: relative;
-    left: 85px;
-    /*padding-left: 0px;*/
-}
-
-
-/*#main-header .right-header li:first-child{*/
-    /*!*background: red !important;*!*/
+/*#main-header .right-header{*/
     /*position: relative;*/
-    /*left: 55px;*/
-    /*!*padding-left: 0px;*!*/
+    /*left: 85px;*/
 /*}*/
-
 
 
 
 #main-header .glyphicon-bell{
     color: #F3DAA0 !important;
     font-size: 18px;
-    position: relative;
+    position: static !important;
     /*right: 135px;*/
-    left: -80px;
-    top: 3px;
+
 }
+
+#main-header .bell{
+    position: relative;
+    left: 60px;
+    top: 3px;
+    z-index: 4;
+    /*background: red !important;*/
+}
+
+#main-header .user-logged-in-li{
+    position: relative;
+    left: -60px;
+    top: 3px;
+    width: 60px;
+    /*background: green !important;*/
+}
+
+.user-loggedout-li{
+    position: relative;
+    left: -60px;
+    top: 3px;
+    width: 60px;
+    /*background: green !important;*/
+}
+
+#main-header .user-logged-in, #main-header .user-loggedout{
+    top: 60px !important;
+    position: relative;
+    /*right: 80px !important;*/
+    /*right: 225px;*/
+    left: 80px;
+    /*background: red !important;*/
+}
+
+#main-header .user-logged-in{
+    left: 40px !important;
+}
+
 
 #main-header .glyphicon-globe{
     position: relative;
@@ -59,11 +80,127 @@ body {
     font-size: 18px;
 }
 
+
+
+
+
+#dropdown1>li>a{
+    color: #333 !important;
+}
+
+#dropdown1>li>a:hover{
+    text-decoration: none;
+}
+
+.profile-drop .divider{
+    background: red;
+}
+
+.profile-dropdown-li{
+    border-bottom: 1px solid #fff !important;
+}
+
+.profile-dropdown-li:last-child{
+    border-bottom: none;
+}
+#dropdown2:before{
+     content: "";
+     width: auto;
+     min-width: 200px;
+     border-bottom: 10px solid #fff;
+     border-right: 10px solid transparent;
+     border-left: 10px solid transparent;
+     position: absolute;
+     top: -10px;
+     right: 16px;
+     z-index: 10;
+ }
+
+#dropdown2:after {
+    content: "";
+    border-bottom: 12px solid #ccc;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    position: absolute;
+    /*top: -12px;*/
+    right: 14px;
+    z-index: 9;
+}
+
+#dropdown2{
+    /*display: inline-block;*/
+    width: 320px !important;
+    top: 70px !important;
+    padding-top: 0px !important;
+    /*background: red !important;*/
+}
+
+#dropdown2 table tr{
+    padding: 0 !important;
+    /*background: red !important;*/
+}
+
+#dropdown2 table tr td {
+    padding: 0 !important;
+    font-size: 9px
+    /*background: red !important;*/
+}
+
+#dropdown1:before {
+    content: "";
+    border-bottom: 10px solid #fff;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    top: -10px;
+    right: 16px;
+    z-index: 10;
+}
+
+#dropdown1:after {
+    content: "";
+    border-bottom: 12px solid #ccc;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    position: absolute;
+    top: -12px;
+    right: 14px;
+    z-index: 9;
+}
+
+#dropdown1{
+    width: 200px !important;
+}
+
+
+.sub-header{
+    background-image: url('../images/header_img.jpg');
+    color: ghostwhite;
+    font-weight: bold;
+    margin-top: -10px;
+    padding: 15px;
+    /*height: 125px;*/
+}
+
+.sub-header h5{
+    font-size: 22px;
+}
+
+
+/*.watchlist{*/
+    /*background: yellow !important;*/
+    /*position: relative;*/
+    /*bottom: 8px !important;*/
+
+/*}*/
+
 .fa-shield{
     transform: scaleY(1.2);
     position: relative;
     top: 30px;
     left: 190px;
+    z-index: 5 !important;
+    /*background: yellow !important;*/
     /*transform: scaleX(1);*/
     /*right: 100px;*/
     /*left: -5px;*/
@@ -78,61 +215,21 @@ body {
 }
 
 #main-header .right-header .nigeria-flag{
-    width: 50px;
+    width: 30px;
     height: 20px;
     position: relative;
     top: 30px;
     /*right: 75px;*/
-    left: 270px;
+    left: 175px;
+    z-index: 2 !important;
 }
 
-@media screen and (max-width: 768px){
-    .fa-shield{
-        top: 18px !important;
-        left: -58px !important;
-    }
-
-    #main-header .right-header .nigeria-flag{
-        top: -10px !important;
-        left: 64% !important;
-        width: 20px !important;
-        height: 20px !important;
-    }
-
-    #main-header .glyphicon-bell{
-        /*position: relative;*/
-        top: 5px !important;
-        left: -85px !important;
-    }
-
-    #main-header .glyphicon-heart{
-        position: relative;
-        /*top: -120px !important;*/
-        /*bottom: 40px !important;*/
-        left: 20% !important;
-        /*background: red !important;*/
-        /*left: -20px !important;*/
-    }
-
-    #main-header .glyphicon-user{
-        top: -90px !important;
-        left: 68% !important;
-        /*background: red !important;*/
-        /*right: 3% !important;*/
-    }
-
-    #main-header .register{
-        top: -83px !important;
-        right: -15% !important;
-        /*right: 5% !important;*/
-        /*left: 0 !important;*/
-    }
-
-    #main-header .login{
-        top: -132px !important;
-        left: 22% !important;
-    }
-
+#main-header .flag-text{
+    position: absolute;
+    top: 38px;
+    left: 205px;
+    font-weight: 300 !important;
+    /*transform: scaleY(1.5);*/
 }
 
 .user-notifications a:hover{
@@ -144,93 +241,26 @@ body {
     color: #1F0101 !important;
 }
 
-
-.home-page-nav-pills-container{
-   /*background: red !important;*/
-    /*background: url('../images/background/water.jpg');*/
-    background: #D7D9C3;
-    /*background-size: 100% 100%;*/
-    /*opacity: 0.9;*/
-    /*padding: 10px;*/
-    /*margin-top: -20px;*/
-}
-
-.home-page-nav-pills-container .row{
-    /*margin-top: -10px;*/
-    /*opacity: 1;*/
-}
-
-@media screen and (max-width: 768px){
-    .home-page-nav-pills-container .row{
-        /*margin-top: 0;*/
-        /*padding: 30px;*/
-
-    }
-}
-
-.home-page-nav-pills-container .row ul{
-    background: #1F0101 !important;
-    /*background: red !important;*/
-    margin-right: -7px;
-}
-
-@media screen and (max-width: 768px){
-    .home-page-nav-pills-container .row ul{
-        margin-right: 0;
-        padding-bottom: 70px;
-        /*background: red !important;*/
-    }
-
-}
-
-
-.notification-count{
-    background: white;
-    position: absolute;
-    top:-6px;
-    width: 10px;
-    height: 14px;
-    right: -2px;
-    padding-bottom: 4px;
-    font-size: 10px;
-    font-weight: 900;
-}
-
-
-.nav-pills{
-    background: #1F0101;
-    margin-top: 8px;
-    height: 55px;
-    color: #F4FF77;
-    height: 47px !important;
-    /*padding-bottom: 15px; !important;*/
-}
-
-.nav-pills li a{
-     margin-top: -8px !important;
-     margin-bottom: -8px !important;
-}
-
 #main-header .nav li a{
     top: 14px;
 }
 
 #main-header .glyphicon-user {
-    top: 55px;
-    position: relative;
-    /*right: 80px !important;*/
-    /*right: 225px;*/
-    left: -130px;
-    font-size: 18px;
-    /*line-height: 33px;*/
+    /*top: 55px;*/
+    position: static !important;
+     font-size: 18px;
     transform: scaleY(1.5);
-    /*height: 20px !important;*/
 }
+
+
+
+
+
 
 .login{
     position: relative;
     top: 53px !important;
-    right: 210px;
+    right: 230px;
     /*font-size: 10px !important;*/
     transform: scaleY(1.5);
     font-weight: 300 !important;
@@ -240,12 +270,14 @@ body {
 
 
 .register{
-    position: relative;
-    top: 57px !important;
-    /*right: -3px;*/
-    right: 118px;
+    position: absolute;
+    top: -33px !important;
+    /*background: red !important;*/
+    padding: 10px;
+    margin-top: 20px !important;
+
     font-size: 10px !important;
-    transform: scaleY(1.5);
+    /*transform: scaleY(1.5);*/
     font-weight: 300 !important;
 }
 
@@ -255,26 +287,39 @@ body {
     top: 120px;
 }
 
-#main-header .glyphicon-heart{
-    top: 50px !important;
-    font-size: 20px;
-    transform: scaleY(1.5);
+.navbar-right{
+    /*margin-right: 4% !important;*/
+    /*margin-left: 20% !important;*/
+    /*background: red !important;*/
     position: relative;
-    left: -120px;
-    /*right: 248px !important;*/
-    /*color: #E62E04!important;*/
+    padding-right: 10px;
+    right: 120px;
 }
 
-.user-logged-in{
-    margin-right: 160px;
-    /*position: absolute;*/
-    /*right: 300px !important;*/
-    /*background: red !important;*/
+#main-header .glyphicon-heart{
+
+    font-size: 20px;
+    transform: scaleY(1.5);
+    z-index: 4 !important;
+
 }
+
+.watchlist{
+    /*background: yellow !important;*/
+    top: 60px !important;
+    position: relative;
+    left: 0px;
+    left: 0 !important;
+    /*height: 10px !important;*/
+    /*width: 90px !important;*/
+    /*top: 18px;*/
+
+}
+
 
 #main-header .glyphicon-heart span{
 
-    font-size: 10px !important;
+    font-size: 10px;
     font-weight: 300 !important;
     color: #F1DAA5; !important;
     position: relative;
@@ -315,6 +360,8 @@ body {
     border-top-width: 3px;
     /*border-top-color: red ;*/
     margin-top: -12px;
+
+
     /*background: #1F0101;*/
     /*z-index: 0.8;*/
     background:  url('../images/background/stars6.jpg') ;
@@ -329,12 +376,214 @@ body {
     margin-top: -12px;
     background: #1F0101;
     opacity: 0.9;
-    /*z-index: 4;*/
-    /*z-index: 0.8;*/
-    /*background:  url('../images/background/stars5.jpg') ;*/
-    /*background: 100%;*/
 
 }
+
+.user-logged-in-li{
+    position: static !important;
+}
+
+
+
+@media screen and (max-width: 768px){
+    .fa-shield{
+        display: none !important;
+        top: 18px !important;
+        left: -58px !important;
+    }
+
+    .footer{
+        font-size: 12px !important;
+    }
+
+    #main-header .right-header .nigeria-flag{
+        display: none !important;
+        top: -30px !important;
+        left: 64% !important;
+        width: 20px !important;
+        height: 20px !important;
+    }
+
+    .logo{
+        width: 35px !important;
+        height: 35px !important;
+    }
+
+    .logo-text{
+        font-size: 9px !important;
+    }
+
+    .glyphicon-heart, .glyphicon-user, .glyphicon-bell{
+        position: static !important;
+        font-size: 14px !important;
+    }
+
+    #main-header #dropdown2{
+        left: -130px !important;
+        /*background: red !important;*/
+    }
+
+    /*.user-logged-in-li{*/
+        /*!*background: blue !important;*!*/
+        /*position: relative!important;*/
+        /*top: 0px !important;*/
+        /*left: 0px !important;*/
+        /*!*right: 90px !important;*!*/
+    /*}*/
+
+    #dropdown1 {
+        left: -100% !important;
+    }
+
+
+
+   #dropdown1{
+       left: -65px !important;
+       top: 60px !important;
+        /*!*left: 3% !important;*!*/
+        /*!*right: 3% !important;*!*/
+        /*width: 240px !important;*/
+        /*left: 40%;*/
+        /*font-size: 10px;*/
+        /*background: red !important;*/
+       width: 200px !important;
+    }
+
+
+     .glyphicon-heart span{
+            /*display: none;*/
+         position: static !important;
+         font-size: 7px !important;
+     }
+
+
+
+     .watchlist{
+         position: relative !important;
+         left: 0 !important;
+         top: 18px !important;
+
+    }
+
+
+    .navbar-right li{
+        display: inline-block !important;
+    }
+
+    .navbar-right{
+        /*position: static !important;*/
+        /*display: none !important;*/
+        height: 0px !important;
+        margin: 0 !important;
+        position: relative;
+        top: -50px !important;
+        width: 100% !important;
+        right: 0px;
+        left:40%;
+        /*background: red !important;*/
+        /*z-index: 3 !important;*/
+    }
+
+
+    #main-header .bell{
+        position: relative !important;
+        top: 8px !important;
+        left: 0 !important;
+    }
+
+    #main-header .user-logged-in{
+       position: relative !important;
+        top: 16px !important;
+        left: 0 !important;
+    }
+
+    #main-header .glyphicon-heart{
+        position: relative;
+        /*top: -120px !important;*/
+        /*bottom: 40px !important;*/
+        left: 20% !important;
+        /*background: red !important;*/
+        /*left: -20px !important;*/
+    }
+
+
+
+    #main-header .register{
+        top: -83px !important;
+        right: -15% !important;
+        /*right: 5% !important;*/
+        /*left: 0 !important;*/
+    }
+
+    #main-header .login{
+        top: -132px !important;
+        left: 22% !important;
+    }
+
+}
+
+
+.home-page-nav-pills-container{
+   /*background: red !important;*/
+    /*background: url('../images/background/water.jpg');*/
+    background: #D7D9C3;
+    /*background-size: 100% 100%;*/
+    /*opacity: 0.9;*/
+    /*padding: 10px;*/
+    /*margin-top: -20px;*/
+}
+
+.home-page-nav-pills-container .row{
+    /*margin-top: -10px;*/
+    /*opacity: 1;*/
+}
+
+
+
+.home-page-nav-pills-container .row ul{
+    background: #1F0101 !important;
+    /*background: red !important;*/
+    margin-right: -7px;
+}
+
+@media screen and (max-width: 768px){
+    .home-page-nav-pills-container .row ul{
+        margin-right: 0;
+        padding-bottom: 70px;
+        /*background: red !important;*/
+    }
+
+}
+
+
+.notification-count{
+    background: white;
+    position: absolute;
+    top:10px;
+    min-width: 10px;
+    height: 14px;
+    right: -2px;
+    padding-bottom: 4px;
+    font-size: 10px;
+    font-weight: 900;
+    border-radius: 50%;
+}
+
+
+.nav-pills{
+    background: #1F0101;
+    margin-top: 8px;
+    height: 55px;
+    color: #F4FF77;
+    height: 47px !important;
+    /*padding-bottom: 15px; !important;*/
+}
+
+.nav-pills li a{
+     margin-top: -8px !important;
+     margin-bottom: -8px !important;
+}
+
 
 @media screen and (max-width: 768px) {
     .search-box-container .search-form{
@@ -375,6 +624,7 @@ body {
     width: 40px;
     float: left;
     margin-left: -15px;
+    padding-left: 0 !important;
     border: 1px solid #F1DAA5;
     border-radius: 5px;
 }
@@ -406,26 +656,36 @@ body {
 .search-box-container form input[type=text]{
     background: #D7D9C3;
     padding: 3px;
-    width: 420px;
+    width: 100% !important;
     height: 23px;
     margin-top: 15px;
     border: 1px solid white;
     position: relative;
-    left: -20px;
-    margin-right: 170px;
+    /*left: -20px;*/
+    /*margin-right: 170px;*/
     /*border-radius: 5px;*/
     /*margin-left: -10px;*/
     color: #333 !important;
 
 }
 
-
-@media screen and (max-width: 768px){
-    .search-box-container form input[type=text]{
-        width: 100%;
-    }
-
+.search-category{
+    padding-right: 0 !important;
+    margin-right: -5px !important;
 }
+
+.search-key {
+    /*background: blue !important;*/
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+.search-icon{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+
 
 .search-box-container {
     /*padding-left: 70px;*/
@@ -491,18 +751,12 @@ body {
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
 
-    .search-box-container .search-icon button[type=submit]{
-        margin-left: -30px !important;
 
-    }
    .home-page-auctions .new-auction{
        background: yellow !important;
 
     }
 
-    .search-box-container form input[type=text]{
-        width: 400px !important;
-    }
 
     .home-page-auctions .all-auctions{
          padding-left: 38%;
@@ -522,36 +776,43 @@ body {
         /*margin-left: -20px !important;*/
     }
 
-    #main-header .navbar-right{
-        /*margin-right: 22% !important;*/
-        position: relative;
-        left: -15% !important;
-        /*padding-right: 130px !important;*/
-        /*background: red !important;*/
+
+
+
+    #main-header .watchlist{
+        /*top: 85px !important;*/
+        left: 125px !important;
     }
 
-    #main-header .glyphicon-bell{
-        left: -30px !important;
+    #main-header .user-logged-in{
+        top: 60px !important;
+        left: 125px !important;
     }
 
-    #main-header .glyphicon-heart{
-        top: 85px !important;
-        left: 15px !important;
+    #main-header .user-loggedout{
+        top: 60px !important;
+        left: 125px !important;
     }
 
-    #main-header .glyphicon-user{
-        top: 85px !important;
-        left: 30px !important;
-    }
+
 
     #main-header .register{
         top: 90px !important;
         left: 33px !important;
     }
 
-    #main-header .login{
-        top: 90px !important;
-        left: -58px !important;
+    #main-header .bell{
+        /*top: 90px !important;*/
+        left: 173px !important;
+    }
+
+    #main-header .nigeria-flag{
+        left: 275px !important;
+        width: 27px !important;
+    }
+
+    #main-header .flag-text{
+        left: 300px !important;
     }
 
 }
@@ -654,7 +915,7 @@ body {
 }
 @media screen and (max-width: 768px)  {
     body{
-        background: red;
+        /*background: red;*/
     }
 
     .all-categories .left-sidebar{
@@ -867,82 +1128,8 @@ body {
 }
 
 
-#dropdown1{
-    border-radius: 4px;
-    box-shadow: none;
-    margin-top: 50px;
-    width: 210px !important;
-    background: #D7D9C3 !important;
-    border: 1px solid #ccc;
-    margin-right: 20px !important;
-
-}
-
- #dropdown2{
-     border-radius: 4px;
-    box-shadow: none;
-    margin-top: 50px;
-    width: 380px !important;
-    background: #f0f0f0 !important;
-    border: 1px solid #fff;
- }
 
 
-
-
-#dropdown1>li>a{
-    color: #333 !important;
-}
-
-#dropdown1>li>a:hover{
-    text-decoration: none;
-}
-
-.profile-drop .divider{
-    background: red;
-}
-
-.profile-dropdown-li{
-    border-bottom: 1px solid #fff !important;
-}
-
-.profile-dropdown-li:last-child{
-    border-bottom: none;
-}
-#dropdown1:before {
-    content: "";
-    border-bottom: 10px solid #fff;
-    border-right: 10px solid transparent;
-    border-left: 10px solid transparent;
-    position: absolute;
-    top: -10px;
-    right: 16px;
-    z-index: 10;
-}
-#dropdown1:after {
-    content: "";
-    border-bottom: 12px solid #ccc;
-    border-right: 12px solid transparent;
-    border-left: 12px solid transparent;
-    position: absolute;
-    top: -12px;
-    right: 14px;
-    z-index: 9;
-}
-
-
-.sub-header{
-    background-image: url('../images/header_img.jpg');
-    color: ghostwhite;
-    font-weight: bold;
-    margin-top: -10px;
-    padding: 15px;
-    /*height: 125px;*/
-}
-
-.sub-header h5{
-    font-size: 22px;
-}
 /*.thumbnail img{*/
     /*width: 100%;*/
     /*height: 230px;*/
@@ -956,9 +1143,7 @@ body {
     border-radius: 0;
 }
 
-.navbar-right{
-    margin-right: 4% !important;
-}
+
 
 #post-ad {
     margin-top: 0 !important;
@@ -1327,14 +1512,9 @@ a:hover {
     border-bottom: none;
 }
 
-.notifications {
-   min-width:420px;
-  }
 
- .notifications-wrapper {
-     overflow:auto;
-      max-height:250px;
-    }
+
+
 
  .notification-item {
     padding:10px;
@@ -1357,7 +1537,7 @@ a:hover {
 /*end of notifications styling */
 
 .dropdown {
-    display:inline-block;
+    /*display:inline-block;*/
     margin-left:20px;
     /*padding:10px;*/
   }
@@ -1408,9 +1588,16 @@ a:hover {
 }
 
 .small-image{
-    width: 48px;
-    height: 48px;
+    width: 30px;
+    height: 30px;
     margin-right: -4px;
+}
+
+.notification-text{
+    /*background :red !important;*/
+    margin-top: -2px !important;
+    position: relative;
+    top: -6px;
 }
 
 
@@ -2113,7 +2300,7 @@ a:hover {
    background-size: 100%;
    margin-right: -3px;
    margin-left: -3px;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 .footer{
     height: 270px;
@@ -2138,6 +2325,7 @@ a:hover {
 .footer a{
     color: #fff !important;
 }
+
 
 .footer-content ul li{
     padding: 7px;
@@ -2181,6 +2369,17 @@ a:hover {
 .footer-subcontent .social-media{
     margin-bottom: 0 !important;
     margin-top: 0 !important;
+    /*position: relative;*/
+    padding-left: 9%;
+    /*left: 20%;*/
+}
+
+.footer-subcontent .social-media a{
+    padding-right: 25px ;
+}
+
+.footer-subcontent .social-media a:last-child{
+    padding-right: 0 ;
 }
 
 
@@ -2192,15 +2391,23 @@ a:hover {
 
 .footer-contact-info{
     background: #1F0101;
+    position: relative;
+    bottom: -20px !important;
+
 }
 
 .footer-contact-info img{
-    margin-left: 50%;
+    margin-left: 42%;
 }
 
 
 .footer-contact-info .label{
-     margin-left: 5%;
+    position: relative;
+    left: -3%;
+    /*color: red !important;*/
 }
 
-
+.all-rights{
+    position: relative;
+    bottom: -60px;
+}

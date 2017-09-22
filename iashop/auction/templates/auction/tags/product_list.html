@@ -25,16 +25,18 @@
                                 <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" />
                             {% endif %}
                             <div class="caption">
-                                 <a hre="#" class="watch-auction" data-action="{%  if auction in watch_list and request.user in owner %}unwatch{% else %}watch{% endif %}" data-id="{{auction.id}}" id="{{auction.id}}">
-                                     <span>
-                                         {% if auction in watch_list and request.user in owner %}
-                                            Unwatch
-                                         {% else %}
-                                            Watch
-                                         {% endif %}
-                                     </span>
-                                     <!--<span class="glyphicon glyphicon-eye-open "></span>-->
-                                 </a>
+                                {% if not request.user.is_anonymous %}
+                                    <a hre="#" class="watch-auction" data-action="{%  if auction in watch_list and request.user in owner %}unwatch{% else %}watch{% endif %}" data-id="{{auction.id}}" id="{{auction.id}}">
+                                        <span>
+                                            {% if auction in watch_list and request.user in owner %}
+                                               Unwatch
+                                            {% else %}
+                                               Watch
+                                            {% endif %}
+                                        </span>
+                                        <!--<span class="glyphicon glyphicon-eye-open "></span>-->
+                                    </a>
+                                {% endif %}
                                 <h4 class="group inner list-group-item-heading">{{ auction.item }}</h4>
                                 <p class="group inner list-group-item-text"></p>
                                 <div class="row">

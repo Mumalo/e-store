@@ -41,14 +41,22 @@ def product_list(context, items):
 
     if items is not None:
         request = context['request']
+
+
         user = request.user
-        watch_list = WatchList.objects.filter(creator=user)
+        watch_list = None
+        owner = None
+
+        if not user.is_anonymous():
+            watch_list = WatchList.objects.filter(creator=user)
+
         watching = []
 
-        for list in watch_list:
-            for item in list.items.all():
-                watching.append(item)
-        owner = [list.creator for list in watch_list][:1]
+        if watch_list is not None:
+            for list in watch_list:
+                for item in list.items.all():
+                    watching.append(item)
+            owner = [list.creator for list in watch_list][:1]
 
 
         return {'request':request,'items':items,'owner':owner, 'watch_list':watching}
