@@ -1,6 +1,15 @@
 # Created by .ignore support plugin (hsz.mobi)
 gitignore
 iashop/iashop/__pycache__/secret.cpython-35.pyc
+env
+.idea
+*.DS_Store
+*.pyc
+*.sqlite3
+__pycache__
+.coverage
+htmlcov
 iashop/iashop/secret.py
 myvenv/Include/
 /myvenv/
+iashop/shop/templates/
