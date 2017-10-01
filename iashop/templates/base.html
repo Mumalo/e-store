@@ -4,6 +4,7 @@
 {% load auction_tags %}
 {% load notifications_tags %}
 {% load auction_tags %}
+{% load page_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -778,11 +779,12 @@
               </div>
 
               <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center social-media">
+                  {% social_media_links as links %}
                     <h6>Social Media</h6>
                   <div class="container-fluid">
-                      <a class="social facebook"> <i class="fa fa-facebook"></i></a>
-                      <a class="social twitter"><i class="fa fa-twitter"></i></a>
-                      <a class="social instagram"><i class="fa fa-instagram"></i></a>
+                      <a class="social facebook" {% if links.fb %}href="{{links.fb}}"{% else %}href="#"{% endif %}> <i class="fa fa-facebook"></i></a>
+                      <a class="social twitter" {% if links.tw %}href="{{links.tw}}"{% else %}href="#"{% endif %}><i class="fa fa-twitter"></i></a>
+                      <a class="social instagram" {% if links.ins %}href="{{links.ins}}"{% else %}href="#"{% endif %}><i class="fa fa-instagram"></i></a>
                   </div>
 
               </div>

@@ -18,6 +18,9 @@ class Pages(models.Model):
     title = models.CharField(choices=HOME_CHOICES, max_length=75, unique=True, null=True)
     photos = models.ManyToManyField(Photo, blank=True, help_text='select this option for home page')
     text = RichTextUploadingField()
+    fb_url = models.URLField(null=True, blank=True, help_text='use this option for home page only')
+    instagram_url = models.URLField(null=True, blank=True, help_text='use this option for home page only')
+    twitter_url = models.URLField(null=True, blank=True, help_text='use this option for home page only')
 
 
 
