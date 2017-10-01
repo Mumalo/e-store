@@ -46,11 +46,11 @@ class GeneralSearchForm(forms.Form):
         search = None
 
         if cleaned_key and not cleaned_in_cat:
-            search = AuctionEvent.objects.filter(item__icontains=cleaned_key)
+            search = AuctionEvent.objects.filter(available=True, item__icontains=cleaned_key)
             # search = 'Me'
 
         if cleaned_key and cleaned_in_cat:
-            search = AuctionEvent.objects.filter(category__id=cleaned_in_cat, item__icontains=cleaned_key)
+            search = AuctionEvent.objects.filter(available=True, category__id=cleaned_in_cat, item__icontains=cleaned_key)
 
         return search
 
@@ -65,18 +65,32 @@ class GeneralSearchForm(forms.Form):
 
 
 class AuctionForm(ModelForm):
-    sub_category2 = forms.CharField(max_length=250, widget=forms.Select, required=False)
+    sub_category3 = forms.CharField(max_length=250, widget=forms.Select, required=False)
+    sub_category4 = forms.CharField(max_length=250, widget=forms.Select, required=False)
 
     def __init__(self, data=None, *args, **kwargs):
         super(AuctionForm, self).__init__(*args, **kwargs)
         # self.fields['sub_category2'].queryset = SubCategory.objects.none()
         self.fields['category'].widget.attrs.update({'id':'cat-select','class': 'browser-default'})
         self.fields['description'].widget.attrs.update({'class':'description', })
-        self.fields['sub_category2'].widget.attrs.update({'id':'sub-cat-select','class': 'browser-default'})
+        self.fields['sub_category3'].widget.attrs.update({'id':'sub-cat-select','class': 'browser-default'})
+        self.fields['sub_category3'].label = 'Sub Category'
+        self.fields['sub_category4'].widget.attrs.update({'id':'sub-cat-select2','class': 'browser-default'})
+        self.fields['sub_category4'].label = 'Sub Category 2'
+        self.fields['place_on_auction'].widget.attrs.update({'id':'auction'})
+        self.fields['start_time'].widget.attrs.update({'id':'start_time'})
+        self.fields['start_time'].required = False
+        self.fields['end_time'].widget.attrs.update({'id':'end_time'})
+        self.fields['end_time'].required = False
+        self.fields['start_price'].widget.attrs.update({'id':'start_price'})
+        self.fields['start_price'].required = False
+
         self.layout = Layout(
             Fieldset(
                 'Auction Information',
-                Row('item', 'category', 'sub_category2'),
+                Row('item'),
+                Row('category', 'sub_category3' ,'sub_category4'),
+                Row('place_on_auction'),
                 Row('start_time', 'end_time'),
                 Row('target_price', 'start_price'),
                     'available',
@@ -123,7 +137,7 @@ class AuctionForm(ModelForm):
 
     class Meta:
         model = AuctionEvent
-        fields = ['item', 'category', 'sub_category2' ,'target_price', 'start_price', 'start_time', 'end_time', 'available', 'description', 'image']
+        fields = ['item', 'category', 'sub_category' ,'sub_category2' ,'target_price', 'start_price', 'start_time', 'end_time', 'available', 'description', 'image', 'place_on_auction']
         exclude = ['subcategory']
         # widgets = {
         #     'sub_category': autocomplete.ModelSelect2(url='auctions:subcategory-autocomplete', forward=['category'])
@@ -176,6 +190,18 @@ class AdvancedSearchForm(forms.Form):
     min = forms.DecimalField(decimal_places=2, max_digits=8, required=False)
 
 
+    def __init__(self, *args, **kwargs):
+
+        self.layout = Layout(
+            Fieldset('',
+                     'key',
+                     Row('min', 'max'))
+        )
+
+        super(AdvancedSearchForm, self).__init__(*args, **kwargs)
+
+
+
 
     def search(self):
         cleaned_key = self.cleaned_data.get('key')
@@ -185,34 +211,27 @@ class AdvancedSearchForm(forms.Form):
         search_r=None
 
         if cleaned_key:
-            search_r = AuctionEvent.objects.filter(item__icontains=cleaned_key)
+            search_r = AuctionEvent.objects.filter(available=True, item__icontains=cleaned_key)
 
         elif cleaned_max:
-            search_r = AuctionEvent.objects.filter(current_price__lte=cleaned_max)
+            search_r = AuctionEvent.objects.filter(available=True, current_price__lte=cleaned_max)
 
         elif cleaned_min:
-            search_r = AuctionEvent.objects.filter(current_price__gte=cleaned_min)
+            search_r = AuctionEvent.objects.filter(available=True, current_price__gte=cleaned_min)
 
         elif cleaned_max and cleaned_min:
-             search_r = AuctionEvent.objects.filter(current_price__gte=cleaned_min, current_price__lte=cleaned_max)
+             search_r = AuctionEvent.objects.filter(available=True, current_price__gte=cleaned_min, current_price__lte=cleaned_max)
 
         elif cleaned_key and  cleaned_min:
-             search_r = AuctionEvent.objects.filter(current_price__gte=cleaned_max, item__icontains=cleaned_key )
+             search_r = AuctionEvent.objects.filter(available=True, current_price__gte=cleaned_max, item__icontains=cleaned_key )
 
         elif cleaned_key and cleaned_max:
-            search_r = AuctionEvent.objects.filter(current_price__lte=cleaned_max, item__icontains=cleaned_key)
+            search_r = AuctionEvent.objects.filter(available=True,current_price__lte=cleaned_max, item__icontains=cleaned_key)
 
         elif cleaned_key and cleaned_max and cleaned_min:
-            search_r = AuctionEvent.objects.filter(current_price__gte=cleaned_min, current_price__lte=cleaned_max, item__icontains=cleaned_key )
+            search_r = AuctionEvent.objects.filter(available=True, current_price__gte=cleaned_min, current_price__lte=cleaned_max, item__icontains=cleaned_key )
         return search_r
 
-    def __init__(self, *args, **kwargs):
-        super(AdvancedSearchForm, self).__init__(*args, **kwargs)
-        self.layout = Layout(
-            Fieldset('',
-                     'key',
-                     Row('min', 'max'))
-        )
 
 
 class AdvertForm(ModelForm):

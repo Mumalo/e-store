@@ -36,9 +36,9 @@
                 {% endwith %}
                 <div class="col-xs-12 col-md-10 profile-image-cover text-center">
                         {% if user.profile.photo %}
-                            <a href="#"><img src="{{ user.profile.photo.url }}" class="inner img-responsive img-thumbnail"></a>
+                            <a href="#"><img src="{{ user.profile.photo.url }}" class="inner img-responsive img-thumbnail img-circle"></a>
                         {% else %}
-                            <a href="#"><img src="{% static 'images/default/default_profile.png' %}" class="iner img-responsive img-thumbnail"></a>
+                            <a href="#"><img src="{% static 'images/default/default_profile.png' %}" class="inner img-responsive img-circle"></a>
                         {% endif %}
 
                     <div class="col-md-2"></div>
@@ -55,8 +55,8 @@
                                 <a class="profile-edit-button" href="{% url 'accounts:edit' user.id %}"><span class="glyphicon glyphicon-pencil"></span>Edit Profile</a>
                             </div>
 
-                            <div class="col-xs-12 col-md-6" style="margin-left: -30px">
-                                <a class="profile-edit-button" href="{% url 'auctions:budget' %}"><span class="glyphicon glyphicon-briefcase"></span> Plan Budget</a>
+                            <div class="col-xs-12 col-md-6" style="">
+                                <a class="profile-edit-button" href="{% url 'auctions:budget' %}"><span class="glyphicon glyphicon-briefcase"></span> Budget</a>
                             </div>
                         </div>
                 {% endif %}
@@ -118,7 +118,11 @@
                             <ul class="collection">
                             {% for item in bids.won %}
                                 <li class="collection-item avatar">
+                                    {% if item.image %}
                                     <img class="circle" src="{{ item.image.url }}" alt="">
+                                    {% else %}
+                                     <img  class="circle" src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                                    {% endif %}
                                     <span class="title">{{ item }}</span>
                                     <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p><br />
                                     <a href="#" class="secondary-content">
@@ -151,7 +155,11 @@
                         <ul class="collection">
                             {% for item in bids.lost %}
                                 <li class="collection-item avatar">
+                                    {% if item.image %}
                                     <img class="circle" src="{{ item.image.url }}" alt="">
+                                    {% else %}
+                                     <img class="circle" src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                                    {% endif %}
                                     <span class="title">{{ item }}</span>
                                     <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p><br />
                                     <a href="#" class="secondary-content">
@@ -189,7 +197,11 @@
                                         {% for item in list.items.all %}
                                             <div class="watch-list-content">
                                                  <li class="collection-item avatar" id="{{item.id}}">
-                                                    <img class="circle" src="{{ item.image.url }}" alt="">
+                                                    {% if item.image %}
+                                                        <img class="circle" src="{{ item.image.url }}" alt="">
+                                                    {% else %}
+                                                        <img  class="circle" src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                                                    {% endif %}
                                                     <span class="title">{{ e}}</span>
                                                     <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>
                                                     <p class="title">current Bid at N {{ item.current_bid_at}}</p><br />
@@ -223,7 +235,11 @@
                                     {% for item in expired_auctions %}
                                             <div class="watch-list-content">
                                                  <li class="collection-item avatar">
-                                                    <img class="circle" src="{{ item.image.url }}" alt="">
+                                                    {% if item.image %}
+                                                        <img class="circle" src="{{ item.image.url }}" alt="">
+                                                    {% else %}
+                                                        <img class="circle"  src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                                                    {% endif %}
                                                     <span class="title">{{ e}}</span>
                                                     <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>
                                                     <p class="title">current Bid at N {{ item.current_bid_at}}</p><br />
@@ -287,7 +303,11 @@
                                     {% for item in all %}
                                             <div class="watch-list-content">
                                                  <li class="collection-item avatar">
-                                                    <img class="circle" src="{{ item.image.url }}" alt="">
+                                                    {% if item.image %}
+                                                        <img class="circle" class="circle" src="{{ item.image.url }}" alt="">
+                                                    {% else %}
+                                                        <img class="circle" src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                                                    {% endif %}
                                                     <span class="title">{{ item }}</span>
                                                     <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>
                                                     <!--<p class="title">current Bid at N {{ item.current_bid_at}}</p><br />-->
@@ -353,6 +373,7 @@
                                                         <!--</div>-->
                                                     </div> <!-- end of row class for price and bid -->
 
+                                                    {% if auction.place_on_auction %}
                                                     <div class="row myClock" style="margin-top: -65px" data-action='{{ auction.end_time|to_json }}'>
                                                         <div class="row">
                                                             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
@@ -368,6 +389,7 @@
                                                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
                                                         </div> <!-- counter text ends here -->
                                                     </div>
+                                                    {% endif %}
                                                 </div>  <!-- end of caption -->
                                             </div> <!-- end of thumbnail -->
                                         </div> <!-- end of column -->
@@ -401,7 +423,7 @@
                                                             <!--<a class="btn btn-flat" href="http://www.jquery2dotnet.com" style="font-size: 13px">BID</a>-->
                                                         <!--</div>-->
                                                     </div> <!-- end of row class for price and bid -->
-
+                                                    {% if auction.place_on_auction %}
                                                     <div class="row myClock" style="margin-top: -49px" data-action='{{ auction.end_time|to_json }}'>
                                                         <div class="row">
                                                             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
@@ -417,6 +439,7 @@
                                                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
                                                         </div> <!-- counter text ends here -->
                                                     </div>
+                                                    {% endif %}
                                                 </div>  <!-- end of caption -->
                                             </div> <!-- end of thumbnail -->
                                         </div> <!-- end of column -->
@@ -452,6 +475,8 @@
                                                         <!--</div>-->
                                                     </div> <!-- end of row class for price and bid -->
 
+
+                                                    {% if auction.place_on_auction %}
                                                     <div class="row myClock" style="margin-top: -49px" data-action='{{ auction.end_time|to_json }}'>
                                                         <div class="row">
                                                             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
@@ -467,6 +492,7 @@
                                                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
                                                         </div> <!-- counter text ends here -->
                                                     </div>
+                                                    {% endif %}
                                                 </div>  <!-- end of caption -->
                                             </div> <!-- end of thumbnail -->
                                         </div> <!-- end of column -->
@@ -500,7 +526,7 @@
                                                             <!--<a class="btn btn-flat" href="http://www.jquery2dotnet.com" style="font-size: 13px">BID</a>-->
                                                         <!--</div>-->
                                                     </div> <!-- end of row class for price and bid -->
-
+                                                    {% if auction.place_on_auction %}
                                                     <div class="row myClock" style="margin-top: -49px" data-action='{{ auction.end_time|to_json }}'>
                                                         <div class="row">
                                                             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
@@ -516,6 +542,7 @@
                                                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
                                                         </div> <!-- counter text ends here -->
                                                     </div>
+                                                    {% endif %}
                                                 </div>  <!-- end of caption -->
                                             </div> <!-- end of thumbnail -->
                                         </div> <!-- end of column -->

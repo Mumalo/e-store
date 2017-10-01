@@ -1,7 +1,7 @@
 import datetime, time
 import arrow
 from django import template
-from ..models import AuctionEvent, Bid, Category, SubCategory, WatchList
+from ..models import AuctionEvent, Bid, Category, SubCategory, WatchList, ItemOfTheDay
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
@@ -148,10 +148,11 @@ def ending_soon(user=None, count=10):
     if user is not None:
         auctions = AuctionEvent.objects.filter(available=True, creator=user)
     for a in auctions:
-        now = datetime.datetime.now()
-        diff = a.end_time - arrow.utcnow()
-        if diff.days == 0:
-            ending_soon_list.append(a)
+        if a.place_on_auction:
+            now = datetime.datetime.now()
+            diff = a.end_time - arrow.utcnow()
+            if diff.days == 0:
+                ending_soon_list.append(a)
     return ending_soon_list
 
 @register.assignment_tag
@@ -203,8 +204,17 @@ def watch_list(user=None):
 
 
 
+@register.assignment_tag
+def item_of_the_day(count=10):
 
+    for i in ItemOfTheDay.objects.all():
 
+        if i.category:
+            return i.category.cat_products.all()[:count]
+        elif i.subcategory:
+            return i.subcategory.sub_products.all()[:count]
+        elif i.user:
+            return AuctionEvent.objects.filter(creator=i.user)[:count]
 
 
 

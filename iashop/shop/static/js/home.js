@@ -17,7 +17,7 @@ $(document).ready(function(){
 
     })
 
-    var owl2 = $("#carousel2, #carousel3")
+    var owl2 = $("#carousel2")
 
     owl2.owlCarousel({
         items:5,
@@ -30,6 +30,32 @@ $(document).ready(function(){
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',
 
+    })
+
+    var owl3 =  $("#carousel3")
+
+    owl3.owlCarousel({
+        items:5,
+        loop:true,
+        margin:10,
+        autoplay:true,
+        autoplayTimeout:4000,
+        autoplaySpeed: 5000,
+        autoplayHoverPause:true,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',
+    })
+
+    var owl4 = $('#carousel4')
+
+    owl4.owlCarousel({
+        items : 1,
+        loop: true,
+        autoplay: true,
+        autoplayTimeout:4000,
+        autoplaySpeed: 5000,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',
     })
 
 

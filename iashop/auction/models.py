@@ -10,6 +10,7 @@ from base.models import BaseModel
 from django.conf import settings
 from django.db.models import Count
 from smart_selects.db_fields import ChainedForeignKey
+from django.core.exceptions import ValidationError
 
 
 
@@ -34,7 +35,7 @@ from smart_selects.db_fields import ChainedForeignKey
 # System users shall be able to place free adds on the site
 
 class Category(BaseModel):
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=250, unique=True, null=True, db_index=False)
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=250, null=True)
     image = models.ImageField(upload_to='category/%Y/%m/%d',blank=True, null=True)
@@ -47,9 +48,24 @@ class Category(BaseModel):
         return self.name
 
 class SubCategory(BaseModel):
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=250,  unique=True, null=True)
     slug = models.SlugField(max_length=250, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True,related_name='subcat')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = 'Sub Categories'
+
+class SubCategory2(BaseModel):
+    name = models.CharField(max_length=250, unique=True)
+    slug = models.SlugField(max_length=250, null=True)
+    sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True, related_name='subcat2')
+
+
+    class Meta:
+        verbose_name_plural = 'Sub Categories 2'
 
     def __str__(self):
         return self.name
@@ -68,11 +84,11 @@ class SubCategory(BaseModel):
 
 
 
-
 class AuctionEvent(BaseModel):
     item = models.CharField(max_length=125, blank=False, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=False, null=True, related_name='cat_products')
     sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, blank=True, null=True, related_name='sub_products')
+    sub_category2 = models.ForeignKey(SubCategory2, on_delete=models.CASCADE, blank=True, null=True, related_name='sub_products2')
     # sub_category = ChainedForeignKey(
     #     SubCategory,
     #     chained_field='category',
@@ -81,17 +97,18 @@ class AuctionEvent(BaseModel):
     #     auto_choose=True,
     #     sort=True,
     # )
-    target_price = models.DecimalField(max_digits=8, decimal_places=2)
-    start_price = models.DecimalField(max_digits=8, decimal_places=2)
-    current_price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    target_price = models.DecimalField(max_digits=50, decimal_places=2)
+    start_price = models.DecimalField(max_digits=50, decimal_places=2, null=True, blank=True)
+    current_price = models.DecimalField(max_digits=50, decimal_places=2, default=0.00)
+    start_time = models.DateTimeField(null=True, blank=True)
+    end_time = models.DateTimeField(null=True, blank=True)
     creator = models.ForeignKey(User,
                                 on_delete=models.CASCADE, null=True)
     image = models.ImageField(upload_to='users/%Y/%m/%d',blank=True)
     time = models.DateTimeField(default=timezone.now)
     available = models.BooleanField(default=True)
     description = models.TextField(max_length=250, null=True, blank=True)
+    place_on_auction = models.NullBooleanField(default=True, help_text='if you click this you must provide start time, end time, start price and target price')
 
 
     class Meta:
@@ -110,18 +127,29 @@ class AuctionEvent(BaseModel):
             raise ValidationError('Start time cannot be greater than end time')
 
     def has_started(self):
-        return self.start_time >= arrow.utcnow()
+
+        if self.place_on_auction:
+            return self.start_time >= arrow.utcnow()
+        else:
+            return False
 
 
 
     def has_ended(self):
-        current_time = arrow.utcnow()
-        return  current_time > self.end_time
+        if self.place_on_auction:
+            current_time = arrow.utcnow()
+            return  current_time > self.end_time
+        else:
+            return False
 
 
 
     def is_running(self):
-        return self.has_started() and not self.has_ended()
+
+        if self.place_on_auction:
+            return self.has_started() and not self.has_ended()
+        else:
+            return False
 
     def time_left(self):
         if self.is_running():
@@ -132,31 +160,40 @@ class AuctionEvent(BaseModel):
 
 
     def get_current_price(self):
-        bids = Bid.objects.filter(event=self).order_by('-amount')
-        count = bids.count()
 
-        if count:
-            current_price =  bids[0].amount
-            return bids[0].amount
+        if self.place_on_auction:
+            bids = Bid.objects.filter(event=self).order_by('-amount')
+            count = bids.count()
+
+            if count:
+                current_price =  bids[0].amount
+                return bids[0].amount
+            else:
+                if self.start_price:
+                    return self.start_price
         else:
-            return self.start_price
+            return self.target_price
 
     def total_bids(self):
-        return Bid.objects.filter(event=self).count()
+
+        if self.place_on_auction:
+            return Bid.objects.filter(event=self).count()
 
     def winner(self):
-        bids = Bid.objects.filter(event=self)
-        count = bids.count()
 
-        if self.has_ended():
-            if count == 0:
-                return "No one placed a bid on this item"
-            elif count == 1:
-                return bids[0].bidder
+        if self.place_on_auction:
+            bids = Bid.objects.filter(event=self)
+            count = bids.count()
+
+            if self.has_ended():
+                if count == 0:
+                    return "No one placed a bid on this item"
+                elif count == 1:
+                    return bids[0].bidder
+                else:
+                    return bids.order_by('-amount')[0].bidder
             else:
-                return bids.order_by('-amount')[0].bidder
-        else:
-            return "No Winner yet"
+                return "No Winner yet"
 
 
     def __str__(self):
@@ -176,7 +213,7 @@ class WatchList(BaseModel):
 
 
 class Bid(BaseModel):
-    amount = models.DecimalField(max_digits=8, decimal_places=2)
+    amount = models.DecimalField(max_digits=50, decimal_places=2)
     bidder = models.ForeignKey(User,
                                 on_delete=models.CASCADE, null=True, related_name='bidder')
     event = models.ForeignKey(AuctionEvent,
@@ -198,7 +235,7 @@ class Advert(BaseModel):
     title = models.CharField(max_length=250, null=True)
     image = models.ImageField(blank=True, null=True, upload_to='users/advert')
     description = models.TextField(max_length=500, null=True, blank=True)
-    price = models.DecimalField(max_digits=8, decimal_places=2)
+    price = models.DecimalField(max_digits=50, decimal_places=2)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='advert')
     available = models.BooleanField(default=False)
 
@@ -223,5 +260,29 @@ class BudgetPlan(Advert):
 
 class Ratings(models.Model):
     time_frame = models.CharField(max_length=125, null=True)
+
+
+class ItemOfTheDay(BaseModel):
+    category = models.ForeignKey(Category, blank=True, null=True, help_text='Please select a category to include')
+    user = models.ForeignKey(User, blank=True, null=True, help_text='Please select a user whose items you wish to include')
+    subcategory = models.ForeignKey(SubCategory, blank=True, null=True, help_text='Please select select a sub category to include')
+
+    def clean(self):
+        c = self.category
+        u = self.user
+        s = self.subcategory
+
+        if (c and u and s) or (c and u) or (c and s) or (u and s):
+            raise ValidationError('Please select one option')
+
+
+    class Meta:
+        verbose_name = 'Item of the day'
+        verbose_name_plural = 'Items of the day'
+
+
+    ''
+
+
 
 

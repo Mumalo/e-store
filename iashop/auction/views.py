@@ -3,7 +3,7 @@ from .forms import AuctionForm, BidForm, AdvancedSearchForm, AdvertForm, BudgetF
 # from .models import Buyer, Seller
 from django.contrib.auth.decorators import login_required
 from django.forms import formset_factory
-from .models import AuctionEvent, Bid, Category, Advert, BudgetPlan, SubCategory
+from .models import AuctionEvent, Bid, Category, Advert, BudgetPlan, SubCategory, SubCategory2
 from django.contrib import messages
 from django.views.generic.edit import CreateView
 from django.shortcuts import render, render_to_response
@@ -33,7 +33,7 @@ def sub_cats_for_cats(request):
         subs = SubCategory.objects.filter(category__name=new_data)
         for s in subs:
             sub_category = str(s)
-            items[sub_category] = [serializers.serialize("json", AuctionEvent.objects.filter(sub_category__name=sub_category))]
+            items[sub_category] = [serializers.serialize("json", SubCategory2.objects.filter(sub_category__name=sub_category))]
 
     # subs = SubCategory.objects.filter(category=data)
 
@@ -51,12 +51,27 @@ def select_by_category(request):
             cat = Category.objects.get(name=submitted_cat)
             for s in cat.subcat.all():
                 result_set.append(str(s.name))
-            # data = serializers.serialize("json", list(cat.subcat.all()))
+            # data = serializers.serialize("json", detail.html(cat.subcat.all()))
         except:
             pass
 
     return JsonResponse(result_set, safe=False)
+@login_required
+@ajax_required
 
+def select_by_subcat(request):
+    subcat = request.POST.get('subcat')
+    result = []
+
+    if subcat:
+        try:
+            sub = SubCategory.objects.get(name=subcat)
+            for s in sub.subcat2.all():
+                result.append(str(s.name))
+        except:
+            pass
+    return JsonResponse(result, safe=False)
+    ''
 
 @login_required
 @ajax_required
@@ -98,9 +113,6 @@ def mark(request):
 
     # if id:
 
-def home(request):
-    return render(request, 'home.html')
-
 
 
 
@@ -125,6 +137,31 @@ def category_detail(request, category_id, category_slug):
     return render(request, "auction/category/category_detail.html",
                   {'category': category, 'items': items,})
 
+def subcat_detail(request, subcat_id=None, subcat_slug=None):
+
+    subcat = None
+    items = None
+    subcat2 = None
+
+    try:
+        subcat = SubCategory.objects.get(id=subcat_id, slug=subcat_slug)
+        items = AuctionEvent.objects.filter(sub_category=subcat)
+    except ObjectDoesNotExist:
+        pass
+    return render(request, "auction/subcategory/detail.html", {'subcat':subcat, 'items':items})
+
+
+
+def subcat2_detail(request, subcat_id=None, subcat_slug=None):
+
+    subcat2 = None
+
+
+    try:
+        subcat2 = SubCategory2.objects.get(id=subcat_id, slug=subcat_slug)
+    except ObjectDoesNotExist:
+        pass
+    return render(request, "auction/subcategory/subcat2-detail.html", {'subcat2':subcat2})
 
 
 
@@ -135,7 +172,8 @@ def add_new_auction(request):
         form = AuctionForm(request,request.POST, request.FILES)
 
         if form.is_valid():
-            cleaned_sub = form.cleaned_data.get('sub_category2')
+            cleaned_sub = form.cleaned_data.get('sub_category3')
+            cleaned_sub2 = form.cleaned_data.get('sub_category4')
 
             new_form = form.save(commit=False)
             current_user = get_user(request)
@@ -143,10 +181,13 @@ def add_new_auction(request):
 
             if cleaned_sub:
                 sub_cat = SubCategory.objects.filter(name=cleaned_sub)[0]
+                sub_cat2 = SubCategory2.objects.filter(name=cleaned_sub2)[0]
             else:
                 sub_cat = None
+                sub_cat2 = None
 
             new_form.sub_category = sub_cat
+            new_form.sub_category2 = sub_cat2
             new_form.save()
             users = User.objects.exclude(id=current_user.id)
             users = list(users)
@@ -184,9 +225,9 @@ def auction_list(request):
 
     # match = None
 
-    if "g_search" in request.GET or "sub_search" in request.GET:
+    if "g_search" in request.GET:
         general_search = GeneralSearchForm(data=request.GET)
-        search_form = AdvancedSearchForm(data=request.GET)
+
 
         if general_search.is_valid():
 
@@ -194,9 +235,11 @@ def auction_list(request):
             cat = general_search.category()
             return render_to_response('auction/list.html', {'g_search':g_search}, context_instance=RequestContext(request, processors=[custom_processor]))
 
-
+    if "sub_search" in request.GET:
+        search_form = AdvancedSearchForm(data=request.GET)
         if search_form.is_valid():
             search = search_form.search()
+
             return render_to_response('auction/list.html', {'search':search}, context_instance=RequestContext(request, processors=[custom_processor]))
 
 
@@ -212,7 +255,6 @@ def edit_auction(request, auction_id):
     auction = get_object_or_404(AuctionEvent, id=auction_id)
     creator = auction.creator
     if request.method == 'POST':
-        return HttpResponse('THE request is post')
         edit_form = AuctionForm(data=request.POST, instance=auction)
 
         if edit_form.is_valid():
@@ -224,6 +266,7 @@ def edit_auction(request, auction_id):
         edit_form = AuctionForm(data=None, instance=auction)
     return render(request, 'auction/edit_auction.html', {'edit_form': edit_form})
 
+@login_required
 def auction_detail(request, auction_id):
     auction = get_object_or_404(AuctionEvent, id=auction_id)
     sent = False
@@ -264,7 +307,7 @@ def auction_detail(request, auction_id):
                 users = list(users)
                 # notify.send(actor=current_user, recipient=users, verb='Placed a bid on', target=auction)
                 # return render(request, 'auction/bid_confirm.html', {'auction':auction})
-                return HttpResponse(bidder)
+
                 messages.success(request, 'Your Bid was submitted')
 
 

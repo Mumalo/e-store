@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+
+{% block title %}{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+              <li>
+                <a href="{% url 'pages:home'%}">Home</a>
+              </li>
+              <li>
+                <a href="#">Contact Us</a>
+              </li>
+        </ul>
+
+        <div class="row left-sidebar richtext">
+            <i>{{text|safe}}</i>
+
+        </div>
+
+    </div>
+{% endblock %}

@@ -10,13 +10,14 @@ body {
 }
 
 .main-header-container{
-    background-image: url('../images/background/stars5.jpg');
-    background-size: 100%;
+    background-image: url('../images/background/school-bg.jpg');
+    background-size: 80%;
 }
 
 #main-header{
     padding-bottom: -4px;
-    background-color: #1E0000;
+    background-color:#1F0101;
+    opacity: 0.9;
 
 }
 
@@ -305,16 +306,28 @@ body {
 }
 
 .watchlist{
-    /*background: yellow !important;*/
     top: 60px !important;
     position: relative;
     left: 0px;
     left: 0 !important;
-    /*height: 10px !important;*/
-    /*width: 90px !important;*/
-    /*top: 18px;*/
-
 }
+
+
+.watchlist span span{
+    font-size: 8px !important;
+    /*margin-left:  !important;*/
+}
+
+.watchlist span span span{
+    padding-left: 5px;
+}
+
+/*.watchlist s span{*/
+    /*position: absolute !important;*/
+/*}*/
+
+
+/*.*/
 
 
 #main-header .glyphicon-heart span{
@@ -364,9 +377,9 @@ body {
 
     /*background: #1F0101;*/
     /*z-index: 0.8;*/
-    background:  url('../images/background/stars6.jpg') ;
+    background:  url('../images/background/school-bg.jpg') ;
     /*z-index: 3;*/
-    background-size: 100%;
+    background-size: 80%;
 
 }
 
@@ -375,7 +388,7 @@ body {
     /*border-top-color: red ;*/
     margin-top: -12px;
     background: #1F0101;
-    opacity: 0.9;
+    opacity: 0.8;
 
 }
 
@@ -411,6 +424,8 @@ body {
 
     .logo-text{
         font-size: 9px !important;
+        padding-left: 0 !important;
+        margin-left: -10px !important;
     }
 
     .glyphicon-heart, .glyphicon-user, .glyphicon-bell{
@@ -460,9 +475,38 @@ body {
 
      .watchlist{
          position: relative !important;
-         left: 0 !important;
+         left: -12px !important;
          top: 18px !important;
+    }
 
+    .glyphicon-heart span{
+       visibility: hidden;
+        width: 80px !important;
+        background: black ;
+        color: #fff !important;
+        text-align: center;
+        border-radius: 6px;
+        position: absolute !important;
+        z-index: 6;
+        bottom: 100%;
+        top: 150px !important;
+        left: 50%;
+        margin-left: -60px;
+    }
+
+    .glyphicon-heart span::after{
+         content: " ";
+    position: absolute;
+    bottom: 100%;  /* At the top of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+    }
+
+    .glyphicon-heart:hover span{
+        visibility: visible;
     }
 
 
@@ -488,14 +532,23 @@ body {
     #main-header .bell{
         position: relative !important;
         top: 8px !important;
-        left: 0 !important;
+        left: -10px !important;
     }
 
-    #main-header .user-logged-in{
+    #main-header .user-logged-in, #main-header .user-loggedout{
        position: relative !important;
         top: 16px !important;
         left: 0 !important;
     }
+
+     #main-header .user-loggedout{
+         left: 30px !important;
+     }
+
+     #main-header .flag-text{
+         display: none !important;
+     }
+
 
     #main-header .glyphicon-heart{
         position: relative;
@@ -509,6 +562,7 @@ body {
 
 
     #main-header .register{
+        display: none;
         top: -83px !important;
         right: -15% !important;
         /*right: 5% !important;*/
@@ -540,10 +594,10 @@ body {
 
 
 
+
+
 .home-page-nav-pills-container .row ul{
     background: #1F0101 !important;
-    /*background: red !important;*/
-    margin-right: -7px;
 }
 
 @media screen and (max-width: 768px){
@@ -624,7 +678,7 @@ body {
     width: 40px;
     float: left;
     margin-left: -15px;
-    padding-left: 0 !important;
+    /*padding-left: 0 !important;*/
     border: 1px solid #F1DAA5;
     border-radius: 5px;
 }
@@ -632,12 +686,16 @@ body {
 @media screen and (max-width: 768px){
 
    .search-box-container .search-category #in_category_field{
-        width: 90px;
+        /*width: 100%;*/
         margin-left: -30px;
     }
 
+    .search-box-container{
+        padding-left: 10% !important;
+    }
+
     .search-box-container .search-icon button[type=submit]{
-        margin-left: -50px !important;
+        /*margin-left: -50px !important;*/
     }
 
 
@@ -699,23 +757,26 @@ body {
     width: 100%;
     padding-left: 0;
     padding-right: 0 !important;
-    /*background: url('../images/background/stars5.jpg');*/
-    /*background-size: 100% 1000px;*/
-    /*opacity: 0.8;*/
 
-    /*background-repeat: repeat-y;*/
-    /*background: red !important;*/
 }
 
-/*.home-page-auctions{*/
-    /*position: absolute;*/
-    /*top: 80px;*/
-    /*left: 43%;*/
+.home-page-container .col-md-7{
+    /*background: red !important;*/
+    padding-left: 0px;
+    padding-right: 0;
+    margin-right: -25px;
+}
 
-/*}*/
 
+
+
+
+
+.home-page-container #carousel1{
+    /*margin-right: -50px !important;*/
+}
 .home-page-auctions{
-    margin-right: 40px;
+    margin-right: 15%;
     /*background: blue !important;*/
     margin-top: -200px !important;
     height: 220px !important;
@@ -723,11 +784,11 @@ body {
 }
 
 .home-page-auctions .all-auctions{
-    padding-left: 40%;
+    /*padding-left: 40%;*/
 }
 
 .home-page-auctions .new-auction{
-    padding-left: 5%;
+    /*padding-left: 5%;*/
 }
 
 
@@ -747,13 +808,16 @@ body {
 
      }
 
+
+
+
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
 
 
    .home-page-auctions .new-auction{
-       background: yellow !important;
+       /*background: yellow !important;*/
 
     }
 
@@ -791,7 +855,7 @@ body {
 
     #main-header .user-loggedout{
         top: 60px !important;
-        left: 125px !important;
+        left: 155px !important;
     }
 
 
@@ -888,18 +952,13 @@ body {
 }
 
 
+.home-page-auctions a{
+    color: #fff;
+    /*background: black ;*/
+}
 
-
-/*.home-page-auctions .new-auction{*/
-
-/*}*/
-
-/*.home-page-auctions li{*/
-    /*display: inline-block;*/
-/*}*/
-
-.home-page-auctions li a{
-    color: #F1DAA5;
+.home-page-auctions{
+    padding-left: 22% !important;
 }
 
 
@@ -916,6 +975,14 @@ body {
 @media screen and (max-width: 768px)  {
     body{
         /*background: red;*/
+    }
+
+    .home-page-container .col-md-7{
+        margin-right: 0 !important;
+    }
+
+    .home-page-container .left-sidenav{
+        width: 100% !important;
     }
 
     .all-categories .left-sidebar{
@@ -1174,7 +1241,7 @@ body {
 
 
 .owl-carousel .item img, .owl-carousel img {
-    width: 950px;;
+    /*width: 950px;;*/
     height: 400px;
     position: relative;
     /*position: absolute;*/
@@ -1184,6 +1251,10 @@ body {
     color: transparent;
     font-size: 0;
     z-index: 1;
+}
+
+#carousel1{
+    width: 97% !important;
 }
 
 @media screen and (max-width: 768px){
@@ -1201,6 +1272,21 @@ body {
 #carousel3 img{
     width: 180px !important;
     height: 200px !important;
+}
+
+#carousel4 img{
+    width: 90%;
+    height: 150px;
+    border: 3px solid #777777;
+    /*padding-left: 20px;*/
+
+}
+
+#carousel4{
+    padding-left: 10%;
+    padding-top: 10px;
+    padding-bottom: 40px;
+
 }
 
 
@@ -1224,9 +1310,9 @@ body {
 
 
 
-.categories-main .panel-heading{
+.categories-main .panel-heading, .best-brand .page-heading{
     font-weight: 700;
-    margin-right: -8px;
+    /*margin-right: -8px;*/
     /*background-color: #f3f4f7 !important;*/
     /*opacity: 0.8;*/
     padding-left: 10px;
@@ -1269,7 +1355,7 @@ body {
 }
 
 .categories-main .panel-body .cat-list{
-    padding: 9px 0 10px;
+    padding: 3px 0 10px;
     width: 225px !important;
 }
 
@@ -1330,7 +1416,7 @@ body {
 
 
     .home-page-nav-pills-container ul li{
-        width: 100% !important;
+        width: 93% !important;
         margin-top: 10px;
     }
 
@@ -1353,7 +1439,7 @@ body {
 /*.description{*/
     /*background: red !important;*/
 /*}*/
-.categories-main .panel-heading{
+.categories-main .panel-heading, .best-brand .panel-heading{
      background: #f5d79b !important;
 }
 .categories-main .panel-heading span a{
@@ -1368,7 +1454,9 @@ body {
 }
 
 .left-sidenav{
-    width: 200px;
+   position: relative;
+    width: 270px;
+
 }
 
 
@@ -1668,6 +1756,7 @@ a:hover {
 .product-list-category{
     width: 100%;
     position: relative;
+
     /*padding-left: 8px;*/
     /*padding-right: 8px;*/
 }
@@ -2281,6 +2370,10 @@ a:hover {
         max-width: 20%;
         background: blue;
     }
+
+    .box {
+        height: auto !important;
+    }
 }
 
 .budget-plan-container{
@@ -2306,18 +2399,18 @@ a:hover {
 }
 
 .footer-container{
-   /*background-image: url('../images/background/stars5.jpg');*/
+   background-image: url('../images/background/header-bg.jpg');
    background-size: 100%;
    margin-right: -3px;
    margin-left: -3px;
     margin-top: 30px;
 }
 .footer{
-    height: 270px;
+    height: auto;
     background: #1E0000;
     margin-right: -13px;
     margin-left: -13px;
-    /*opacity: 0.9;*/
+    opacity: 0.9;
     /*margin-top: 30px;*/
     /*opacity: 0.8;*/
 }
@@ -2327,7 +2420,7 @@ a:hover {
     margin-left: 40px !important;
     margin-right: 40px !important;
     padding: 13px;
-    opacity: 0.6 !important;
+    /*opacity: 0.6 !important;*/
     /*margin-top: -20px !important;*/
     /*width: 900px !important;*/
 }
@@ -2420,6 +2513,12 @@ a:hover {
 .all-rights{
     position: relative;
     bottom: -60px;
+    font-size: 12px;
+}
+
+.richtext{
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 /*.all-categories .col-lg-3:nth-child(4n+1){*/

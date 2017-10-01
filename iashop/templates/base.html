@@ -45,7 +45,7 @@
                     <!--<span class="icon-bar"></span>-->
                     <!--<span class="icon-bar"></span>-->
                <!--</button>-->
-               <a class="navbar-brand text" href="{% url 'auctions:home' %}" style="color: #fff;"><img src="{% static 'images/background/logo.jpg' %}" class="img-responsive logo"><span class="logo-text" style="z-index: 4">IA STORE</span></a>
+               <a class="navbar-brand text" href="{% url 'pages:home' %}" style="color: #fff;"><img src="{% static 'images/background/logo.jpg' %}" class="img-responsive logo"><span class="logo-text" style="z-index: 4">IA STORE</span></a>
            </div>
 
        <!--<div class="collapse navbar-collapse container-fluid" id="myNavbar" style="width: 100% !important; overflow: hidden">-->
@@ -126,7 +126,8 @@
                                                                         <img src="{{ notification.target.image.url}}" class="img-responsive small-image">
                                                                     </a>
                                                                     {% else %}
-                                                                        <a href="{% url 'auctions:bid' if notification.target.id %}">
+
+                                                                        <a href="{% url 'auctions:bid' notification.target.id %}">
                                                                             <img src="{% static 'images/no_image.png' %}" class="img-responsive small-image">
                                                                         </a>
 
@@ -196,19 +197,19 @@
        <div class="col-sm-8 col-md-8 col-lg-8 col-xs-8 text-center search-form">
            {% search_form %}
        </div>
-       <div class="col-sm-0 col-md-2 col-sm-2">
+       <div class="col-sm-2 col-md-2 col-sm-2">
 
        </div>
         <div class="row home-page-auctions">
-            <!--<div class="col-xs-2 col-sm-2 col-md-2"></div>-->
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6  all-auctions">
-                 <li class="list-unstyled"><a href="{% url 'auctions:list' %}" class="text">All Auctions</a></li>
+            <div class="col-xs-0 col-sm-3 col-md-3"></div>
+            <div class="col-xs-12 col-sm-2  col-md-2">
+                 <a href="{% url 'auctions:list' %}" class="text">All Items</a>
             </div>
 
-            <div class="col-xs-12 col-sm-6 col-md-6  new-auction">
-                <li class="list-unstyled"><a href="{% url 'auctions:add_new_auction' %}" class="text">Add  Auction</a></li>
+            <div class="col-xs-12 col-sm-2 col-md-2" >
+               <a href="{% url 'auctions:add_new_auction' %}" class="text">Add  Item</a>
             </div>
-            <!--<div class="col-xs-2 col-sm-2 col-md-2"></div>-->
+            <div class="col-xs-0 col-sm-3 col-md-3"></div>
 
 
         </div>
@@ -218,17 +219,21 @@
 <div class="modal modal-fixed-footer" id="WatchList">
     <div class="modal-content">
         <h4 class="text-center">Watch List</h4>
-        <!--{% for i in list %}-->
+        <!--{% for i in detail.html %}-->
         <!--{{i.product}}-->
         <!--{% endfor %}-->
-        <!--{{list}}-->
+        <!--{{detail.html}}-->
         <ul class="collection">
             {% watch_list request.user as lists %}
             {% for list in lists %}
             {% for item in list.items.all %}
             <div class="watch-list-content">
                 <li class="collection-item avatar" id="{{item.id}}">
-                    <img class="circle" src="{{ item.image.url }}" alt="">
+                    {% if item.image %}
+                        <img class="circle" src="{{ item.image.url }}" alt="">
+                    {% else %}
+                        <img  src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                    {% endif %}
                     <span class="title">{{ item}}</span>
                     <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>
                     <p class="title">current Bid at N {{ item.current_bid_at}}</p><br />
@@ -261,6 +266,8 @@
        {% block js %}
             <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
              <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+             <script src="{% static 'js/jquery.matchHeight.js' %}" type="text/javascript"></script>
+
              <script src="{% static 'js/smart-selects/admin/js/chainedfk.js' %}"></script>
              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
             {% include 'material/includes/material_js.html' %}
@@ -275,6 +282,7 @@
             <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
             <script type="text/javascript" src="https://simplewebrtc.com/latest-v2.js"></script>
             <script src="{% static 'js/owlcarousel/owl.carousel.min.js' %}"></script>
+            <!--<script src="{% static 'django_select2/django_select2.js' %}"></script>-->
             <!--<script>-->
                 <!--var csrftoken = $.cookie('csrftoken');-->
                     <!--function csrfSafeMethod(method) {-->
@@ -302,6 +310,7 @@
                         $.post("{% url 'auctions:select-by-category' %}",
                                 {category: cat_name},
                                 function (data) {
+//                                    alert(data)
 
 //                                    var json_data = $.parseJSON(data)
 
@@ -322,6 +331,37 @@
 
                     }).change()
 
+                    $("#sub-cat-select").change(function(){
+                         var subcat = $(this).find('option:selected').val()
+                        var options = ''
+
+                        $.post("{% url 'auctions:select-by-subcat'%}",
+                                {
+                                    subcat:subcat
+                                },
+
+                                function(data){
+//                                    alert(data)
+
+                                    $("#sub-cat-select2").each(function(){
+                                        $("#sub-cat-select2 option").remove()
+                                    })
+
+                                    for (i = data.length -1; i >= 0; i--){
+
+                                        options += ('<option  value="' + data[i] + '">'+ data[i] + '</option>')
+
+                                    }
+
+                                    $('#sub-cat-select2').append(options)
+                                }
+
+                        )
+
+
+
+                    }).change()
+
                     $('.cat-list').hover(function(){
                          var el = $('#subcats');
                          var current_cat = $(this).data('action');
@@ -339,8 +379,10 @@
                             var items_array = []
 
                             for (val in data){
+//                                alert(data[val])
                                 id_val = val
                                 json_parsed_items = JSON.parse(data[val])
+//                                alert(json_parsed_items)
                                  var heads = $('<div class="col-md-4" id="' + id_val +'" style="color: white !important;"></div>')
                                  heads.append('<h6 style="border-bottom: 1px solid #337ab7; text-transform: capitalize">' + val + '</h6>')
                                  items_array.push(json_parsed_items)
@@ -351,10 +393,13 @@
 
 
                                 for (i in json_parsed_items ){
+//
+                                    item_slug = json_parsed_items[i]["fields"]["slug"]
                                     item_key = json_parsed_items[i]["pk"]
-                                    var url = "{% url 'auctions:bid' 12 %}".replace(12, item_key)
+                                    var url = "{% url 'auctions:subcat2_detail' 12 13 %}".replace(12, item_key).replace(13, item_slug)
+//                                    var url = "{% url 'auctions:bid' 13 %}".replace(12, item_key)
 //                                    alert(url)
-                                    link = $('<a class="" style="color: white !important; display: block; padding: 6px" href="' + url+ '" >'+ json_parsed_items[i]["fields"]["item"] + '</a>')
+                                    link = $('<a class="" style="color: white !important; display: block; padding: 6px" href="' + url+ '" >'+ json_parsed_items[i]["fields"]["name"] + '</a>')
                                     item.append(link)
                                 }
 
@@ -529,6 +574,62 @@
                             endingTop: '10%',
                      });
 
+                    $("#auction").on('change', function(){
+
+//                        $(this).find('option:first-child').remove()
+                        var selected = $(this).find('option:selected').val()
+
+                        var start = $("#start_time")
+                        var startlabel = $("label[for='"+start.attr('id')+"']")
+                        var end = $("#end_time")
+                        var endlabel = $("label[for='"+end.attr('id')+"']")
+                        var price = $("#start_price")
+                        var pricelabel = $("label[for='"+price.attr('id')+"']")
+
+                        if ((selected == '1') || (selected == '2')){
+                            start.prop('required', true)
+                            end.prop('required', true)
+                            price.prop('required', true)
+
+                            if (!start.is(':visible') && !startlabel.is(':visible')){
+                                start.fadeIn(1000)
+                                startlabel.fadeIn(1000)
+
+                            }
+                            if (!end.is(':visible') && !endlabel.is(':visible')){
+                                end.fadeIn(1000)
+                                endlabel.fadeIn(1000)
+                            }
+
+                            if (!price.is(':visible') && !pricelabel.is(':visible')){
+                                price.fadeIn(1000)
+                                pricelabel.fadeIn(1000)
+                            }
+                        }
+
+                        else{
+
+                            start.prop('required', false)
+                            end.prop('required', false)
+                            price.prop('required', false)
+
+                            start.fadeOut(1000)
+                            startlabel.fadeOut(1000)
+                            end.fadeOut(1000)
+                            endlabel.fadeOut(1000)
+                            price.fadeOut(1000)
+                            pricelabel.fadeOut(1000)
+
+
+
+
+                        }
+                    })
+
+//                    Match column heights to avoid unequal height issue in bootstrap
+
+                    $(".box").matchHeight()
+
                     function getCookie(name) {
                         var cookieValue = null;
                         var i = 0;
@@ -586,26 +687,26 @@
                 <div class="row">
                     <div class="col-xs-4 col-sm-4 col-md-4 left-footer-content text-left">
                         <ul class="list-unstyled">
-                             <li><a>Know More About Us</a></li>
-                             <li><a>IA Devices</a></li>
-                             <li><a>About IA Store</a></li>
+                             <li><a href="{% url 'pages:about' %}">Know More About Us</a></li>
+                             <li><a href="{% url 'auctions:list' %}">IA Devices</a></li>
+                             <!--<li><a>About IA Store</a></li>-->
                         </ul>
                     </div>
 
                     <div class="col-xs-4 col-sm-4 col-md-4 middle-footer-content text-left">
                         <ul class="list-unstyled">
-                             <li><a>Make Money With Us</a></li>
-                             <li><a>Sell With IA Store</a></li>
-                             <li><a>Partner With IA Store</a></li>
-                             <li><a>Advertise With IA Store</a></li>
+                             <li><a href="{% url 'auctions:add_new_auction' %}">Make Money With Us</a></li>
+                             <li><a href="{% url 'auctions:add_new_auction' %}">Sell With IA Store</a></li>
+                             <li><a href="#">Partner With IA Store</a></li>
+                             <li><a href="#">Advertise With IA Store</a></li>
                         </ul>
                     </div>
 
                     <div class="col-xs-4 col-sm-4 col-md-4 right-footer-content text-left">
                         <ul class="list-unstyled">
-                            <li><a>Get Help</a></li>
-                             <li><a>Your Account</a></li>
-                             <li><a>Buyer Protection</a></li>
+                            <li><a href="#">Get Help</a></li>
+                             <li><a href="{% url 'accounts:login' %}">Your Account</a></li>
+                             <li><a href="#">Buyer Protection</a></li>
                         </ul>
                     </div>
 
@@ -702,24 +803,24 @@
                   </div>
 
                   <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                       <img src="{% static 'images/background/logo.jpg' %}" class="img-responsive img-circle" style="width:40px; height: 40px">
+                       <img src="{% static 'images/background/logo.jpg' %}" class="img-responsive img-circle" style="width:40px; height: 40px; border: 1px solid #fff">
                         <span class="label text-center">IA STORE</span>
 
                       <div class="row text-right" style="">
-                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                              Contact Us
+                          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                              <a href="{% url 'pages:contact' %}">Contact Us</a>
                           </div>
 
-                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left">
+                          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left">
                               Terms of Use
 
                           </div>
-                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left">
+                          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left">
                               Feebback
                           </div>
 
                           <div class="row text-center all-rights">
-                                  Copyright @2017 All RightReserved
+                                  <div class="col-xs-12 col-sm-12 col-md-12">Copyright @2017 All RightReserved</div>
                           </div>
                       </div>
                   </div>

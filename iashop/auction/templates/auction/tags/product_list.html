@@ -15,14 +15,16 @@
 <!--{% endfor %}-->
     <div id="products" class="row list-group">
 
+
                 {% for auction in items %}
                 {% if auction.available %}
-                    <div class="item  col-xs-12 col-md-3 product-item-container">
-                        <div class="thumbnail" >
+                    <div class="item  col-xs-12 col-md-3 col-sm-3 product-item-container ">
+                        <!--place{{auction.place_on_auction}}-->
+                        <div class="thumbnail box">
                             {% if auction.image %}
                                 <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{{ auction.image.url }}" alt="" /></a>
                             {% else %}
-                                <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" />
+                                <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" /></a>
                             {% endif %}
                             <div class="caption">
                                 {% if not request.user.is_anonymous %}
@@ -41,28 +43,29 @@
                                 <p class="group inner list-group-item-text"></p>
                                 <div class="row">
                                     <div class="col-xs-12 col-md-12 text-center lead-container">
-                                        <p class="lead">N{{ auction.get_current_price }} {{auction.available}}</p>
+                                        <p class="lead">N{{ auction.get_current_price }}</p>
 
                                     </div>
                                     <!--<div class="col-xs-12 col-md-6">-->
                                         <!--<a class="btn btn-flat" href="http://www.jquery2dotnet.com">BID</a>-->
                                     <!--</div>-->
                                 </div> <!-- end of row class for price and bid -->
-                                <div class="row myClock" style="margin-top: -49px" data-action='{{ auction.end_time|to_json }}'>
-                                    <div class="row">
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 hours"></div>
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 minutes"></div>
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 seconds"></div>
-                                    </div>
-
-                                    <div class="row time-info">
+                                {% if auction.place_on_auction %}
+                                    <div class="row myClock" style="margin-top: -49px" data-action='{{ auction.end_time|to_json }}'>
+                                        <div class="row">
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 hours"></div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 minutes"></div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 seconds"></div>
+                                        </div>
+                                        <div class="row time-info">
                                             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Days</div>
                                             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Hours</div>
                                             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Minutes</div>
                                             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
-                                    </div> <!-- counter text ends here -->
-                                </div>
+                                        </div> <!-- counter text ends here -->
+                                    </div>
+                                {% endif %}
                             </div>  <!-- end of caption -->
                         </div> <!-- end of thumbnail -->
                     </div> <!-- end of column -->

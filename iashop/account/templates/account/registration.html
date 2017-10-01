@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
-
- {% load material_form %}
+{% load page_tags %}
+{% load material_form %}
 {% block title %}{% endblock %}
 
 {% block content %}
@@ -24,9 +24,8 @@
                     <h4>Terms and Conditions</h4>
 
                     <ul class="collection">
-                        <li class="collection-item">
-                            <!--Please Do not pay money to any seller untill you have recieved your item-->
-                        </li>
+                        {% terms as terms %}
+                        {{terms|safe}}
 
                     </ul>
                 </div>

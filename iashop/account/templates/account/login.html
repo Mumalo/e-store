@@ -24,7 +24,17 @@
                         {% csrf_token %}
                         {% form form=form %}{% endform %}
                         <input type="hidden" name="next" value="{{ next }}" />
-                        <button type="submit" name="_submit" class="btn">Submit</button>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <button type="submit" name="_submit" class="btn">Submit</button>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-6 col-md-6"  style="padding: 10px">
+                                or  <a href="{% url 'accounts:register' %}">Create a New Account</a>
+                            </div>
+
+                        </div>
+
                  </form>
             </div>
             <div class="col-sm-3">

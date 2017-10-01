@@ -17,12 +17,12 @@
 
     <ul class="breadcrumb">
               <li>
-                <a href="#">Home</a>
+                <a href="{% url 'pages:home' %}">Home</a>
               </li>
               <li>
-                <a href="#">Auctions</a>
+                <a href="{% url 'auctions:list' %}">items</a>
               </li>
-              <li class="active">Auction detail</li>
+              <li class="active">item detail</li>
     </ul>
 
     <div class="row">
@@ -41,7 +41,7 @@
                 </div>
 
 
-
+                {% if auction.place_on_auction %}
                 <div class="col-xs-12 col-sm-7 col-md-7 bid-form-container">
                     {% if messages %}
                             <ul class="messages">
@@ -56,21 +56,21 @@
 
                     <!--The form-->
 
-                    <div class="row">
-                        <div class="hidden-xs-up col-sm-2 colmd-2"></div>
+                        <div class="row">
+                            <div class="hidden-xs-up col-sm-2 colmd-2"></div>
 
-                        <div class="colxs-12 col-sm-8 colmd-8">
-                            <form method="post" class="viewform">
-                                {% csrf_token %}
-                                {% form form=bid_form %}{% endform %}
-                                <button type="submit" name="_submit" class="btn waves-effect waves-teal">BID</button>
-                            </form>
+                                <div class="colxs-12 col-sm-8 colmd-8">
+                                    <form method="post" class="viewform">
+                                        {% csrf_token %}
+                                        {% form form=bid_form %}{% endform %}
+                                        <button type="submit" name="_submit" class="btn waves-effect waves-teal">BID</button>
+                                    </form>
+                                </div>
+                            <div class="hidden-xs-up col-sm-2 colmd-2"></div>
+
                         </div>
-
-                        <div class="hidden-xs-up col-sm-2 colmd-2"></div>
-
-                    </div>
                 </div>
+                {% endif %}
             </div> <!-- end of auction detail image row -->
 
             <div class="row auction-detail-item-info">
@@ -124,22 +124,27 @@
 
                         <li class="list-group-item">
                             <div class="row">
+                                {% if auction.place_on_auction %}
                                 <div class="col-xs-4 col-md-4">
                                      Expires on
                                 </div>
                                 <div class="col-xs-4 col-md-8">
                                       <span>{{ auction.end_time }}</span>
                                 </div>
+                                {% endif %}
                             </div>
                         </li>
 
                         <li class="list-group-item">
                             <div class="row">
-                                <div class="col-xs-4 col-md-4">
-                                     Time Remaining
-                                </div>
+                                {% if auction.place_on_auction %}
+                                    <div class="col-xs-4 col-md-4">
+                                         Time Remaining
+                                    </div>
+                                {% endif %}
                                 <div class="col-xs-8 col-md-8" style="float: left">
                                     <span>
+                                        {% if auction.place_on_auction %}
                                         <div class="row myClock" style="" data-action='{{ auction.end_time|to_json }}'>
                                             <div class="row">
                                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
@@ -155,6 +160,7 @@
                                                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
                                             </div> <!-- counter text ends here -->
                                         </div>
+                                        {% endif %}
                                     </span>
                                 </div>
                             </div>
@@ -167,6 +173,7 @@
 
         <div class="col-xs-12 col-sm-3 col-md-3 right-sidebar">
             <h5 class="auction-detail-heading">More Information</h5>
+            {% if auction.place_on_auction %}
             <div class="container" style="margin-left: 21px; background-color: #eee">
                 <div class="row myClock" style="padding-left: 18px; margin-bottom: -5px" data-action='{{ auction.end_time|to_json }}'>
                     <div class="row">
@@ -184,12 +191,12 @@
                     </div> <!-- counter text ends here -->
                 </div>
             </div>
+            {% endif %}
             <!--Declare winner here -->
             <div class="panel">
                 <div class="panel-body">
-                    <h6>Current bid at N{{auction.get_current_price}}</h6>
-                    <h6>Winner: {{auction.winner}}</h6>
-                    <h6>Purchase this item now for: {{auction.target_price}}</h6>
+                    <h6>{% if auction.place_on_auction %}<span>Current bid</span> {% else %}<span>Price</span>{% endif %} N{{auction.get_current_price}}</h6>
+                    {% if auction.place_on_auction %}<h6>Winner: {{auction.winner}}</h6>{% endif %}
                 </div>
 
             </div>
