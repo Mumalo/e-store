@@ -21,7 +21,7 @@ def home(request):
     except ObjectDoesNotExist:
         p = None
 
-    return render(request, 'home.html', {'images':images})
+    return render(request, 'home.html', {'images':images, 'text':text})
 
 def contact_us(request):
 

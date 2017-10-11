@@ -37,7 +37,7 @@ urlpatterns = [
     # name='django.contrib.sitemaps.views.sitemap'),
     url(r'^photologue/', include('photologue.urls', namespace='photologue')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
-    url(r'^grappelli/', include('grappelli.urls')),
+    url(r'^grapelli/', include('grappelli.urls')),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += staticfiles_urlpatterns()
