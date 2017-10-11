@@ -14,6 +14,8 @@ from django.core.urlresolvers import reverse
 from .models import Follow
 from notifications.signals import notify
 from auction.models import WatchList, AuctionEvent
+from auction.forms import  EmailPostForm
+from django.conf import settings
 # from cart.cart import Cart
 
 # from notify.signals import notify
@@ -117,7 +119,16 @@ def edit_profile(request, pk):
 
 
 
-
+# @login_required
+# def budget_reply_form(request):
+#     form = EmailPostForm()
+#
+#     if request.method == 'POST':
+#         form = EmailPostForm(request.POST)
+#     else:
+#         form = EmailPostForm()
+#     return render(request, 'budget/budget_reply.html', {'form':form, 'me':'message'})
+#
 
 
 @login_required
@@ -128,11 +139,32 @@ def user_detail(request, pk):
     all = AuctionEvent.objects.filter(creator=user)
     expired_auctions = AuctionEvent.objects.filter(creator=user, available=False)
 
+    sender = request.user
+    budget_reply_form = EmailPostForm()
+
+    if request.method == 'POST':
+        budget_reply_form = EmailPostForm(request.POST)
+        budget = request.POST.get('budget', None)
+
+
+
+        if budget_reply_form.is_valid():
+            message = budget_reply_form.cleaned_data.get('message')
+            from_email = settings.EMAIL_HOST_USER
+            to_email = user.email
+            subject = "{}, {} reacted on your budget plan {}".format(sender, sender.email, budget)
+            message = "{}".format(message)
+            budget_reply_form.send(subject, message, from_email, [to_email])
+
+
+
+
     if user.is_authenticated and user.is_active:
         return render(request, 'account/user_home.html', {
         'user': user, 'nfs':nfs,'lists':lists,
         'expired_auctions':expired_auctions,
         'all':all,
+         'budget_reply_form':budget_reply_form,
     })
 
     else:

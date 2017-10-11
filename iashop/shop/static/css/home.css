@@ -12,6 +12,8 @@ body {
 .main-header-container{
     background-image: url('../images/background/school-bg.jpg');
     background-size: 80%;
+    /*background-repeat: no-repeat;*/
+    /*background-position: center;*/
 }
 
 #main-header{
@@ -406,8 +408,33 @@ body {
     }
 
     .footer{
-        font-size: 12px !important;
+        font-size: 11px !important;
     }
+
+    /*.footer-contact-info .all-rights{*/
+        /*!*background: red !important;*!*/
+        /*width: 270px !important;*/
+        /*right: 90% !important;*/
+    /*}*/
+
+    .footer-contact-info div:nth-child(2) [class*="row"]{
+        /*background: red !important;*/
+        width: 300px !important;
+        /*margin-right: 25% !important;*/
+        position: relative;
+        right: 110px;
+    }
+
+    .footer-contact-info div:nth-child(2) .label{
+        position: relative;
+        left: 12%;
+    }
+
+    .footer-contact-info div:nth-child(2) [class*="row"] .all-rights{
+        right: 6% !important;
+    }
+
+
 
     #main-header .right-header .nigeria-flag{
         display: none !important;
@@ -833,7 +860,7 @@ body {
     }
 
     .left-sidenav{
-        width: 180px !important;
+        width: 190px !important;
     }
 
     #carousel1 .item img{
@@ -896,13 +923,15 @@ body {
     /*}*/
 
     .left-sidenav{
-        width: 200px !important;
+        /*width: 100px !important;*/
+        /*padding-right: 0 !important;*/
+        /*padding-left: 0 !important;*/
         /*background: red !important;*/
     }
 
     .right-sidenav{
         margin-left: 0 !important;
-        width: 220px !important;
+        width: 210px !important;
     }
 
     #main-header .nigeria-flag{
@@ -924,9 +953,25 @@ body {
 
 }
 
+@media screen and  (min-width: 1255px){
+    #main-header{
+        /*background-color: red !important;*/
+    }
+
+    .left-sidenav{
+        width: 230px !important;
+    }
+
+    .right-sidenav{
+        margin-left: 0 !important;
+        /*width: 205px !important;*/
+    }
+
+}
+
 @media screen and  (min-width: 1025px) and (max-width: 1225px) {
     #main-header{
-        background: blue !important;
+        /*background: blue !important;*/
     }
 
      #main-header .glyphicon-user{
@@ -948,6 +993,10 @@ body {
          top: 90px !important;
          left: -360px !important;
      }
+
+     .home-page-container .left-sidenav{
+        width: 230px !important;
+    }
 
 }
 
@@ -1048,11 +1097,12 @@ body {
     position: absolute;
     left: 90% !important;
     top: 0;
-    width: 682px ;
+    width: 780px ;
     /*add DOM break point for this style*/
     padding: 10px;
     opacity: 0.8;
-    height: 350px;
+    height: 370px;
+    overflow: auto;
     /*color: white !important;*/
 }
 
@@ -2225,17 +2275,27 @@ a:hover {
 }
 
 .follow-user-container .btn-small{
-    font-size: 70% !important;
-    color: #F4FF77;
-    background: #1F0101;
-    float: left;
-    border-radius: 4px;
+    font-size: 60% !important;
+    /*color: #F4FF77;*/
+    background: #fff;
+    /*float: left;*/
+    border-radius: 15px;
+    border: 1px solid darkred;
+    color: darkred;
+    padding-right: 15px;
+    padding-left: 15px;
     /*width: 113px;*/
 }
 
 
+.follow-user-container [class*="col-"]:first-child{
+    /*background-color: red !important;*/
+    padding-right: 0 !important;
+}
+
+
 .follow-user-container .btn-small:hover{
-    background: #1F0101;
+    /*background: #1F0101;*/
 }
 
 
@@ -2377,8 +2437,119 @@ a:hover {
 }
 
 .budget-plan-container{
-    height: 480px;
+    /*height: 480px;*/
     /*background: red;*/
+    padding-bottom: 20px;
+}
+
+/*.budget-plan-container form .section h5{*/
+    /*text-align: center;*/
+    /*font-size: 18px;*/
+    /*font-weight: 300;*/
+/*}*/
+
+/*.budget-plan-container form .btn{*/
+    /*background-color: #1F0101 !important;*/
+    /*font-size: 75%;*/
+/*}*/
+
+/*.budget-plan-container form .submit-button{*/
+    /*margin-left: 35%;*/
+/*}*/
+
+
+.budget-plan-container .budget-image{
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+    margin-bottom: 10px;
+}
+
+.budget-plan-container .budget-image input#upload{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    display: none;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    /*background-color: red !important;*/
+}
+
+.budget-plan-container button{
+    background-color: #1F0101 !important;
+    font-size: 75%;
+}
+
+.budget-plan-container .budget-image .btn-circle{
+    /*width: 100%;*/
+    /*height:0;*/
+	/*padding-bottom: 100%;*/
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 6px;
+    padding-bottom: 2px;
+    background-color: #1F0101 !important;
+    font-size: 75%;
+
+    /*padding-bottom: 50%;*/
+}
+
+.budget-plan-container .budget-image button i{
+   display:block;
+	float:left;
+	width:100%;
+	padding-top:50%;
+    padding-bottom:50%;
+	line-height:1em;
+	margin-top:-0.5em;
+    text-align:center;
+}
+
+.budget-plan-container .budget-image #uploadFile{
+    width: 80%;
+    padding-left: 33%;
+}
+
+
+.budget-notify span{
+    display: none;
+    color: #333;
+    font-size: 10px;
+}
+
+/*.budget-notify span{*/
+    /*position: absolute;*/
+    /*top: -10px;*/
+/*}*/
+
+/*.budget-notify i:hover + span{*/
+    /*display: block;*/
+    /*!*position: absolute;*!*/
+    /*!*top: -18px;*!*/
+/*}*/
+
+/*google chrome and safari*/
+.budget-plan-container .budget-image #uploadFile::-webkit-input-placeholder{
+     color: orangered !important;
+    font-weight: bold !important;
+    margin-left: 10px;
+}
+
+/*internet explorer and firefox*/
+
+.budget-plan-container .budget-image #uploadFile:-ms-input-placeholder,
+.budget-plan-container .budget-image #uploadFile::-moz-placeholder {
+    color: orangered !important;
+    /*font-weight: bold !important;*/
+    /*margin-left: 10px;*/
 }
 
 .budget-plan-container form{
@@ -2387,8 +2558,25 @@ a:hover {
 }
 
 
+.budget-plan-container .title, .price{
+    /*background: red !important;*/
+    margin-left: 7%;
+}
+
+.budget-plan-container .time{
+    margin-right: 10%;
+}
+
+
 .budget-plan-container .fieldWrapper{
     padding: 18px;
+}
+
+.budget-plan-container .panel-heading{
+    padding: 10px;
+    background: #1F0101 !important;
+    color: #fff;
+    /*width: 100% !important;*/
 }
 
 .budget-plan-container .errors{
@@ -2499,6 +2687,8 @@ a:hover {
 
 }
 
+
+
 .footer-contact-info img{
     margin-left: 42%;
 }
@@ -2512,8 +2702,9 @@ a:hover {
 
 .all-rights{
     position: relative;
-    bottom: -60px;
+    /*bottom: -60px;*/
     font-size: 12px;
+    top: 60px;
 }
 
 .richtext{

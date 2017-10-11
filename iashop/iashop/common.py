@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import sys
+from django.conf import settings
+settings.configure()
 # from os.path import abspath, basename, dirname, join, normpath
 from .secret import DATABASE_NAME, PASSWORD, USER, SECRET_KEY, EMAIL_HOST, \
     EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, EMAIL_USE_TLS, HOST, ENGINE

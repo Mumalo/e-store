@@ -119,26 +119,35 @@ class AuctionEvent(BaseModel):
         auction_end_time = arrow.get(self.end_time)
         auction_start_price = self.start_price
 
-        if auction_start_time < arrow.utcnow() or auction_end_time < arrow.utcnow():
-            raise ValidationError('Auction cannot be created in the past')
-        if auction_end_time < auction_start_time:
-            raise ValidationError('End time cannot be less than start time')
-        if auction_start_time > auction_end_time:
-            raise ValidationError('Start time cannot be greater than end time')
-
+        if self.place_on_auction:
+            if auction_start_time < arrow.utcnow() or auction_end_time < arrow.utcnow():
+                raise ValidationError('Auction cannot be created in the past')
+            if auction_end_time < auction_start_time:
+                raise ValidationError('End time cannot be less than start time')
+            if auction_start_time > auction_end_time:
+                raise ValidationError('Start time cannot be greater than end time')
     def has_started(self):
 
         if self.place_on_auction:
-            return self.start_time >= arrow.utcnow()
+            started = self.start_time >= arrow.utcnow()
+
+            if started:
+                return True
+            else:
+                self.available = False
+                return False
         else:
-            return False
+            return True
 
 
 
     def has_ended(self):
         if self.place_on_auction:
             current_time = arrow.utcnow()
-            return  current_time > self.end_time
+            ended = current_time > self.end_time
+            if ended:
+                self.available = False
+                return True
         else:
             return False
 
@@ -149,14 +158,16 @@ class AuctionEvent(BaseModel):
         if self.place_on_auction:
             return self.has_started() and not self.has_ended()
         else:
-            return False
+            return True
 
     def time_left(self):
-        if self.is_running():
-            diff = self.end_time - arrow.utcnow()
-            return diff.day
-        else:
-            return 'ended'
+
+        if self.place_on_auction:
+            if self.is_running():
+                diff = self.end_time - arrow.utcnow()
+                return diff.day
+            else:
+                return 'ended'
 
 
     def get_current_price(self):
@@ -199,6 +210,10 @@ class AuctionEvent(BaseModel):
     def __str__(self):
         return self.item
 
+    def is_available(self):
+        if self.has_ended() or not self.has_started():
+            self.available = False
+
 class WatchList(BaseModel):
 
     creator = models.ForeignKey(User,
@@ -233,7 +248,7 @@ class Bid(BaseModel):
 
 class Advert(BaseModel):
     title = models.CharField(max_length=250, null=True)
-    image = models.ImageField(blank=True, null=True, upload_to='users/advert')
+    image = models.ImageField(blank=False, null=True,upload_to='advert/%Y/%m/%d')
     description = models.TextField(max_length=500, null=True, blank=True)
     price = models.DecimalField(max_digits=50, decimal_places=2)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='advert')
@@ -247,7 +262,18 @@ class Advert(BaseModel):
         return self.title
 
 class BudgetPlan(Advert):
-    pass
+    range = models.IntegerField(null=True)
+    TIME_CHOICES = (
+        ('YEARS','Years'),
+        ('MONTHS','Months'),
+        ('WEEKS','Weeks'),
+        ('DAYS','Days'),
+        ('HOURS','Hours'),
+        ('MINUTES','Minutes'),
+        ('SECONDS', 'Seconds'),
+    )
+    time = models.CharField(choices=TIME_CHOICES, max_length=75, null=True)
+
 
 
 
@@ -282,7 +308,5 @@ class ItemOfTheDay(BaseModel):
 
 
     ''
-
-
 
 

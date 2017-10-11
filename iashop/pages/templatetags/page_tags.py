@@ -1,6 +1,7 @@
 
 
 from django import template
+from django.core.exceptions import ObjectDoesNotExist
 from ..models import Pages
 
 
@@ -30,7 +31,20 @@ def social_media_links():
             links['ins'] = ins
         if not (fb or tw or ins):
             links = None
-    except:
+    except ObjectDoesNotExist:
         pass
 
     return links
+
+
+@register.assignment_tag
+
+def terms():
+    page = None
+    terms = None
+    try:
+        page = Pages.objects.get(title='Home')
+        terms = page.text
+    except ObjectDoesNotExist:
+        pass
+    return terms

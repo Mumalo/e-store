@@ -23,7 +23,7 @@ class Institution(BaseModel):
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profile')
     photo = models.ImageField(blank=True, null=True, upload_to='profile/users', default=DEFAULT_PROFILE)
-    cover = models.ImageField(blank=True, null=True, upload_to='cover/users', default=DEFAULT_COVER)
+    # cover = models.ImageField(blank=True, null=True, upload_to='cover/users', default=DEFAULT_COVER)
     phone = models.CharField(max_length=25, null=True, blank=True, default='00000000')
     institution = models.ForeignKey(Institution,
                                     on_delete=models.CASCADE, null=True)

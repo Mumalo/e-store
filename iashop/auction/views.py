@@ -16,7 +16,7 @@ import json
 from django.core import serializers
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.mail import send_mail, BadHeaderError
+# from django.core.mail import send_mail, BadHeaderError
 from  django.template import RequestContext
 from common.decorators import ajax_required
 from notifications.signals import notify
@@ -174,17 +174,23 @@ def add_new_auction(request):
         if form.is_valid():
             cleaned_sub = form.cleaned_data.get('sub_category3')
             cleaned_sub2 = form.cleaned_data.get('sub_category4')
+            sub_cat = None
+            sub_cat2 = None
 
             new_form = form.save(commit=False)
             current_user = get_user(request)
             new_form.creator = current_user
 
             if cleaned_sub:
-                sub_cat = SubCategory.objects.filter(name=cleaned_sub)[0]
-                sub_cat2 = SubCategory2.objects.filter(name=cleaned_sub2)[0]
-            else:
-                sub_cat = None
-                sub_cat2 = None
+                try:
+                    sub_cat = SubCategory.objects.get(name=cleaned_sub)
+                except ObjectDoesNotExist:
+                    pass
+            elif cleaned_sub2:
+                try:
+                    sub_cat2 = SubCategory2.objects.get(name=cleaned_sub2)
+                except ObjectDoesNotExist:
+                    pass
 
             new_form.sub_category = sub_cat
             new_form.sub_category2 = sub_cat2
@@ -266,6 +272,9 @@ def edit_auction(request, auction_id):
         edit_form = AuctionForm(data=None, instance=auction)
     return render(request, 'auction/edit_auction.html', {'edit_form': edit_form})
 
+
+
+
 @login_required
 def auction_detail(request, auction_id):
     auction = get_object_or_404(AuctionEvent, id=auction_id)
@@ -287,13 +296,10 @@ def auction_detail(request, auction_id):
             if creator and sender and message:
                 from_email = settings.EMAIL_HOST_USER
                 to_email = creator.email
-                subject = "{}, {}is interested in {}".format(sender, sender.email, auction.item)
+                subject = "{}, {} is interested in {}".format(sender, sender.email, auction.item)
                 message = "{}".format(message)
-                try:
-                    send_mail(subject, message, from_email, [to_email])
-                except BadHeaderError:
-                    return HttpResponse('Invalid Header found')
-                sent = True
+                private_message.send(subject, message, from_email, [to_email])
+
 
         if bid_form.is_valid():
             bidder = get_user(request)
@@ -325,6 +331,8 @@ def auction_detail(request, auction_id):
                    'auction': auction,
                    'private_message':private_message,
                    'sent': sent})
+
+
 
 @login_required
 def create_advert(request):
@@ -379,7 +387,7 @@ class AdvertDelete(DeleteView):
 @login_required
 def create_budget_plan(request):
     if request.method == 'POST':
-        budget_form = BudgetForm(data=request.POST)
+        budget_form = BudgetForm(data=request.POST, files=request.FILES)
         if budget_form.is_valid():
             new_budget = budget_form.save(commit=False)
             new_budget.creator = request.user
@@ -399,18 +407,53 @@ def update_budget(request, budget_id):
     if request.method == 'POST':
         budget_form = BudgetForm(data=request.POST, instance=budget)
 
-        if budget.is_valid() and request.user.id == creator.id:
+        if budget_form.is_valid() and request.user.id == creator.id:
             new_budget = budget_form.save(commit=False)
             new_budget.creator = creator
             new_budget.available = True
             new_budget.save()
+            messages.success(request, 'budget updated successfully')
     else:
         budget_form = BudgetForm(instance=budget)
-    return render(request, 'auction/advert/budget_adit.html')
+    return render(request, 'auction/advert/budget_edit.html', {'budget_form':budget_form})
 
-class BudgetDelete(DeleteView):
-    model = BudgetPlan
-    success_url = reverse_lazy('account:user_detail')
+@login_required
+@ajax_required
+def delete_view(request):
+
+    id = request.POST.get('id', None)
+    confirm_delete = request.POST.get('confirm', None)
+    action = request.POST.get('action', None)
+
+    if id:
+
+        if action == 'budget':
+            try:
+                budget = BudgetPlan.objects.get(id=id)
+
+                if confirm_delete and confirm_delete == 'true':
+                    budget.delete()
+                    return JsonResponse({'status':'ok'})
+                # budget.delete()
+
+            except ObjectDoesNotExist:
+                return JsonResponse({'status':'ko'})
+        if action == 'item':
+            try:
+                item = AuctionEvent.objects.get(id=id)
+
+                if confirm_delete and confirm_delete == 'true':
+                    item.delete()
+                    return JsonResponse({'status':'ok'})
+                # budget.delete()
+
+            except ObjectDoesNotExist:
+                return JsonResponse({'status':'ko'})
+
+    else:
+        return JsonResponse({'status':'ko'})
+
+
 
 # Views for creating budget plan
 

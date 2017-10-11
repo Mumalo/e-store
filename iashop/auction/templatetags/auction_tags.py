@@ -1,8 +1,10 @@
 import datetime, time
 import arrow
 from django import template
-from ..models import AuctionEvent, Bid, Category, SubCategory, WatchList, ItemOfTheDay
+from ..models import AuctionEvent, Bid, Category, SubCategory, WatchList, ItemOfTheDay, BudgetPlan
+from ..forms import EmailPostForm
 from django.db.models import Count
+from django.conf import settings
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import Context
@@ -118,10 +120,12 @@ def live_auctions(user=None, count=10):
 @register.assignment_tag
 def hottest_deals(user=None, count=5):
     auctions = AuctionEvent.objects.filter(available=True)
-    list = []
+    hottest_list = []
     if user is not None:
         auctions = AuctionEvent.objects.filter(available=True, creator=user)
-    return auctions.annotate(total_bids=Count('bids')).order_by('-total_bids')[:count]
+    hottest = auctions.annotate(total_bids=Count('bids')).order_by('-total_bids')[:count]
+    hottest_list = [a for a in hottest if a.is_running()]
+    return hottest_list[:count]
 
 
 @register.assignment_tag
@@ -217,7 +221,20 @@ def item_of_the_day(count=10):
             return AuctionEvent.objects.filter(creator=i.user)[:count]
 
 
+@register.assignment_tag(takes_context=True)
+def budget_plan(context, user=None):
+    request = context["request"]
 
+    if user:
+        budget = BudgetPlan.objects.filter(creator=user)
+    return budget
+
+
+# @register.inclusion_tag(file_name="auction/tags/budget_reply.html",takes_context=True)
+# def satisfy_budget(context, user, b):
+#     request = context["request"]
+#     budget_reply =  EmailPostForm()
+#     return {'request':request, 'budget_reply':budget_reply, 'user':user}
 
 
 

@@ -7,6 +7,8 @@ from django import forms
 from django.forms import ModelForm, Textarea
 from material import Layout, Fieldset, Row
 import arrow
+from django.core.mail import send_mail, BadHeaderError
+from django.shortcuts import HttpResponse
 
     # def get_item_label(self, item):
     #     return "{}, {}".format(item.name, item.category)
@@ -25,6 +27,16 @@ class EmailPostForm(forms.Form):
             Fieldset('',
                      'message')
         )
+
+    def send(self, subject, message, from_email, to_email):
+        sent = False
+
+        try:
+            send_mail(subject, message, from_email, to_email)
+            sent = True
+        except BadHeaderError:
+            return HttpResponse('Invalid Header found')
+        ''
 
 class GeneralSearchForm(forms.Form):
     first_choice = ('All','All')
@@ -164,7 +176,7 @@ class BidForm(ModelForm):
         now = arrow.utcnow()
         event = self.event
         event_end_time = event.end_time
-        if now > event_end_time:
+        if event_end_time and now > event_end_time:
             raise ValidationError('This Auction has ended')
 
 
@@ -249,18 +261,37 @@ class AdvertForm(ModelForm):
                      'description')
         )
 
-time_choice = ['years', 'months', 'weeks','days', 'hours', 'minutes', 'seconds' ]
+
 
 class BudgetForm(ModelForm):
-    range = forms.IntegerField()
-    time = forms.ChoiceField(choices=[(str(ch), str(ch)) for ch in time_choice])
+    # range = forms.IntegerField()
+    # time = forms.ChoiceField(choices=[(str(ch), str(ch)) for ch in time_choice])
 
 
     def __init__(self, *args, **kwargs):
         super(BudgetForm, self).__init__(*args, **kwargs)
         self.fields['title'].label = 'item'
+        self.fields['image'].widget.attrs.update({'id': 'upload'})
+        self.fields['image'].label = ''
+
+    def clean(self):
+        budgets = BudgetPlan.objects.all().count()
+        if budgets > 10:
+            raise ValidationError('You have reached your budget plan limit. Please edit other satisfied budgets to continue')
+
 
 
     class Meta:
         model = BudgetPlan
-        fields = ['title', 'description', 'price' ,'time', 'range']
+        fields = ['title', 'description', 'price' ,'time', 'range', 'image',]
+
+
+# class BudgetPlanEmailForm():
+#     ''
+    # def save(self, commit=True):
+    #     budget = super(BudgetForm, self).save(commit=False)
+    #     budget.image = self.cleaned_data.get('image')
+    #     budget.save()
+
+
+        ''

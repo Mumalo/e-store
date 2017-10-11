@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load auction_tags %}
 {% load notifications_tags %}
+{% load material_form %}
 {% load static %}
 
 
@@ -64,7 +65,7 @@
 
 
             <!--Label for user information-->
-
+         {% if user.id == request.user.id %}
             <div class="panel panel-default user-home-side-menu">
 
                 <div class="panel-body text-center heading">
@@ -80,6 +81,7 @@
                 </div>
 
             </div> <!-- end of user-home-side-menu for bids -->
+         {% endif %}
 
         {% if user.id == request.user.id %}
             <div class="panel panel-default user-home-side-menu">
@@ -89,7 +91,7 @@
                 </div>
 
                 <div class="panel-body">
-                   <a href="#all-auctions">All Auctions<span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
+                   <a href="#all-auctions">All Items<span class="glyphicon glyphicon-triangle-right pull-right" style="color: #d4c5d0"></span></a>
                 </div>
 
                 <div class="panel-body">
@@ -119,9 +121,13 @@
                             {% for item in bids.won %}
                                 <li class="collection-item avatar">
                                     {% if item.image %}
-                                    <img class="circle" src="{{ item.image.url }}" alt="">
+                                    <a  href="{% url 'auctions:bid' item.id %}">
+                                         <img class="circle" src="{{ item.image.url }}" alt="">
+                                    </a>
                                     {% else %}
-                                     <img  class="circle" src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                                    <a  href="{% url 'auctions:bid' item.id %}">
+                                         <img  class="circle" src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                                    </a>
                                     {% endif %}
                                     <span class="title">{{ item }}</span>
                                     <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p><br />
@@ -156,9 +162,14 @@
                             {% for item in bids.lost %}
                                 <li class="collection-item avatar">
                                     {% if item.image %}
-                                    <img class="circle" src="{{ item.image.url }}" alt="">
+                                        <a href="{% url 'auctions:bid' item.id %}">
+                                             <img class="circle" src="{{ item.image.url }}" alt="">
+                                        </a>
+
                                     {% else %}
-                                     <img class="circle" src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                                        <a href="{% url 'auctions:bid' item.id %}">
+                                            <img class="circle" src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                                        </a>
                                     {% endif %}
                                     <span class="title">{{ item }}</span>
                                     <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p><br />
@@ -198,9 +209,14 @@
                                             <div class="watch-list-content">
                                                  <li class="collection-item avatar" id="{{item.id}}">
                                                     {% if item.image %}
-                                                        <img class="circle" src="{{ item.image.url }}" alt="">
+                                                     <a href="{% url 'auctions:bid' item.id %}">
+                                                          <img class="circle" src="{{ item.image.url }}" alt="">
+                                                     </a>
                                                     {% else %}
-                                                        <img  class="circle" src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                                                        <a href="{% url 'auctions:bid' item.id %}" >
+                                                            <img  class="circle" src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                                                        </a>
+
                                                     {% endif %}
                                                     <span class="title">{{ e}}</span>
                                                     <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>
@@ -234,18 +250,30 @@
                         <ul class="collection">
                                     {% for item in expired_auctions %}
                                             <div class="watch-list-content">
-                                                 <li class="collection-item avatar">
+                                                 <li class="collection-item avatar" id="{{item.id}}">
                                                     {% if item.image %}
+                                                     <a href="{% url 'auctions:bid' item.id %}">
                                                         <img class="circle" src="{{ item.image.url }}" alt="">
+                                                     </a>
                                                     {% else %}
-                                                        <img class="circle"  src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                                                        <a href="{% url 'auctions:bid' item.id %}">
+                                                            <img class="circle"  src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                                                        </a>
                                                     {% endif %}
                                                     <span class="title">{{ e}}</span>
                                                     <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>
                                                     <p class="title">current Bid at N {{ item.current_bid_at}}</p><br />
-                                                    <a href="{% url 'auctions:edit_auction' item.id %}" class="secondary-content">
-                                                        <i class="material-icons">create</i>
-                                                    </a>
+                                                    <div class="secondary-content fixed-action-btn horizontal" style="right: 2px">
+                                                        <a class="btn-floating" style="background-color: #1F0101">
+                                                            <i class="medium material-icons">add</i>
+                                                        </a>
+
+                                                        <ul>
+                                                            <li><a class="btn-floating red delete_item"  data-id="{{item.id}}" data-action="item"><i class="material-icons">delete</i></a></li>
+                                                            <li><a class="btn-floating blue-grey" href="{% url 'auctions:edit_item' item.id %}"><i class="material-icons">edit</i></a></li>
+                                                        </ul>
+
+                                                    </div>
 
                                                  </li>
                                             </div>
@@ -294,7 +322,7 @@
             <!--Modal6 contents here -->
              <div class="modal modal-fixed-footer" id="all-auctions">
                     <div class="modal-content">
-                        <h4 class="text-center">All Auctions here</h4>
+                        <h4 class="text-center">All Items</h4>
                         <!--{% for i in list %}-->
                             <!--{{i.product}}-->
                         <!--{% endfor %}-->
@@ -302,18 +330,30 @@
                         <ul class="collection">
                                     {% for item in all %}
                                             <div class="watch-list-content">
-                                                 <li class="collection-item avatar">
+                                                 <li class="collection-item avatar" {% with item.id as id %}id="{{id}}{% endwith %}">
                                                     {% if item.image %}
-                                                        <img class="circle" class="circle" src="{{ item.image.url }}" alt="">
+                                                        <a href="{% url 'auctions:bid' item.id %}">
+                                                            <img class="circle" class="circle" src="{{ item.image.url }}" alt="">
+                                                        </a>
                                                     {% else %}
-                                                        <img class="circle" src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                                                        <a href="{% url 'auctions:bid' item.id %}">
+                                                            <img class="circle" src="{% static 'images/no_image.png' %}" class="img-responsive ">
+                                                        </a>
                                                     {% endif %}
                                                     <span class="title">{{ item }}</span>
                                                     <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>
                                                     <!--<p class="title">current Bid at N {{ item.current_bid_at}}</p><br />-->
-                                                    <a href="{% url 'auctions:edit_auction' item.id %}" class="secondary-content">
-                                                        <i class="material-icons">create</i>
-                                                    </a>
+                                                    <div class="secondary-content fixed-action-btn horizontal" style="right: 2px">
+                                                        <a class="btn-floating" style="background-color: #1F0101">
+                                                            <i class="medium material-icons">add</i>
+                                                        </a>
+
+                                                        <ul>
+                                                            <li><a class="btn-floating red delete_item"  data-id="{{item.id}}" data-action="item" id="{{item.id}}"><i class="material-icons">delete</i></a></li>
+                                                            <li><a class="btn-floating blue-grey" href="{% url 'auctions:edit_item' item.id %}"><i class="material-icons">edit</i></a></li>
+                                                        </ul>
+
+                                                    </div>
 
                                                  </li>
                                             </div>
@@ -350,16 +390,17 @@
 
                     <div class="tab-content left-sidebar" style="padding: 10px">
                         <div id="live" class="tab-pane fade in active">
-                            <!--Display Live auctions here -->
+                            <!--Display Live auctions here-->
                                 <div id="products" class="row list-group user-auctions">
                                     {% live_auctions user 10 as live %}
                                     {% for auction in live %}
-                                        <div class="item  col-xs-12 col-md-4">
-                                            <div class="thumbnail">
+                                        <div class="item  col-xs-12 col-sm-4 col-md-4">
+                                            <div class="box thumbnail">
+
                                                 {% if auction.image %}
-                                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image img-thumbnail" src="{{ auction.image.url }}" alt="" /></a>
+                                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{{ auction.image.url }}" alt="" /></a>
                                                 {% else %}
-                                                    <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image img-thumbnail" src="{% static 'images/no_image.png' %}" alt="" />
+                                                    <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" />
                                                 {% endif %}
                                                 <div class="caption">
                                                     <h4 class="group inner list-group-item-heading" style="font-size: 13px">{{ auction.item|truncatewords:2 }}</h4>
@@ -406,11 +447,11 @@
                                     {% latest_auctions user 5 as latest %}
                                     {% for auction in latest %}
                                         <div class="item  col-xs-12 col-md-4">
-                                            <div class="thumbnail">
+                                            <div class="box thumbnail">
                                                 {% if auction.image %}
-                                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image img-thumbnail" src="{{ auction.image.url }}" alt="" /></a>
+                                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-imag" src="{{ auction.image.url }}" alt="" /></a>
                                                 {% else %}
-                                                    <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image img-thumbnail" src="{% static 'images/no_image.png' %}" alt="" />
+                                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" /></a>
                                                 {% endif %}
                                                 <div class="caption">
                                                     <h4 class="group inner list-group-item-heading" style="font-size: 13px">{{ auction.item|truncatewords:2 }}</h4>
@@ -457,11 +498,12 @@
                                     {% hottest_deals user 5 as hottest %}
                                     {% for auction in hottest %}
                                         <div class="item  col-xs-12 col-md-4">
-                                            <div class="thumbnail">
+                                            <div class="box thumbnail">
+
                                                 {% if auction.image %}
-                                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image img-thumbnail" src="{{ auction.image.url }}" alt="" /></a>
+                                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{{ auction.image.url }}" alt="" /></a>
                                                 {% else %}
-                                                    <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image img-thumbnail" src="{% static 'images/no_image.png' %}" alt="" />
+                                                    <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" />
                                                 {% endif %}
                                                 <div class="caption">
                                                     <h4 class="group inner list-group-item-heading" style="font-size: 13px">{{ auction.item|truncatewords:2 }}</h4>
@@ -485,12 +527,12 @@
                                                             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 seconds"></div>
                                                         </div>
 
-                                                        <div class="row auction-text">
+                                                        <divs class="row auction-text">
                                                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Days</div>
                                                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Hours</div>
                                                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Minutes</div>
                                                                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
-                                                        </div> <!-- counter text ends here -->
+                                                        </divs> <!-- counter text ends here -->
                                                     </div>
                                                     {% endif %}
                                                 </div>  <!-- end of caption -->
@@ -509,11 +551,11 @@
                                     {% ending_soon user 5 as soon %}
                                     {% for auction in soon %}
                                         <div class="item  col-xs-12 col-md-4">
-                                            <div class="thumbnail">
+                                            <div class="box thumbnail">
                                                 {% if auction.image %}
-                                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image img-thumbnail" src="{{ auction.image.url }}" alt="" /></a>
+                                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{{ auction.image.url }}" alt="" /></a>
                                                 {% else %}
-                                                    <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image img-thumbnail" src="{% static 'images/no_image.png' %}" alt="" />
+                                                    <a href="{% url 'auctions:bid' auction.id %}"></a><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" />
                                                 {% endif %}
                                                 <div class="caption">
                                                     <h4 class="group inner list-group-item-heading" style="font-size: 13px">{{ auction.item|truncatewords:2 }}</h4>
@@ -561,18 +603,68 @@
         </div>
         <!--End of right side bar -->
 
-        {% if request.user.id == user.id %}
             <div class="col-xs-12 col-md-2 jumbotron" style="padding: 8px">
                 <h6 class="text-center" style="color: #1F0101">{{request.user}}'s Budget Plan</h6>
                 <ul class="collection avatar">
-                    <li class="collection-item">
+                    <!--{% budget_plan user as budget %}-->
+                    {% for b in budget %}
+                    <li class="collection-item avatar" id="{{b.id}}">
+                        {% if b.image %}
+                            <img class="circle img-responsive" src="{{ b.image.url }}" alt="">
+                        {% else %}
+                            <img class="circle img-responsie" src="{% static 'images/no_image.png' %}">
+                        {% endif %}
+                        <a style="font-size: 12px !important; color: #333">{{ b }}</a><br>
+                        <span style="font-size: 9px !important; font-weight: 800">{{b.price}}</span>
+
+                        {% if request.user.id == user.id %}
+                            <div class="secondary-content fixed-action-btn horizontal" style="right: 2px">
+                                <a class="btn-floating" style="background-color: #1F0101">
+                                    <i class="medium material-icons">add</i>
+                                </a>
+
+                                <ul>
+                                    <li><a class="btn-floating red delete_item"  data-id="{{b.id}}" data-action="budget"><i class="material-icons">delete</i></a></li>
+                                    <li><a class="btn-floating blue-grey" href="{% url 'auctions:edit_budget' b.id %}"><i class="material-icons">edit</i></a></li>
+                                </ul>
+
+                            </div>
+
+                        {% else %}
+                            <a href="#contact-user" class="secondary-content budget-notify">
+                                <i class="material-icons">email</i>
+
+                                <!--<span>Show {{user}} You can satisfy this plan</span>-->
+                            </a>
+                        {% endif %}
 
                     </li>
+                    <div class="modal modal-fixed-footer" id="contact-user">
+
+                        <div class="modal-content">
+                            <h3 style="font-size: 16px">Tell {{user}} You can supply this budget plan</h3>
+                            <form method="post" action="{% url 'accounts:user_detail' user.id %}">
+                                {% csrf_token %}
+            <!--<div class="col-xs-8 col-sm-12 col-md-12">-->
+                                {% form form=budget_reply_form %}{% endform %}
+                                <input type="hidden" name="budget" value="{{b}}">
+                                 <button type="submit" name="reply" class="btn" value="budget" style="background:#1F0101">SEND MESSAGE</button>
+                            </form>
+                        </div>
+
+                        <!--<h5>Or contact him throuh <span class="glyphicon glyphicon-earphone"> {{user.telephone}}</span></h5>-->
+
+
+                        <div class="modal-footer" >
+                            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+                        </div>
+
+                    </div>
+                    {% endfor %}
 
                 </ul>
 
             </div>
-        {% endif %}
 
 
 

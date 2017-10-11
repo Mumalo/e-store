@@ -13,6 +13,10 @@ class Pages(models.Model):
         ('Home', 'Home'),
         ('About', 'About Us'),
         ('Contact', 'Contact Us'),
+        ('Make Money', 'Make Money'),
+        ('Partner', 'Partner'),
+        ('Advertise', 'Advertise'),
+        ('Help', 'Help'),
     )
 
     title = models.CharField(choices=HOME_CHOICES, max_length=75, unique=True, null=True)

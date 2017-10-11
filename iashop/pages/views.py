@@ -49,7 +49,59 @@ def about_us(request):
 
     return render(request, 'pages/about_us.html', {'text':text})
 
+def make_money(request):
 
+    p = None
+    text = None
+
+    try:
+        p = Pages.objects.get(title='Make Money')
+        text = p.text
+    except ObjectDoesNotExist:
+        pass
+
+    return render(request, 'pages/make_money.html', {'text':text})
+
+def partner(request):
+
+    p = None
+    text = None
+
+    try:
+        p = Pages.objects.get(title='Partner')
+        text = p.text
+    except ObjectDoesNotExist:
+        pass
+
+    return render(request, 'pages/partner.html', {'text':text})
+
+
+def advertise(request):
+
+    p = None
+    text = None
+
+    try:
+        p = Pages.objects.get(title='Advertise')
+        text = p.text
+    except ObjectDoesNotExist:
+        pass
+
+    return render(request, 'pages/advertise.html', {'text':text})
+
+
+def help(request):
+
+    p = None
+    text = None
+
+    try:
+        p = Pages.objects.get(title='Help')
+        text = p.text
+    except ObjectDoesNotExist:
+        pass
+
+    return render(request, 'pages/help.html', {'text':text})
 
 # error views
 
