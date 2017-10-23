@@ -1,11 +1,13 @@
 from decimal import Decimal
-from .models import AuctionEvent,   Bid, Advert, BudgetPlan, Category, SubCategory
+from .models import AuctionEvent,   Bid, Advert, BudgetPlan, Category, SubCategory, Image
 from datetime import datetime
 from django.core.exceptions import ValidationError
 
 from django import forms
 from django.forms import ModelForm, Textarea
 from material import Layout, Fieldset, Row
+from photologue.models import Photo
+# from material.frontend.forms import
 import arrow
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import HttpResponse
@@ -80,7 +82,7 @@ class AuctionForm(ModelForm):
     sub_category3 = forms.CharField(max_length=250, widget=forms.Select, required=False)
     sub_category4 = forms.CharField(max_length=250, widget=forms.Select, required=False)
 
-    def __init__(self, data=None, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(AuctionForm, self).__init__(*args, **kwargs)
         # self.fields['sub_category2'].queryset = SubCategory.objects.none()
         self.fields['category'].widget.attrs.update({'id':'cat-select','class': 'browser-default'})
@@ -97,6 +99,7 @@ class AuctionForm(ModelForm):
         self.fields['start_price'].widget.attrs.update({'id':'start_price'})
         self.fields['start_price'].required = False
 
+
         self.layout = Layout(
             Fieldset(
                 'Auction Information',
@@ -107,10 +110,6 @@ class AuctionForm(ModelForm):
                 Row('target_price', 'start_price'),
                     'available',
                     'description',
-            ),
-            Fieldset(
-                "Add Your Item\'s image ",
-                'image'
             ),
         )
 
@@ -149,11 +148,31 @@ class AuctionForm(ModelForm):
 
     class Meta:
         model = AuctionEvent
-        fields = ['item', 'category', 'sub_category' ,'sub_category2' ,'target_price', 'start_price', 'start_time', 'end_time', 'available', 'description', 'image', 'place_on_auction']
-        exclude = ['subcategory']
+        fields = ['item', 'category', 'sub_category' ,'sub_category2' ,'target_price', 'start_price', 'start_time', 'end_time', 'available', 'description', 'place_on_auction']
+        exclude = ['subcategory','image',]
         # widgets = {
         #     'sub_category': autocomplete.ModelSelect2(url='auctions:subcategory-autocomplete', forward=['category'])
         # }
+
+class ImageForm(ModelForm):
+    class Meta:
+        model = Image
+        fields = ['image',]
+
+    def __init__(self, *args, **kwargs):
+        super(ImageForm, self).__init__(*args, **kwargs)
+        self.layout = Layout(
+            Fieldset(
+                "",
+                'image'
+            ),
+        )
+
+# class BaseImageFormSet(forms.BaseForm):
+#     def add_fields(self, form, index):
+#         super(BaseImageFormSet, self).add_fields(form, index)
+#         form.fields["DELETE"] = forms.BooleanField()
+
 class BidForm(ModelForm):
     def __init__(self, data=None, auction=None, bidder=None, *args, **kwargs):
         self.event = auction

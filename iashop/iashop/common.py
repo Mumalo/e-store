@@ -17,11 +17,11 @@ from django.conf import settings
 settings.configure()
 # from os.path import abspath, basename, dirname, join, normpath
 from .secret import DATABASE_NAME, PASSWORD, USER, SECRET_KEY, EMAIL_HOST, \
-    EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, EMAIL_USE_TLS, HOST, ENGINE
+    EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, EMAIL_USE_TLS, HOST, ENGINE, DISQUS_API_KEY, DISQUS_WEBSITE_SHORTNAME
 from django.core.urlresolvers import reverse_lazy
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-print(BASE_DIR)
+# print(BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -65,12 +65,12 @@ DJANGO_APPS = (
     # 'smart_selects',
     'common',
     # 'shop',
+    'photologue',
     'account',
     'base',
     'auction',
     'cart',
     'pages',
-    'photologue',
     'sortedm2m',
     # 'selectable',
     # 'selectable_select2',
@@ -81,6 +81,9 @@ DJANGO_APPS = (
 
 
 THIRD_PARTY_APPS = (
+    'disqus',
+    'star_ratings',
+
 
 )
 
@@ -295,7 +298,13 @@ CKEDITOR_CONFIGS = {
             'dialogui',
             'elementspath'
         ]),
-    }
+    },
+
+    'awesome_ckeditor': {
+        'toolbar': 'basic',
+        # 'height': '100%',
+        # 'width': '100%',
+    },
 }
 
 
@@ -441,3 +450,10 @@ if len(sys.argv) > 1 and sys.argv[1] == 'test':
 # }
 
 # GRAPPELLI_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
+
+DISQUS_API_KEY = DISQUS_API_KEY
+DISQUS_WEBSITE_SHORTNAME = DISQUS_WEBSITE_SHORTNAME
+
+
+STAR_RATINGS_STAR_HEIGHT = 20
+STAR_RATINGS_STAR_WIDTH = 20

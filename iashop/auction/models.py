@@ -11,6 +11,7 @@ from django.conf import settings
 from django.db.models import Count
 from smart_selects.db_fields import ChainedForeignKey
 from django.core.exceptions import ValidationError
+from photologue.models import Photo, ImageModel
 
 
 
@@ -81,8 +82,8 @@ class SubCategory2(BaseModel):
 #     condition = models.CharField(max_length=10, choices=ITEM_CONDITION_CHOICES)
 #     status = models.BooleanField(default=True)
 #
-
-
+class Image(ImageModel):
+    pass
 
 class AuctionEvent(BaseModel):
     item = models.CharField(max_length=125, blank=False, null=True)
@@ -104,7 +105,8 @@ class AuctionEvent(BaseModel):
     end_time = models.DateTimeField(null=True, blank=True)
     creator = models.ForeignKey(User,
                                 on_delete=models.CASCADE, null=True)
-    image = models.ImageField(upload_to='users/%Y/%m/%d',blank=True)
+    # image = models.ImageField(upload_to='users/%Y/%m/%d',blank=True)
+    image = models.ManyToManyField(Image, blank=True, null=True)
     time = models.DateTimeField(default=timezone.now)
     available = models.BooleanField(default=True)
     description = models.TextField(max_length=250, null=True, blank=True)

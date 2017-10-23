@@ -1,11 +1,32 @@
 @import url(http://fonts.googleapis.com/css?family=Muli);
 body {
     margin:0;
+    margin-bottom: 0;
     padding:0;
     font-family:helvetica, "Helvetica Neue", Helvetica, Arial, sans-serif;
-     background: #D7D9C3 ;
+    background: #D7D9C3 ;
     font-size: 14px;
     overflow-x: hidden;
+    height: 100%;
+    width: 100% !important;
+}
+
+
+.naira{
+    position: relative;
+    top: 12px;
+    left: 13px;
+
+}
+
+.naira img{
+    width: 12px;
+    height: 12px;
+}
+
+html {
+    background: #1F0101 !important;
+
 }
 
 .main-header-container{
@@ -20,6 +41,23 @@ body {
     background-color:#1F0101;
     opacity: 0.9;
 
+}
+
+
+
+#myFormset .image-formset{
+    border: 1px solid #333 !important;
+    padding: 10px;
+}
+
+#myFormset .add{
+    background: #37474f !important;
+    color: #f1f1f1;
+    position: relative;
+    top: -30px;
+    left: 45%;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 /*#main-header .right-header{*/
@@ -633,6 +671,13 @@ body {
         /*background: red !important;*/
     }
 
+    .bio{
+        width: 100% !important;
+        margin-top: 7px;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
 }
 
 
@@ -651,11 +696,11 @@ body {
 
 
 .nav-pills{
-    background: #1F0101;
+    background: #1F0101 !important;
     margin-top: 8px;
-    height: 55px;
+    height: auto;
     color: #F4FF77;
-    height: 47px !important;
+    /*height: 47px !important;*/
     /*padding-bottom: 15px; !important;*/
 }
 
@@ -663,6 +708,7 @@ body {
      margin-top: -8px !important;
      margin-bottom: -8px !important;
 }
+
 
 
 @media screen and (max-width: 768px) {
@@ -1245,9 +1291,7 @@ body {
     /*border-right: 8px solid  #f2f2f2;*/
 }
 
-.right-sidebar{
-    border-left: 8px solid #f2f2f2;
-}
+
 
 .auction-detail-heading{
     color: #666;
@@ -1256,11 +1300,15 @@ body {
 }
 
 .auction-detail-image{
-    width: 289px;
-    height: 249px
-
+    width: 100% !important;
+    height: 285px !important;
 }
 
+
+.rating-no-detail .star-ratings-rating-average, .rating-no-detail .star-ratings-rating-count,
+.rating-no-detail .star-ratings-rating-user{
+    display: none;
+}
 .bid-form-container{
     background: silver;
     margin-top: 13%;
@@ -1339,25 +1387,31 @@ body {
 }
 
 #carousel2 img{
-    width: 180px !important;
+    width: 100% !important;
     height: 200px !important;
 }
 
+#carousel2, #carousel3{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 #carousel3 img{
-    width: 180px !important;
+    width: 100% !important;
     height: 200px !important;
 }
 
 #carousel4 img{
-    width: 90%;
-    height: 150px;
-    border: 3px solid #777777;
+    width: 100%;
+    height: 180px;
+    /*border: 3px solid #777777;*/
     /*padding-left: 20px;*/
 
 }
 
 #carousel4{
-    padding-left: 10%;
+    padding-left: 2px;
+    padding-right: 2px;
     padding-top: 10px;
     padding-bottom: 40px;
 
@@ -1440,7 +1494,7 @@ body {
 }
 
 .nav-pills{
-    padding: 10px;
+    padding: 8px;
 }
 
 
@@ -1488,11 +1542,13 @@ body {
         /*width: 100px;*/
     }
 
-
-
     .home-page-nav-pills-container ul li{
         width: 93% !important;
         margin-top: 10px;
+    }
+
+    .nav-pills{
+        padding-left: 22px !important;
     }
 
 
@@ -1947,7 +2003,7 @@ a:hover {
 }
 
 .list-group-image{
-    width: 400px !important;
+    width: 100% !important;
     height: 190px !important;
 }
 
@@ -2336,6 +2392,12 @@ a:hover {
     border-bottom: 1px solid #ddd
 }
 
+.bio{
+    padding-top: 3px;
+    padding-left: 3px;
+    padding-right: 10px;
+    padding-bottom: 18px;
+}
 .user-home-side-menu .panel-body:last-child{
     border-bottom: none;
 }
@@ -2386,7 +2448,7 @@ a:hover {
 
 
 .user-auctions .thumbnail{
-    width: 190px !important;
+    /*width: 190px !important;*/
     /*height: 100px;*/
 }
 
@@ -2424,6 +2486,24 @@ a:hover {
     transition-duration: 0.4s !important;
 }
 
+
+/*password change container */
+
+.password-change a{
+    color: #333;
+}
+
+.password-change a:hover{
+    color: #1F0101;
+}
+
+.password-change{
+    margin-top: 15px;
+    border: 1px solid #3b5998;
+    width: 40%;
+    padding: 5px;
+    /*margin-left: 50px;*/
+}
 .profile-edit-button:hover{
     background: white !important;
 }
@@ -2456,9 +2536,23 @@ a:hover {
         background: blue;
     }
 
-    .box {
-        height: auto !important;
+    .user-home .middle-container{
+       padding-left: 0;
+        padding-right: 0;
     }
+
+    .auction-tex{
+        font-size: 16px !important;
+        background: red !important;
+    }
+
+    .myClock{
+        font-size: 24px !important;
+    }
+
+    /*.box {*/
+        /*height: auto !important;*/
+    /*}*/
 }
 
 .budget-plan-container{
@@ -2466,6 +2560,8 @@ a:hover {
     /*background: red;*/
     padding-bottom: 20px;
 }
+
+
 
 /*.budget-plan-container form .section h5{*/
     /*text-align: center;*/
@@ -2550,6 +2646,34 @@ a:hover {
     font-size: 10px;
 }
 
+.budget-text{
+    font-size: 12px;
+    color: #333
+}
+
+.budget-text:hover .tooltiptext{
+    visibility: visible;
+}
+
+
+
+.tooltiptext{
+    visibility: hidden;
+    width: 170px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    padding-left: 10px;
+
+     /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: -10px;
+}
+
 /*.budget-notify span{*/
     /*position: absolute;*/
     /*top: -10px;*/
@@ -2616,7 +2740,7 @@ a:hover {
    background-size: 100%;
    margin-right: -3px;
    margin-left: -3px;
-    margin-top: 30px;
+   margin-top: 30px;
 }
 .footer{
     height: auto;
@@ -2624,6 +2748,7 @@ a:hover {
     margin-right: -13px;
     margin-left: -13px;
     opacity: 0.9;
+    bottom: -20px !important;
     /*margin-top: 30px;*/
     /*opacity: 0.8;*/
 }
@@ -2819,4 +2944,5 @@ a:hover {
     /*padding: 30px;*/
     /*margin-bottom: 10px;*/
 /*}*/
+
 

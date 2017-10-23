@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load material_form %}
+{% load static %}
 {% block title %}edit{% endblock %}
 
 {% block content %}
@@ -23,11 +24,20 @@
 
               <form method="post" action="{% url 'accounts:edit' user.id %}" enctype="multipart/form-data" class="viewform">
                   {% csrf_token %}
+                   {{ profile_form.media }}
                   {% form form=user_form %}{% endform %}
                   {% form form=profile_form %}{% endform %}
 
+
                   <button type="submit" name="_submit" class="btn">Submit</button>
               </form>
+
+             <div class="row text-center" style="padding-left: 40%">
+                 <div class="password-change">
+                    <a href="{% url 'password_change' %}"><span class="glyphicon glyphicon-lock"></span>Change Password</a>
+                 </div>
+             </div>
+
           </div>
           <div class="col-sm-2">
 
@@ -36,4 +46,9 @@
       </div>
 
   </div>
+
+        {% block extrajs %}
+            <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+            <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+        {% endblock %}
 {% endblock %}

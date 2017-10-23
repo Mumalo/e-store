@@ -32,12 +32,17 @@ urlpatterns = [
     url(r'', include('account.urls', namespace='accounts')),
     url(r'', include('cart.urls', namespace='shopping-cart')),
     url(r'', include('pages.urls', namespace='pages')),
+    url(r'^account/', include('django.contrib.auth.urls')),
     url('^inbox/notifications/', include('notifications.urls', namespace='notifications')),
     # url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
     # name='django.contrib.sitemaps.views.sitemap'),
     url(r'^photologue/', include('photologue.urls', namespace='photologue')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^grapelli/', include('grappelli.urls')),
+
+
+#     ratings app
+    url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += staticfiles_urlpatterns()

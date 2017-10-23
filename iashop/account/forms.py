@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 # from crispy_forms.helper import FormHelper
 from django.utils.translation import ugettext_lazy as _
 from material import Layout, Row, Fieldset
+from ckeditor.widgets import CKEditorWidget
 
 
 
@@ -108,6 +109,7 @@ class ProfileForm(ModelForm):
 
 
 
+
 class PasswordChangeForm(forms.Form):
     current_password = forms.CharField(max_length=25, widget=forms.PasswordInput)
     new_password = forms.CharField(max_length=25, widget=forms.PasswordInput)
@@ -176,6 +178,9 @@ class ProfileEditForm(ModelForm):
     class Meta:
         model = Profile
         fields = ('photo', 'phone', 'institution', 'gender', 'bio')
+        # widgets = {
+        #      'bio':CKEditorWidget(config_name='awesome_ckeditor')
+        #  }
 
 
 

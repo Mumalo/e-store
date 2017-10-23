@@ -5,8 +5,9 @@
 {% block title %}{% endblock %}
 
 {% block content %}
-<div class="container container-fluid">
-    <h1>You have successfully added a new auction</h1>
+<div class="container-fluid text-center" style="padding-top: 50px; padding-bottom: 50px">
+    <h5>You have successfully added a new item</h5>
+    <a href="{% url 'auctions:add_new_auction' %}">Add another</a>
 
 </div>
 {% endblock %}

@@ -37,10 +37,21 @@
               {% endif %}
 <div class="container container-fluid form-container">
 
-     <form method="post" class="viewform" enctype="multipart/form-data">
+     <form method="post" class="viewform"  id="myFormset" enctype="multipart/form-data">
       {% csrf_token %}
       {% form form=form %}{% endform %}
-          <button type="submit" name="_submit" class="btn">Submit</button>
+
+       {% for form in formset.forms %}
+            <div  class="row image-formset">
+                <div class="col-xs-12 col-sm-4 col-md-4">{% form form=form %}{% endform %}</div>
+                <span class="errors">{{ form.image.errors }}</span>
+            </div>
+       {% endfor %}
+
+
+    {{ formset.management_form }}
+         <button type="submit" name="_submit" class="btn" style="margin-top: 60px; margin-bottom: 20px; margin-left: 33%">Submit</button>
+
     </form>
 
     {% block extrajs %}

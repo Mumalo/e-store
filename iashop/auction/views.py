@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse, HttpResponseRedirect
-from .forms import AuctionForm, BidForm, AdvancedSearchForm, AdvertForm, BudgetForm, EmailPostForm, GeneralSearchForm
+from .forms import AuctionForm, BidForm, AdvancedSearchForm, AdvertForm, BudgetForm, EmailPostForm, GeneralSearchForm, ImageForm
 # from .models import Buyer, Seller
 from django.contrib.auth.decorators import login_required
-from django.forms import formset_factory
+from django.forms import formset_factory, modelform_factory
 from .models import AuctionEvent, Bid, Category, Advert, BudgetPlan, SubCategory, SubCategory2
 from django.contrib import messages
 from django.views.generic.edit import CreateView
@@ -20,6 +20,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from  django.template import RequestContext
 from common.decorators import ajax_required
 from notifications.signals import notify
+
 
 @ajax_required
 def sub_cats_for_cats(request):
@@ -168,10 +169,15 @@ def subcat2_detail(request, subcat_id=None, subcat_slug=None):
 @login_required
 def add_new_auction(request):
 
+    ImageFormset = formset_factory(ImageForm, can_delete=True)
     if request.method == 'POST':
-        form = AuctionForm(request,request.POST, request.FILES)
 
-        if form.is_valid():
+        form = AuctionForm(request.POST)
+        formset = ImageFormset(request.POST, request.FILES)
+
+
+        if form.is_valid() and formset.is_valid():
+            photos = []
             cleaned_sub = form.cleaned_data.get('sub_category3')
             cleaned_sub2 = form.cleaned_data.get('sub_category4')
             sub_cat = None
@@ -180,6 +186,7 @@ def add_new_auction(request):
             new_form = form.save(commit=False)
             current_user = get_user(request)
             new_form.creator = current_user
+            images = []
 
             if cleaned_sub:
                 try:
@@ -194,17 +201,22 @@ def add_new_auction(request):
 
             new_form.sub_category = sub_cat
             new_form.sub_category2 = sub_cat2
-            new_form.save()
+            form.save()
+            for form in formset:
+                image = form.save()
+                new_form.image.add(image)
+
             users = User.objects.exclude(id=current_user.id)
             users = list(users)
             auction = new_form
             notify.send(current_user, recipient=users, verb='created a new item', target=auction)
 
-            messages.success(request, 'Item added successfully')
+            return  render(request, 'auction/auction_complete.html')
     else:
-        form = AuctionForm(request)
+        form = AuctionForm()
+        formset = ImageFormset()
     return render(request, 'auction/new_auction.html',
-                  {'form': form}, )
+                  {'form': form, 'formset':formset}, )
 
 # ajax view to select by category
 

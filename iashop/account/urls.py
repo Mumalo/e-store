@@ -1,6 +1,7 @@
 
 from django.conf.urls import url
 from . import views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^account/register/$', views.user_registration, name='register'),
@@ -10,4 +11,13 @@ urlpatterns = [
     # url(r'^budget/$', views.budget_reply_form, name='budget_reply'),
     url(r'^account/logout/$', views.logout_user, name='logout'),
     url(r'^account/edit/user/(?P<pk>[0-9]+)$', views.edit_profile, name='edit'),
+
+    # password change and reset views
+    # url(r'^account/password-change/$',auth_views.password_change,name='password_change'),
+    # url(r'^account/password-change/done/$',auth_views.password_change_done,name='password_change_done'),
+    #
+    # url(r'^account/password-reset/$',auth_views.password_reset,name='password_reset'),
+    # url(r'^account/password-reset/done/$',auth_views.password_reset_done, name='password_reset_done'),
+    # url(r'^account/password-reset/confirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$',auth_views.password_reset_confirm, name='password_reset_confirm'),
+    # url(r'^account/password-reset/complete/$',auth_views.password_reset_complete,name='password_reset_complete'),
 ]

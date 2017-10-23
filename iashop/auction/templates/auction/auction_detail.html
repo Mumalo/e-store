@@ -2,6 +2,9 @@
 {% load auction_tags %}
 {% load static %}
 {% load material_form %}
+{% load disqus_tags %}
+{% disqus_dev %}
+{% load ratings %}
 
 {% block title %}{% endblock %}
 
@@ -31,13 +34,23 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-5 col-md-5">
                     <h5 class="auction-detail-heading">{{ auction }}</h5>
+
                     <!--<p>Current bid at N{{auction.get_current_price}}</p>-->
                     <!--<p>Winner: {{auction.winner}}</p>-->
-                    {% if auction.image %}
-                        <img src="{{ auction.image.url }}" class="auction-detail-image img-responsive img-thumbnail">
+                    {% with auction.image.all|first as image %}
+                    {% if image.image %}
+                        <div class="owl-carousel owl-theme" id="item-detail-carousel">
+                            {% for image in auction.image.all %}
+                                <div class="item">
+                                    <img src="{{ image.image.url }}" class="img-responsive img-thumbnail auction-detail-image">
+                                </div>
+                            {%endfor %}
+
+                        </div>
                     {% else %}
-                        <img src="{% static 'images/no_image.png' %}" class="auction-detail-image img-responsive img-thumbnail">
+                             <img src="{% static 'images/no_image.png' %}" class="auction-detail-image img-responsive img-thumbnail">
                     {% endif %}
+                    {% endwith %}
                 </div>
 
 
@@ -74,7 +87,7 @@
             </div> <!-- end of auction detail image row -->
 
             <div class="row auction-detail-item-info">
-                <div class="col-xs-0 col-md-4" style="width: 277px"></div>
+                <div class="col-xs-0 col-md-4"></div>
                 <div class="col-xs-12 col-md-8">
                     <ul class="list-group">
                         <li class="list-group-item">
@@ -114,10 +127,11 @@
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-xs-4 col-md-4">
-                                     Current bid
+                                     {% if auction.place_on_auction %}Current bid{% else %}Price{% endif %}
                                 </div>
-                                <div class="col-xs-4 col-md-8">
-                                    <span>{{ auction.get_current_price }}</span>
+                                <div class="col-xs-4 col-md-8" style="margin-top: -12px">
+                                    <span class="naira" style="top: 16px"><img src="{% static 'images/currency_sign.png' %}" class="img-responsive"></span>
+                                    <span style="padding-left: 28px">{{ auction.get_current_price }}</span>
                                 </div>
                             </div>
                         </li>
@@ -171,8 +185,11 @@
             <!--End of item information -->
         </div>
 
-        <div class="col-xs-12 col-sm-3 col-md-3 right-sidebar">
-            <h5 class="auction-detail-heading">More Information</h5>
+        <div class="col-xs-12 col-sm-3 col-md-3 right-sidebar" style="margin-left: 5px">
+            <h6 class="auction-detail-heading">More Information</h6>
+            <div class="container-fluid rating-no-detail">
+                <span style="font-size: 13px">{% ratings auction 15 15 %} </span>
+            </div>
             {% if auction.place_on_auction %}
             <div class="container" style="margin-left: 21px; background-color: #eee">
                 <div class="row myClock" style="padding-left: 18px; margin-bottom: -5px" data-action='{{ auction.end_time|to_json }}'>
@@ -195,7 +212,11 @@
             <!--Declare winner here -->
             <div class="panel">
                 <div class="panel-body">
-                    <h6>{% if auction.place_on_auction %}<span>Current bid</span> {% else %}<span>Price</span>{% endif %} N{{auction.get_current_price}}</h6>
+                    <h6>{% if auction.place_on_auction %}<span>Current bid</span> {% else %}<span>Price</span>{% endif %}</h6>
+                        <p class="lead">
+                            <span class="naira"><img src="{% static 'images/currency_sign.png' %}" class="img-responsive"></span>
+                            <span style="padding-left: 30px">{{auction.get_current_price}}</span>
+                        </p>
                     {% if auction.place_on_auction %}<h6>Winner: {{auction.winner}}</h6>{% endif %}
                 </div>
 
@@ -234,7 +255,7 @@
             <div class="tab-content">
                 <div id="desc" class="tab-pane fade in active">
                     <h6 class="text-center">Product Description</h6>
-                    {{auction.description}}
+                    <div class="container-fluid text-left">{{auction.description}}</div>
                 </div>
 
                 <div id="best-offers" class="tab-pane fade">
@@ -255,6 +276,9 @@
 
                 <div id="comment" class="tab-pane fade">
                     <h6 class="text-center">Drop Comment</h6>
+                    <div class="container-fluid">
+                        {% disqus_show_comments %}
+                    </div>
                 </div>
 
                 <div id="private-message" class="tab-pane fade">
@@ -285,7 +309,10 @@
                 </div>
 
                 <div id="rate" class="tab-pane fade">
-                    <h4>Private message here</h4>
+                    <h6 class="text-center">Rate this item</h6>
+                    <div class="container-fluid text-center">
+                       {% ratings auction %}
+                    </div>
                 </div>
             </div> <!-- end of tab content -->
         </div>

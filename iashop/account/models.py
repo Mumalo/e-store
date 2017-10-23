@@ -5,6 +5,7 @@ from base.models import BaseModel
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from ckeditor.fields import RichTextField
 
 USER_GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
 DEFAULT_COVER = ('default/default_cover.png')
