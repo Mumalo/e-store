@@ -6,16 +6,6 @@
 {% block title %}{% endblock %}
 
 {% block content %}
-    <!--<div class="jumbotron sub-header">-->
-        <!--<div class="row text-center" style="padding-top: -10px">-->
-            <!--<h5><span>WELCOME TO</span> <span>IASTORE</span></h5>-->
-        <!--</div>-->
-    <!--</div>-->
-
-    <!--<div class="navbar navbar-default">-->
-
-    <!--</div>-->
-
     <div class="container-fluid text-center home-page-container">
         <div class="row content main-slider" style="width: 100%;">
             <div class="col-xs-3 col-sm-2 col-md-3 right-sidenav" style="border-left: none !important;">
@@ -56,9 +46,11 @@
                             {% for item in items %}
                                 {% with item.image.all|first as image %}
                                     {% if image %}
+                                        {% for image in item.image.all %}
                                         <div class="item">
-                                            <a href="{% url 'auctions:bid' item.id %}"><img  src="{{ item.image.url }}"  class="img-responsive"></a>
+                                            <a href="{% url 'auctions:bid' item.id %}"><img  src="{{ image.image.url }}"  class="img-responsive"></a>
                                         </div>
+                                        {% endfor %}
                                     {% else %}
                                         <div class="item">
                                             <a href="{% url 'auctions:bid' item.id %}"><img  src="{% static 'images/no_image.png' %}" class="img-responsive"></a>
@@ -81,10 +73,6 @@
                 <li style="width: 180px" class="text-center">
                     <a class="active" data-toggle="pill" href="#ending-soon">Ending Today</a>
                 </li>
-
-                <li style="width: 180px" class="text-center">
-                    <a class="" data-toggle="pill" href="#top-deals" >Top Deals</a>
-                </li>
             </ul>
 
             <div class="tab-content" style="padding-bottom: 49px">
@@ -95,9 +83,11 @@
                         {% for item in soon %}
                             {% with item.image.all|first as image %}
                                 {% if image.image %}
+                                    {% for image in item.image.all %}
                                     <div class="item">
                                         <a href="{% url 'auctions:bid' item.id %}"><img src="{{ image.image.url }}"  class="img-responsive" ></a>
                                     </div>
+                                    {% endfor %}
                                 {% else %}
                                     <div class="item">
                                         <a href="{% url 'auctions:bid' item.id %}"><img  src="{% static 'images/no_image.png' %}" class="img-responsive"></a>
@@ -107,17 +97,29 @@
                         {% endfor %}
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="tab-pane fade" id="top-deals">
+        <div class="row left-sidebar" style="width: 93%">
+            <ul class="nav nav-pills">
+                <li style="width: 180px" class="text-center">
+                    <a class="active" data-toggle="pill" href="#top-deals" >Top Deals</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" style="padding-bottom: 49px">
+                <div class="tab-pane fade in active" id="top-deals">
                     <h5>Hottest deals</h5>
                     <div class="owl-carousel owl-theme" id="carousel3">
                         {% hottest_deals as top %}
                         {% for item in top %}
                             {% with item.image.all|first as image %}
                                 {% if image.image %}
+                                    {% for image in item.image.all %}
                                     <div class="item">
                                         <a href="{% url 'auctions:bid' item.id %}"><img src="{{ image.image.url }}"  class="img-responsive" ></a>
                                     </div>
+                                    {% endfor %}
                                 {% else %}
                                     <div class="item">
                                         <a href="{% url 'auctions:bid' item.id %}"><img  src="{% static 'images/no_image.png' %}" class="img-responsive"></a>
