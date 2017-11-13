@@ -1,15 +1,41 @@
 @import url(http://fonts.googleapis.com/css?family=Muli);
 body {
-    margin:0;
-    margin-bottom: 0;
-    padding:0;
     font-family:helvetica, "Helvetica Neue", Helvetica, Arial, sans-serif;
     background: #D7D9C3 ;
     font-size: 14px;
-    overflow-x: hidden;
-    height: 100%;
-    width: 100% !important;
+    /*overflow-x: hidden;*/
+    position: relative;
+
+    /*flex-direction: column;*/
 }
+
+body, html {
+    overflow-x:hidden;
+}
+
+.body-content{
+    /*position:relative;*/
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+html, body{
+     height: 100%;
+     padding: 0;
+     margin: 0;
+}
+
+html{
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+
 
 
 .naira{
@@ -24,10 +50,7 @@ body {
     height: 12px;
 }
 
-html {
-    background: #1F0101 !important;
 
-}
 
 .main-header-container{
     background-image: url('../images/background/school-bg.jpg');
@@ -446,6 +469,8 @@ html {
 
     .footer{
         font-size: 11px !important;
+        background-color: #1F0101;
+        margin-bottom: 0 !important;
     }
 
     /*.footer-contact-info .all-rights{*/
@@ -786,7 +811,7 @@ html {
 .search-box-container form input[type=text]{
     background: #D7D9C3;
     padding: 3px;
-    width: 100% !important;
+    width: 95% !important;
     height: 23px;
     margin-top: 15px;
     border: 1px solid white;
@@ -829,14 +854,19 @@ html {
     width: 100%;
     padding-left: 0;
     padding-right: 0 !important;
+    padding-left: 20px;
 
+}
+
+.home-page-container .row:first-child{
+    /*margin-left: 22px;*/
 }
 
 .home-page-container .col-md-7{
     /*background: red !important;*/
     padding-left: 0px;
     padding-right: 0;
-    margin-right: -25px;
+    /*margin-right: -25px;*/
 }
 
 
@@ -1091,14 +1121,44 @@ html {
 .breadcrumb{
     font-size: 12px !important;
 }
+
+
 @media screen and (max-width: 768px)  {
-    body{
-        /*background: red;*/
-    }
 
     .home-page-container .col-md-7{
         margin-right: 0 !important;
     }
+
+    .col-xs-12{
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .home-page-container .row:first-child{
+        margin-left: 0;
+    }
+
+    #carousel4 .item{
+        padding: 30px !important;
+        padding-left: 24% !important;
+
+    }
+
+    #carousel4 img{
+        width: 80% !important;
+        height: auto !important;
+    }
+
+    .best-brand{
+        padding-bottom: 10px !important;
+    }
+
+
+    #carousel2 img, #carousel3 img{
+        width: 100%;
+    }
+
 
     .home-page-container .left-sidenav{
         width: 100% !important;
@@ -1231,7 +1291,7 @@ html {
 
 .all-categories .left-sidebar img{
    width: 100%;
-    height: 100px;
+    height: 200px;
 }
 .category-content a{
     color: #333;
@@ -1365,6 +1425,7 @@ html {
 .owl-carousel .item img, .owl-carousel img {
     /*width: 950px;;*/
     height: 400px;
+    /*height: auto;*/
     position: relative;
     /*position: absolute;*/
     /*height: 300px;*/
@@ -1376,7 +1437,7 @@ html {
 }
 
 #carousel1{
-    width: 97% !important;
+    width: 100% !important;
 }
 
 @media screen and (max-width: 768px){
@@ -1384,11 +1445,19 @@ html {
         width: 100%;
         /*height: 250px;*/
     }
+
+    #carousel1 img{
+        height: 300px !important;
+    }
+
+
+
 }
 
 #carousel2 img, #carousel3 img{
-    width: 90% !important;
-    height: 270px !important;
+    width: 95% !important;
+    min-height: 200px;
+    height: auto;
 }
 
 #carousel2, #carousel3{
@@ -1403,7 +1472,9 @@ html {
 
 #carousel4 img{
     width: 100%;
-    height: 180px;
+    min-height: 180px;
+    height: auto;
+    /*height: auto;*/
     /*border: 3px solid #777777;*/
     /*padding-left: 20px;*/
 
@@ -1434,6 +1505,11 @@ html {
         width: 100%;
     }
 
+    .sub-cat-on-hover{
+        display: none !important;
+
+    }
+
 }
 
 
@@ -1452,26 +1528,17 @@ html {
 }
 
 .main-slider .right-sidenav{
-    /*margin-left: -26px !important;*/
+    /*margin-left: -20px !important;*/
 }
 
 .main-slider{
-    /*background: url('../images/background/body4.jpg');*/
-    /*background-repeat: repeat-x;*/
-    /*background: url('../images/background/body5.jpg');*/
+
     background: #D7D9C3;
     background-size: 100% 1000px;
-    /*opacity: 0.8;*/
-    /*opacity: 0.9;*/
-     /*background-repeat: no-repeat;*/
-    /*background-size: 100% 100%;*/
-    /*margin-right: 20px !important;*/
     padding-right: 0 !important;
+    padding-left: 0px !important;
     padding-top: 15px;
     padding-bottom: 19px;
-    /*background-blend-mode: color-dodge;*/
-    /*background-size: 100% 100%;*/
-
 }
 
 .main-slider .right-sidenav{
@@ -1545,6 +1612,12 @@ html {
     .home-page-nav-pills-container ul li{
         width: 93% !important;
         margin-top: 10px;
+    }
+
+    .row{
+        margin-left: 0;
+        margin-right: 0;
+        width: 100% !important;
     }
 
     .nav-pills{
@@ -2303,18 +2376,26 @@ input{
 
 .profile-image-cover{
   width: 70%;
-  height: 50%;
-    background: #D7D9C3 !important;
+  height: auto;
+  background: #D7D9C3 !important;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 3px;
   padding-right: -8px;
   background: #fff;
-  margin-left: 33px !important;
-  /*left: 10%;*/
-  /*top: 308px !important;*/
-    /*position: absolute;*/
+  margin-left: 33px;
 }
+
+
+@media screen and (max-width: 768px){
+    .profile-image-cover{
+        padding-right: 15px !important;
+        padding-left: 0;
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
 
 .profile-image-cover .inner{
   height: 160px;
@@ -2363,8 +2444,10 @@ a:hover {
     border-radius: 15px;
     border: 1px solid darkred;
     color: darkred;
-    padding-right: 15px;
-    padding-left: 15px;
+    margin: auto;
+    /*width: 100%;*/
+    /*padding-right: 15px;*/
+    /*padding-left: 15px;*/
     /*width: 113px;*/
 }
 
@@ -2422,6 +2505,13 @@ a:hover {
     color: #F1DAA5;
 }
 
+.user-home{
+    width: 100%;
+    padding: 0;
+}
+
+
+
 .user-home-side-menu .heading{
     font-weight: bold;
     font-size: 18px;
@@ -2468,7 +2558,7 @@ a:hover {
     /*width: 70%;*/
 /*}*/
 
-.profile-edit-button{
+.profile-edit-button a, .budget-edit-button a{
     padding: 7px !important;
     font-size: 75% !important;
     border-radius: 40% !important;
@@ -2533,13 +2623,44 @@ a:hover {
         left: 55%;
         /*margin-right: -7px;*/
         max-width: 20%;
-        background: blue;
+        /*background: blue;*/
     }
 
     .user-home .middle-container{
        padding-left: 0;
         padding-right: 0;
     }
+
+    .user-home .nav-pills-container{
+        margin: 0 !important;
+        width: 100%;
+        padding: 0 !important;
+        /*background: blue !important;*/
+    }
+    
+    .user-home .nav-pills-container > div{
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+    }
+
+    .user-home .follow-user-container{
+        /*background: red !important;*/
+        padding-left: 20%;
+    }
+
+    .user-home .follow-user-container .follow-button{
+        margin-left: 10px;
+        margin-top: 5px;
+    }
+
+    .user-home .profile-edit-button{
+        margin-bottom: 10px;
+    }
+
+
+    
+
 
     .auction-tex{
         font-size: 16px !important;
@@ -2735,22 +2856,38 @@ a:hover {
     padding: 0 0 0 0;
 }
 
+
+
 .footer-container{
    background-image: url('../images/background/header-bg.jpg');
    background-size: 100%;
-   margin-right: -3px;
-   margin-left: -3px;
-   margin-top: 30px;
+   width: 100%;
+   /*position: fixed;*/
+   left: 0;
+   bottom: 0;
 }
+
+footer{
+    background: #1F0101;
+    margin-bottom: 0;
+    margin-top: 40px;
+    /*position: relative;*/
+    /*height: 250px;*/
+}
+
+.main-footer{
+    position: absolute;
+    right: 0;
+    left: 0;
+
+}
+
 .footer{
-    height: auto;
+    margin: 0;
+    padding: 0;
     background: #1E0000;
-    margin-right: -13px;
-    margin-left: -13px;
+    width: 100%;
     opacity: 0.9;
-    bottom: -20px !important;
-    /*margin-top: 30px;*/
-    /*opacity: 0.8;*/
 }
 
 .footer-header{
@@ -2776,7 +2913,7 @@ a:hover {
     /*margin-top: -40px*/
 }
 
-.footer-subcontent{}
+
 
 .footer-subcontent li a{
     color: #333 !important;

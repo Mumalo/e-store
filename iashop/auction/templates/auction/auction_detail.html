@@ -92,10 +92,10 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <div class="row">
-                                <div class="col-xs-4 col-md-4">
+                                <div class="col-xs-12 col-md-4">
                                     #ID
                                 </div>
-                                <div class="col-xs-4 col-md-8">
+                                <div class="col-xs-12 col-md-8">
                                     <span>{{ auction.id }}</span>
                                 </div>
                             </div>
@@ -104,10 +104,10 @@
 
                         <li class="list-group-item">
                             <div class="row">
-                                <div class="col-xs-4 col-md-4">
+                                <div class="col-xs-12 col-md-4">
                                     Institution
                                 </div>
-                                <div class="col-xs-4 col-md-8">
+                                <div class="col-xs-12 col-md-8">
                                     <span>{{ auction.creator.profile.institution }}</span>
                                 </div>
                             </div>
@@ -115,10 +115,10 @@
 
                         <li class="list-group-item">
                             <div class="row">
-                                <div class="col-xs-4 col-md-4">
+                                <div class="col-xs-12 col-md-4">
                                     Location
                                 </div>
-                                <div class="col-xs-4 col-md-8">
+                                <div class="col-xs-12 col-md-8">
                                       <span>{{ auction.creator.profile.institution.state }}</span>
                                 </div>
                             </div>
@@ -126,10 +126,10 @@
 
                         <li class="list-group-item">
                             <div class="row">
-                                <div class="col-xs-4 col-md-4">
+                                <div class="col-xs-12 col-md-4">
                                      {% if auction.place_on_auction %}Current bid{% else %}Price{% endif %}
                                 </div>
-                                <div class="col-xs-4 col-md-8" style="margin-top: -12px">
+                                <div class="col-xs-12 col-md-8" style="margin-top: -12px">
                                     <span class="naira" style="top: 16px"><img src="{% static 'images/currency_sign.png' %}" class="img-responsive"></span>
                                     <span style="padding-left: 28px">{{ auction.get_current_price }}</span>
                                 </div>
@@ -139,10 +139,10 @@
                         <li class="list-group-item">
                             <div class="row">
                                 {% if auction.place_on_auction %}
-                                <div class="col-xs-4 col-md-4">
+                                <div class="col-xs-12 col-md-4">
                                      Expires on
                                 </div>
-                                <div class="col-xs-4 col-md-8">
+                                <div class="col-xs-12 col-md-8">
                                       <span>{{ auction.end_time }}</span>
                                 </div>
                                 {% endif %}
@@ -152,11 +152,11 @@
                         <li class="list-group-item">
                             <div class="row">
                                 {% if auction.place_on_auction %}
-                                    <div class="col-xs-4 col-md-4">
+                                    <div class="col-xs-12 col-md-4">
                                          Time Remaining
                                     </div>
                                 {% endif %}
-                                <div class="col-xs-8 col-md-8" style="float: left">
+                                <div class="col-xs-12 col-md-8" style="float: left">
                                     <span>
                                         {% if auction.place_on_auction %}
                                         <div class="row myClock" style="" data-action='{{ auction.end_time|to_json }}'>
@@ -168,10 +168,10 @@
                                             </div>
 
                                             <div class="row">
-                                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Days</div>
-                                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Hours</div>
-                                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Minutes</div>
-                                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
+                                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">D</div>
+                                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">H</div>
+                                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">M</div>
+                                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">S</div>
                                             </div> <!-- counter text ends here -->
                                         </div>
                                         {% endif %}
@@ -201,10 +201,10 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Days</div>
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Hours</div>
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Minutes</div>
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">D</div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">H</div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">M</div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">S</div>
                     </div> <!-- counter text ends here -->
                 </div>
             </div>

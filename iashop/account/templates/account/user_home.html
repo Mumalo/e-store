@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load auction_tags %}
-{% load notifications_tags
+{% load notifications_tags %}
 {% load material_form %}
 {% load static %}
 {% load ratings %}
@@ -12,20 +12,20 @@
 
 <div class="container-fluid user-home">
     <div class="row">
-        <div class="col-xs-12 col-md-4 col-lg-4 jumbotron" style="">
+        <div class="col-xs-12 col-md-4 col-lg-4 jumbotron">
             <!--display the profile picture-->
             <div class="row">
                 {% with total_followers=user.followers.count %}
                     <div class="row follow-user-container text-center" >
-                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-                            <a class=" btn btn-small " style="margin-right: 15px !important;">
+                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                            <a class="btn btn-small " style="margin-right: 15px !important;">
                                 <span class="followers-count">
                                     <span class="total-followers">{{ total_followers }}</span>
                                     follower{{ total_followers|pluralize }}
                                 </span>
                             </a>
                         </div>
-                        <div class="col-xs-3 col-sm-3 col-md-3">
+                        <div class="col-xs-12 col-sm-3 col-md-3">
                             <a class="btn-flat btn-small follow-button" data-id="{{ user.id }}" data-action="{% if request.user in user.followers.all %}unfollow{% else %}follow{% endif %}">
                                 {% if request.user not in user.followers.all %}
                                     Follow
@@ -55,12 +55,12 @@
                 <!--if the user is not the owner of this profile dont see the buttons below-->
                 {% if request.user.id == user.id %}
                         <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <a class="profile-edit-button" href="{% url 'accounts:edit' user.id %}"><span class="glyphicon glyphicon-pencil"></span>Edit Profile</a>
+                            <div class="col-xs-12 col-sm-6 col-md-6 profile-edit-button">
+                                <a class="" href="{% url 'accounts:edit' user.id %}"><span class="glyphicon glyphicon-pencil"></span>Edit Profile</a>
                             </div>
 
-                            <div class="col-xs-6 col-sm-6 col-md-6" style="">
-                                <a class="profile-edit-button" href="{% url 'auctions:budget' %}"><span class="glyphicon glyphicon-briefcase"></span> Budget</a>
+                            <div class="col-xs-12 col-sm-6 col-md-6 budget-edit-button" style="">
+                                <a class="" href="{% url 'auctions:budget' %}"><span class="glyphicon glyphicon-briefcase"></span> Budget</a>
                             </div>
 
                         </div>
@@ -390,7 +390,7 @@
                 </div>
             </div>
             <!--Row starts here -->
-            <div class="row" style="margin-left: -13px !important; margin-right: -13px !important;">
+            <div class="row nav-pills-container" style="margin-left: -13px; margin-right: -13px">
                 <div class="col-xs-12 col-md-12">
                     <ul class="nav nav-pills nav-justified">
                         <li><a href="#live" data-toggle="pill" class="active">Live Auctions</a></li>
