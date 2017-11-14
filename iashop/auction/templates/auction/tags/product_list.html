@@ -14,23 +14,13 @@
 <!--{{i.creator}}-->
 <!--{% endfor %}-->
     <div id="products" class="row list-group">
-
-
                 {% for auction in items %}
                 {% if auction.available %}
-                    <div class="item  col-xs-12 col-md-3 col-sm-3 product-item-container ">
+                    <div class="item col-xs-12 col-md-3 col-sm-4 product-item-container ">
                         <!--place{{auction.place_on_auction}}-->
-                        <div class="thumbnail box">
-                            {% with auction.image.all|first as image %}
-                                {% if image.image %}
-                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{{ image.image.url }}" alt="" /></a>
-                                {% else %}
-                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" /></a>
-                                {% endif %}
-                             {% endwith %}
-                            <div class="caption">
-                                {% if not request.user.is_anonymous %}
-                                    <a hre="#" class="watch-auction" data-action="{%  if auction in watch_list and request.user in owner %}unwatch{% else %}watch{% endif %}" data-id="{{auction.id}}" id="{{auction.id}}">
+                        <div>
+                            {% if not request.user.is_anonymous %}
+                                    <a href="#" class="watch-auction" data-action="{%  if auction in watch_list and request.user in owner %}unwatch{% else %}watch{% endif %}" data-id="{{auction.id}}" id="{{auction.id}}">
                                         <span>
                                             {% if auction in watch_list and request.user in owner %}
                                                Unwatch
@@ -41,6 +31,17 @@
                                         <!--<span class="glyphicon glyphicon-eye-open "></span>-->
                                     </a>
                                 {% endif %}
+                        </div>
+                        <div class="thumbnail box">
+                            {% with auction.image.all|first as image %}
+                                {% if image.image %}
+                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{{ image.image.url }}" alt="" /></a>
+                                {% else %}
+                                    <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" /></a>
+                                {% endif %}
+                             {% endwith %}
+                            <div class="caption">
+
                                 <h4 class="group inner list-group-item-heading">{{ auction.item }}</h4>
                                 <p class="group inner list-group-item-text"></p>
                                 <div class="row">

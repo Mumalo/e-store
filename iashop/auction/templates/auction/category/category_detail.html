@@ -43,7 +43,7 @@
                         <h5 class="text-center">{{ subcat }}</h5>
                         <!--Begin of item detail.html -->
                         {% for auction in subcat.sub_products.all %}
-                            <div class="col-xs-12 col-sm-3 col-md-3 text-center">
+                            <div class="col-xs-12 col-sm-4 col-md-3 text-center">
                                 <div class="thumbnail box">
                                     {% with auction.image.all|first as image %}
                                         {% if image.image %}
