@@ -9,9 +9,10 @@ env
 __pycache__
 .coverage
 htmlcov
-iashop/iashop/secret.py
+#iashop/iashop/secret.py
 myvenv/Include/
 /myvenv/
 iashop/shop/templates/
 
 
+/iashop/iashop/secret.py

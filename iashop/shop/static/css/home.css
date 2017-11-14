@@ -473,11 +473,7 @@ html{
         margin-bottom: 0 !important;
     }
 
-    /*.footer-contact-info .all-rights{*/
-        /*!*background: red !important;*!*/
-        /*width: 270px !important;*/
-        /*right: 90% !important;*/
-    /*}*/
+
 
     .footer-contact-info div:nth-child(2) [class*="row"]{
         /*background: red !important;*/
@@ -492,9 +488,9 @@ html{
         left: 12%;
     }
 
-    .footer-contact-info div:nth-child(2) [class*="row"] .all-rights{
-        right: 6% !important;
-    }
+    /*.footer-contact-info div:nth-child(2) [class*="row"] .all-rights{*/
+        /*right: 6% !important;*/
+    /*}*/
 
 
 
@@ -1473,7 +1469,9 @@ html{
 #carousel4 img{
     width: 100%;
     min-height: 180px;
-    height: auto;
+    /*height: auto;*/
+    height: 200px;
+    color: transparent;
     /*height: auto;*/
     /*border: 3px solid #777777;*/
     /*padding-left: 20px;*/
@@ -1509,6 +1507,7 @@ html{
         display: none !important;
 
     }
+    
 
 }
 
@@ -2637,6 +2636,11 @@ a:hover {
         padding: 0 !important;
         /*background: blue !important;*/
     }
+
+    .user-home .tab-content .item a>img{
+        width: 70% !important;
+        height: auto !important;
+    }
     
     .user-home .nav-pills-container > div{
         padding-left: 0;
@@ -2991,7 +2995,7 @@ footer{
     position: relative;
     /*bottom: -60px;*/
     font-size: 12px;
-    top: 60px;
+    top: 20px;
 }
 
 .richtext{

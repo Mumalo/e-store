@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^partner/$', views.partner, name='partner'),
     url(r'^advertise/$', views.advertise, name='advertise'),
     url(r'^help/$', views.help, name='help'),
+    url(r'^terms/$', views.terms, name='terms'),
 
 
     # url()

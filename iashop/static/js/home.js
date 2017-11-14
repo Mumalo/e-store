@@ -20,7 +20,6 @@ $(document).ready(function(){
     var owl2 = $("#carousel2")
 
     owl2.owlCarousel({
-        items:5,
         loop:true,
         margin:10,
         autoplay:true,
@@ -29,13 +28,29 @@ $(document).ready(function(){
         autoplayHoverPause:true,
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',
+
+        responsiveClass:true,
+            responsive:{
+           0:{
+               items:1,
+               nav:true
+           },
+           600:{
+               items:3,
+               nav:false
+           },
+           1000:{
+               items:4,
+               nav:true,
+               loop:false
+           }
+          }
 
     })
 
     var owl3 =  $("#carousel3")
 
     owl3.owlCarousel({
-        items:5,
         loop:true,
         margin:10,
         autoplay:true,
@@ -44,6 +59,23 @@ $(document).ready(function(){
         autoplayHoverPause:true,
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',
+
+        responsiveClass:true,
+            responsive:{
+           0:{
+               items:1,
+               nav:true
+           },
+           600:{
+               items:3,
+               nav:false
+           },
+           1000:{
+               items:4,
+               nav:true,
+               loop:false
+           }
+          }
     })
 
     var owl4 = $('#carousel4')
@@ -57,6 +89,25 @@ $(document).ready(function(){
         animateOut: 'fadeOut',
         animateIn: 'fadeIn',
     })
+
+    var owl5 = $("#item-detail-carousel")
+    owl5.owlCarousel({
+        items:1,
+        loop:true,
+        margin:10,
+        autoplay:true,
+        autoplayTimeout:4000,
+        autoplaySpeed: 5000,
+        autoplayHoverPause:true,
+        animateOut: 'fadeOut',
+        animateIn: 'fadeIn',
+    })
+
+    //var user_home_owl = $(' .user-home .tab-content .item img')
+    //
+    //user_home_owl.owlCarousel({
+    //
+    //})
 
 
 

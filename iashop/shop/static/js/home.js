@@ -103,6 +103,12 @@ $(document).ready(function(){
         animateIn: 'fadeIn',
     })
 
+    //var user_home_owl = $(' .user-home .tab-content .item img')
+    //
+    //user_home_owl.owlCarousel({
+    //
+    //})
+
 
 
     //$('.cat-list').hover(function(){

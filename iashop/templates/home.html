@@ -43,7 +43,7 @@
                         <div class="owl-carousel owl-theme" id="carousel4">
                             {% for item in items %}
                                 {% with item.image.all|first as image %}
-                                    {% if image %}
+                                    {% if image.image %}
                                         {% for image in item.image.all %}
                                         <div class="item">
                                             <a href="{% url 'auctions:bid' item.id %}"><img  src="{{ image.image.url }}"  class="img-responsive"></a>

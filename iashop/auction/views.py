@@ -193,7 +193,7 @@ def add_new_auction(request):
                     sub_cat = SubCategory.objects.get(name=cleaned_sub)
                 except ObjectDoesNotExist:
                     pass
-            elif cleaned_sub2:
+            if cleaned_sub2:
                 try:
                     sub_cat2 = SubCategory2.objects.get(name=cleaned_sub2)
                 except ObjectDoesNotExist:

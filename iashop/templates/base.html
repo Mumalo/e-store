@@ -8,9 +8,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-{#    <meta charset="UTF-8">#}
+    <meta charset="UTF-8">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0;">
 
     <title>{% block title %}{% endblock %}</title>
 
@@ -41,7 +41,10 @@
                     <!--<span class="icon-bar"></span>-->
                     <!--<span class="icon-bar"></span>-->
                <!--</button>-->
-               <a class="navbar-brand text" href="{% url 'pages:home' %}" style="color: #fff;"><img src="{% static 'images/background/logo.jpg' %}" class="img-responsive logo"><span class="logo-text" style="z-index: 4">IA STORE</span></a>
+               <a class="navbar-brand text" href="{% url 'pages:home' %}" style="color: #fff;"><img src="{% static 'images/background/logo.jpg' %}" class="img-responsive logo">
+                   <span class="logo-text" style="z-index: 4">IA STORE</span>
+                   <span style="position: absolute;left: 6%; top: 53px; font-family: Helvetica; font-size: 9px">SHOP BETTER LIVE BETTER</span>
+               </a>
            </div>
 
        <!--<div class="collapse navbar-collapse container-fluid" id="myNavbar" style="width: 100% !important; overflow: hidden">-->
@@ -747,7 +750,9 @@
                         <ul class="list-unstyled">
                              <li><a href="{% url 'pages:about' %}">Know More About Us</a></li>
                              <li><a href="{% url 'auctions:list' %}">IA Devices</a></li>
-                             <!--<li><a>About IA Store</a></li>-->
+                             <li><a href="{% url 'pages:contact' %}">Contact Us</a></li>
+                             <li><a href="{% url 'pages:terms' %}">Terms of Use</a></li>
+                             <li><a href="#">Feebback</a></li>
                         </ul>
                     </div>
 
@@ -861,32 +866,14 @@
 
                   </div>
 
-                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                  <div class="container-fluid text-center" style="position: relative; left: 10%">
                        <img src="{% static 'images/background/logo.jpg' %}" class="img-responsive img-circle" style="width:40px; height: 40px; border: 1px solid #fff">
-                        <span class="label text-center">IA STORE</span>
-
-                      <div class="row text-right">
-                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                              <a href="{% url 'pages:contact' %}">Contact Us</a>
-                          </div>
-
-                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left">
-                              Terms of Use
-
-                          </div>
-                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left">
-                              Feebback
-                          </div>
-
-                          <div class="row text-center all-rights">
-                                  <div class="container">Copyright @2017 All Rights Reserved</div>
-                          </div>
-                      </div>
+                      <span class="text-left" style="position: absolute; left: 41%">IA STORE</span>
+{#                      <span style="background: red !important;">shop better, live better</span>#}
                   </div>
 
-                  <div  class="col-xs-4 col-sm-4 col-md-4 col-lg-5">
 
-                  </div>
+
           </div>
 
       </div>

@@ -103,6 +103,19 @@ def help(request):
 
     return render(request, 'pages/help.html', {'text':text})
 
+def terms(request):
+
+    p = None
+    text = None
+
+    try:
+        p = Pages.objects.get(title='Terms')
+        text = p.text
+    except ObjectDoesNotExist:
+        pass
+
+    return render(request, 'pages/terms.html', {'text':text})
+
 # error views
 
 def server_error(request):

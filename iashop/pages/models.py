@@ -17,6 +17,7 @@ class Pages(models.Model):
         ('Partner', 'Partner'),
         ('Advertise', 'Advertise'),
         ('Help', 'Help'),
+        ('Terms', 'Terms'),
     )
 
     title = models.CharField(choices=HOME_CHOICES, max_length=75, unique=True, null=True)
