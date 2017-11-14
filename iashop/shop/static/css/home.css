@@ -36,7 +36,9 @@ html{
 }
 
 
-
+#products .item{
+    padding: 2px;
+}
 
 .naira{
     position: relative;
@@ -57,10 +59,6 @@ html{
     background-size: 80%;
     /*background-repeat: no-repeat;*/
     /*background-position: center;*/
-}
-
-#products .item{
-    padding: 4px;
 }
 
 #main-header{
@@ -910,15 +908,29 @@ html{
 
      }
 
-    .product-item-container a>img{
-        width: 60% !important;
-        height: auto !important;
+    #products .item a>img{
+        width: 70% !important;
+        /*height: auto !important;*/
+    }
+
+
+
+
+}
+
+@media screen and (min-width: 600px) and (max-width: 768px){
+
+    #products a>img{
+        height: 256px !important;
+    }
+
+    .watch-auction{
+        top: -250px !important;
     }
 
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-
 
    .home-page-auctions .new-auction{
        /*background: yellow !important;*/
@@ -928,6 +940,8 @@ html{
     #main-header{
         /*background: red !important;*/
     }
+
+
 
 
     .home-page-auctions .all-auctions{
@@ -1171,6 +1185,11 @@ html{
         margin-right: 0 !important;
         margin-right: 0 !important;
         /*background: blue !important;*/
+    }
+
+    #products .item{
+        padding-left: 5px !important;
+        padding-right: 5px !important;
     }
 
 
@@ -1458,8 +1477,8 @@ html{
 
 #carousel2 img, #carousel3 img{
     width: 95% !important;
-    height: 200px !important;
-    /*height: 300;*/
+    min-height: 200px;
+    height: auto;
 }
 
 #carousel2, #carousel3{
@@ -1513,7 +1532,7 @@ html{
         display: none !important;
 
     }
-    
+
 
 }
 
@@ -1627,10 +1646,6 @@ html{
 
     .nav-pills{
         padding-left: 22px !important;
-    }
-
-    #carousel2 img, #carousel3 img{
-        height: auto !important;
     }
 
 
@@ -2029,11 +2044,10 @@ a:hover {
 
 .watch-auction{
     /*color: #E62E04;*/
-    /*position: relative;*/
-    /*top: 20px;*/
-    /*left: 120px;*/
-    /*margin-left: 5%;*/
-    margin-bottom: -30px;
+
+    position: relative;
+    top: -200px;
+    left: 120px;
     z-index: 5;
     font-size: 12px;
     font-weight: 900;
@@ -2044,8 +2058,6 @@ a:hover {
     font-weight: 500;
     border-radius: 5px;
 }
-
-
 
 .collection .watch-auction{
     position: static !important;
@@ -2405,11 +2417,6 @@ input{
         padding-left: 0;
         width: 100%;
         margin-left: 0;
-    }
-
-    .watch-auction{
-        /*background: red !important;*/
-        top: -130px !important;
     }
 }
 
