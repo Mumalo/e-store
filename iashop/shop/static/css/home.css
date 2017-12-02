@@ -2999,6 +2999,7 @@ footer{
 .footer-contact-info{
     background: #1F0101;
     position: relative;
+    padding: 20px !important;
     bottom: -20px !important;
 
 }
