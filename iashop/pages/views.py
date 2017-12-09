@@ -12,6 +12,7 @@ def home(request):
     p = None
     images = None
     terms = None
+    text = None
 
     try:
         p = Pages.objects.get(title='Home')
