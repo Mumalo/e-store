@@ -424,8 +424,7 @@
                                                     <div class="row auction-text" style="">
                                                         <div class="col-xs-12 col-md-12 text-center">
                                                             <p class="lead" style="font-size: 13px" >
-                                                                <span class="naira"><img src="{% static 'images/currency_sign.png' %}" class="img-responsive"></span>
-                                                                <span>{{ item.get_current_price }}</span>
+                                                                <span>&#x20A6 {{ item.get_current_price }}</span>
                                                             </p>
                                                         </div>
                                                         <!--<div class="col-xs-12 col-md-6">-->
@@ -484,8 +483,7 @@
                                                     <div class="row auction-text">
                                                         <div class="col-xs-12 col-md-12 text-center">
                                                             <p class="lead" style="font-size: 13px">
-                                                                <span class="naira"><img src="{% static 'images/currency_sign.png' %}" class="img-responsive"></span>
-                                                                <span>{{ item.get_current_price }}</span>
+                                                                <span>&#x20A6 {{ item.get_current_price }}</span>
                                                             </p>
                                                         </div>
                                                         <!--<div class="col-xs-12 col-md-6">-->
@@ -545,8 +543,7 @@
                                                     <div class="row auction-text">
                                                         <div class="col-xs-12 col-md-12 text-center">
                                                             <p class="lead" style="font-size: 13px">
-                                                                <span class="naira"><img src="{% static 'images/currency_sign.png' %}" class="img-responsive"></span>
-                                                                <span>{{ item.get_current_price }}</span>
+                                                                <span>&#x20A6 {{ item.get_current_price }}</span>
                                                             </p>
                                                         </div>
                                                         <!--<div class="col-xs-12 col-md-6">-->
@@ -665,8 +662,7 @@
 
 
                         <p class="lead" style="font-size: 9px !important; font-weight: 800;">
-                            <span class="naira" style="left: 0 !important; top: 9px"><img src="{% static 'images/currency_sign.png' %}" class="img-responsive" style="width: 9px;height: 9px"></span>
-                            <span style="padding-left: 15px">{{ b.price }}</span>
+                            <span style="padding-left: 15px">&#x20A6 {{ b.price }}</span>
                         </p>
 
                         {% if request.user.id == user.id %}

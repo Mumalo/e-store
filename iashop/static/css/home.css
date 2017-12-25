@@ -524,11 +524,11 @@ html{
     }
 
     /*.user-logged-in-li{*/
-        /*!*background: blue !important;*!*/
+        /*/*background: blue !important;*/
         /*position: relative!important;*/
         /*top: 0px !important;*/
         /*left: 0px !important;*/
-        /*!*right: 90px !important;*!*/
+        /*/*right: 90px !important;*/
     /*}*/
 
     #dropdown1 {
@@ -540,8 +540,8 @@ html{
    #dropdown1{
        left: -65px !important;
        top: 60px !important;
-        /*!*left: 3% !important;*!*/
-        /*!*right: 3% !important;*!*/
+        /*/*left: 3% !important;*/
+        /*/*right: 3% !important;*/
         /*width: 240px !important;*/
         /*left: 40%;*/
         /*font-size: 10px;*/
@@ -841,7 +841,7 @@ html{
 .search-box-container {
     /*padding-left: 70px;*/
     /*margin-right: 20px;*/
-    /*!*background: red;*!*/
+    /*/*background: red;*/
     /*width: 100%;*/
 }
 
@@ -1175,12 +1175,12 @@ html{
     /*padding: 0px;*/
     /*font-size: 28px;*/
     /*font-weight: 700;*/
-    /*!*z-index: 4;*!*/
+    /*/*z-index: 4;*/
     /*line-height: 75px;*/
     /*margin-left: -20px;*/
     /*margin-right: -20px;*/
     /*position: relative;*/
-    /*!*background: url('../images/background/stars5.jpg');;*!*/
+    /*/*background: url('../images/background/stars5.jpg');;*/
     /*color: 	#F3DAA0;*/
     /*float: none;*/
     /*background: red;*/
@@ -1507,7 +1507,7 @@ html{
         display: none !important;
 
     }
-    
+
 
 }
 
@@ -2641,7 +2641,7 @@ a:hover {
         width: 70% !important;
         height: auto !important;
     }
-    
+
     .user-home .nav-pills-container > div{
         padding-left: 0;
         padding-right: 0;
@@ -2663,7 +2663,7 @@ a:hover {
     }
 
 
-    
+
 
 
     .auction-tex{
@@ -2679,6 +2679,7 @@ a:hover {
         /*height: auto !important;*/
     /*}*/
 }
+
 
 .budget-plan-container{
     /*height: 480px;*/
@@ -2806,8 +2807,8 @@ a:hover {
 
 /*.budget-notify i:hover + span{*/
     /*display: block;*/
-    /*!*position: absolute;*!*/
-    /*!*top: -18px;*!*/
+    /*/*position: absolute;*/
+    /*/*top: -18px;*/
 /*}*/
 
 /*google chrome and safari*/

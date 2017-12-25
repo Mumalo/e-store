@@ -2073,26 +2073,91 @@ a:hover {
 
 
 /* grid and list view css */
-.product-item-container .thumbnail
-{
+.product-item-container .thumbnail {
     padding-bottom: -10px;
     padding: 0px;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
     /*border: 1px solid red;*/
+
 }
-
-
 
 .item.list-group-item {
     float: none;
     width: 100%;
     background-color: #fff;
-    margin-bottom: 10px;
+    height: auto;
+    margin-bottom: 80px;
+}
+
+.item.list-group-item .myClock{
+    float: none;
+}
+
+.item-price{
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    color: #e62e04 !important;
 }
 
 
+.product-item-container .thumbnail .caption{
+    margin-top: 0 !important;
+}
+
+.list-group-item-heading{
+    margin-top: -90px !important;
+    width: 98%;
+    margin-left: 1%;
+    text-transform: uppercase;
+    font-size: 14px;
+    margin-bottom: 5px;
+    float: none;
+    text-align: center;
+    background: #09022d;
+    padding: 20px;
+    color: #ffffff;
+    position: relative;
+    font-weight: 700;
+    opacity: 0.8;
+}
+
+
+/*
+ #91817F*/
+
+
+
+@media screen and (max-width: 768px){
+   .item.grid-group-item .list-group-item-heading,
+   .list-group-item-heading{
+       width: 73.8% !important;
+       float: none;
+       margin-left: 13.8%;
+    }
+
+    .item.list-group-item img{
+        height: 210px !important;
+    }
+
+
+}
+
+
+@media screen and (min-width: 768px){
+    .item.list-group-item img {
+    /*float: none;*/
+    width: 40% !important;
+    height: 240px !important;
+    /*height: 75% !important;*/
+    }
+    .item.list-group-item .list-group-item-heading{
+        width: 40.6% !important;
+        float: none;
+        margin-left: 30%;
+    }
+}
 
 
 .list-group-item.list-group-image{
@@ -2100,9 +2165,11 @@ a:hover {
 }
 
 .list-group-image{
-    width: 100% !important;
-    height: 190px !important;
+    width: 90% !important;
+    height: 210px !important;
+    z-index: -1 !important;
 }
+
 
 .category-detail .sub-cats .list-group-image{
     width: 300px !important;
@@ -2113,6 +2180,10 @@ a:hover {
     margin-bottom: 0px;
 }
 
+
+
+
+
 .item.list-group-item .caption {
     padding: 9px 9px 0px 3px;
     border-bottom: 1px solid #ddd;
@@ -2121,16 +2192,12 @@ a:hover {
     width: 100%;
 }
 
-
-
 .item.list-group-item:before, .item.list-group-item:after {
     display: table;
     content: " ";
 }
 
-.item.list-group-item img {
-    float: left;
-}
+
 
 .item.list-group-item:after {
     clear: both;
@@ -2141,6 +2208,7 @@ a:hover {
     /*border-bottom: 1px solid #ddd;*/
     /*padding: 12px;*/
 }
+
 
 .product-container{
     background-color: #fff !important;
@@ -2297,12 +2365,8 @@ input{
    color : #4267b2 !important;
 }
 
-.list-group-item-heading{
-    text-transform: uppercase;
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #4267b2 !important;
-}
+
+
 
 .list-group-item-text{
     font-size: 12px;
@@ -2555,9 +2619,6 @@ a:hover {
     margin-bottom: -4px;
 }
 
-.user-auctions .list-group-item-heading{
-    padding-top: 3px;
-}
 
 
 
@@ -2666,7 +2727,7 @@ a:hover {
         width: 70% !important;
         height: auto !important;
     }
-    
+
     .user-home .nav-pills-container > div{
         padding-left: 0;
         padding-right: 0;
@@ -2688,7 +2749,7 @@ a:hover {
     }
 
 
-    
+
 
 
     .auction-tex{

@@ -246,8 +246,7 @@
                     <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>
                     <p class="lead">{% if item.place_on_auction %}current Bid at {% else %}Price{% endif %} </p>
                     <p class="lead">
-                        <span class="naira"><img src="{% static 'images/currency_sign.png' %}" class="img-responsive"></span>
-                        <span>{{ item.get_current_price }}</span>
+                        <span>&#x20A6 {{ item.get_current_price }}</span>
                     </p><br />
                     <p><span class="watch-auction" data-action="unwatch" data-id="{{item.id}}">Unwatch</span></p>
                     <a href="#" class="secondary-content">

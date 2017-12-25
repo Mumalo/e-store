@@ -82,6 +82,7 @@ DJANGO_APPS = (
 THIRD_PARTY_APPS = (
     'disqus',
     'star_ratings',
+    'bootstrap_pagination',
 
 
 )
@@ -227,7 +228,7 @@ STATICFILES_FINDERS = (
 )
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 
 MEDIA_URL = '/media/'

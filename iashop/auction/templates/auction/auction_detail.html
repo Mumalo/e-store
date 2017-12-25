@@ -130,8 +130,7 @@
                                      {% if auction.place_on_auction %}Current bid{% else %}Price{% endif %}
                                 </div>
                                 <div class="col-xs-12 col-md-8" style="margin-top: -12px">
-                                    <span class="naira" style="top: 16px"><img src="{% static 'images/currency_sign.png' %}" class="img-responsive"></span>
-                                    <span style="padding-left: 28px">{{ auction.get_current_price }}</span>
+                                    <span class="item-price" style="padding-left: 28px">&#x20A6 {{ auction.get_current_price }}</span>
                                 </div>
                             </div>
                         </li>
@@ -214,8 +213,7 @@
                 <div class="panel-body">
                     <h6>{% if auction.place_on_auction %}<span>Current bid</span> {% else %}<span>Price</span>{% endif %}</h6>
                         <p class="lead">
-                            <span class="naira"><img src="{% static 'images/currency_sign.png' %}" class="img-responsive"></span>
-                            <span style="padding-left: 30px">{{auction.get_current_price}}</span>
+                            <span  class="item-price" style="padding-left: 30px">&#x20A6 {{ auction.get_current_price }}</span>
                         </p>
                     {% if auction.place_on_auction %}<h6>Winner: {{auction.winner}}</h6>{% endif %}
                 </div>

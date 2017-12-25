@@ -20,6 +20,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from  django.template import RequestContext
 from common.decorators import ajax_required
 from notifications.signals import notify
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 @ajax_required
@@ -81,9 +82,7 @@ def mark_all_as_read(request):
     action = request.POST.get('recipient')
     user = None
     nfs = None
-
     if action:
-
         try:
             user = User.objects.get(username=action)
             unread = user.notifications.unread()
@@ -96,7 +95,6 @@ def mark_all_as_read(request):
 
 @login_required
 @ajax_required
-
 def mark(request):
     id = request.POST.get('id')
     user = request.user
@@ -109,13 +107,6 @@ def mark(request):
         except ObjectDoesNotExist:
             return JsonResponse({'status':'ko'})
     return JsonResponse({'status':'ko'})
-
-
-
-    # if id:
-
-
-
 
 def all_categories(request):
     categories = Category.objects.all()
@@ -143,7 +134,6 @@ def subcat_detail(request, subcat_id=None, subcat_slug=None):
     subcat = None
     items = None
     subcat2 = None
-
     try:
         subcat = SubCategory.objects.get(id=subcat_id, slug=subcat_slug)
         items = AuctionEvent.objects.filter(sub_category=subcat)
@@ -156,38 +146,29 @@ def subcat_detail(request, subcat_id=None, subcat_slug=None):
 def subcat2_detail(request, subcat_id=None, subcat_slug=None):
 
     subcat2 = None
-
-
     try:
         subcat2 = SubCategory2.objects.get(id=subcat_id, slug=subcat_slug)
     except ObjectDoesNotExist:
         pass
     return render(request, "auction/subcategory/subcat2-detail.html", {'subcat2':subcat2})
 
-
-
 @login_required
 def add_new_auction(request):
 
     ImageFormset = formset_factory(ImageForm, can_delete=True)
     if request.method == 'POST':
-
         form = AuctionForm(request.POST)
         formset = ImageFormset(request.POST, request.FILES)
-
-
         if form.is_valid() and formset.is_valid():
             photos = []
             cleaned_sub = form.cleaned_data.get('sub_category3')
             cleaned_sub2 = form.cleaned_data.get('sub_category4')
             sub_cat = None
             sub_cat2 = None
-
             new_form = form.save(commit=False)
             current_user = get_user(request)
             new_form.creator = current_user
             images = []
-
             if cleaned_sub:
                 try:
                     sub_cat = SubCategory.objects.get(name=cleaned_sub)
@@ -221,9 +202,18 @@ def add_new_auction(request):
 # ajax view to select by category
 
 def custom_processor(request):
-    auctions  = AuctionEvent.objects.all()
 
-    for auction in auctions:
+    all_auctions_list  = AuctionEvent.objects.all()
+    paginator = Paginator(all_auctions_list, 10)
+    page = request.GET.get('page')
+    try:
+        auctions = paginator.page(page)
+    except PageNotAnInteger:
+        auctions = paginator.page(1)
+    except EmptyPage:
+        auctions = paginator.page(paginator.num_pages)
+
+    for auction in all_auctions_list:
         if auction.has_ended():
             auction.available = False
             auction.save()

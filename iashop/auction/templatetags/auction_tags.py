@@ -1,6 +1,7 @@
 import datetime, time
 import arrow
 from django import template
+from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
 from ..models import AuctionEvent, Bid, Category, SubCategory, WatchList, ItemOfTheDay, BudgetPlan
 from ..forms import EmailPostForm
 from django.db.models import Count
@@ -10,6 +11,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.template import Context
 # from cart.cart import Cart
 from ..forms import GeneralSearchForm
+
 register = template.Library()
 
 @register.filter(name='to_json')
@@ -38,13 +40,10 @@ def search_form(context):
     return {'form':form}
 
 @register.inclusion_tag(file_name='auction/tags/product_list.html', takes_context=True)
-
 def product_list(context, items):
 
     if items is not None:
         request = context['request']
-
-
         user = request.user
         watch_list = None
         owner = None

@@ -1,18 +1,11 @@
 {% load auction_tags %}
 {% load static %}
 {% load material_form %}
+{% load ratings %}
+{% load bootstrap_pagination %}
 
 
 {% block content %}
-<!--{{c}}-->
-<!--{{ca}}-->
-<!--{{owner}}-->
-<!--{{list}}-->
-<!--{{pr}}-->
-<!--{{watch_list}}-->
-<!--{% for i in watch_list %}-->
-<!--{{i.creator}}-->
-<!--{% endfor %}-->
     <div id="products" class="row list-group">
                 {% for auction in items %}
                 {% if auction.available %}
@@ -39,13 +32,17 @@
                                         <!--<span class="glyphicon glyphicon-eye-open "></span>-->
                                     </a>
                                 {% endif %}
-                                <h4 class="group inner list-group-item-heading">{{ auction.item }}</h4>
-                                <p class="group inner list-group-item-text"></p>
+                                <a href="#" class="item-title-link-element"><div class="group inner list-group-item-heading text-center">{{ auction.item }}</div></a>
+                                <p class="group inner list-group-item-text">
+                                    <div class="container-fluid rating-no-detail text-center">
+                                        <span style="font-size: 13px">{% ratings auction 15 15 %} </span>
+                                    </div>
+                                </p>
                                 <div class="row">
                                     <div class="col-xs-12 col-md-12 text-center lead-container">
                                         <p class="lead">
-                                            <span class="naira"><img src="{% static 'images/currency_sign.png' %}" class="img-responsive"></span>
-                                            <span>{{ auction.get_current_price }}</span>
+{#                                            <span class="naira"><img src="{% static 'images/currency_sign.png' %}" class="img-responsive"></span>#}
+                                            <span class="item-price">&#x20A6 {{ auction.get_current_price }}</span>
                                         </p>
 
                                     </div>
@@ -54,7 +51,7 @@
                                     <!--</div>-->
                                 </div> <!-- end of row class for price and bid -->
                                 {% if auction.place_on_auction %}
-                                    <div class="row myClock" style="margin-top: -49px" data-action='{{ auction.end_time|to_json }}'>
+                                    <div class="row myClock  text-center" style="margin-top: -49px" data-action='{{ auction.end_time|to_json }}'>
                                         <div class="row">
                                             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
                                             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 hours"></div>
@@ -75,7 +72,10 @@
                 {% endif %}
                 {% endfor %}
             </div>
+
+            <div class="pagination-row text-center">
+                {% bootstrap_paginate  items range=10 show_prev_next="false" show_first_last="true" %}
+            </div>
+
             <!--End of products -->
-
-
 {% endblock %}
