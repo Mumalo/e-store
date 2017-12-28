@@ -30,3 +30,7 @@ DATABASES = {
 
 
 SECRET_KEY = SECRET_KEY
+
+STATIC_URL = "STATIC_URL = 'http://iastore.com.ng/mysite/public/static/"
+
+STATIC_ROOT = "/home/iastorec/public_html/mysite/public/static/"
