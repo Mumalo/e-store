@@ -125,7 +125,7 @@ html{
 }
 
 #main-header .user-logged-in, #main-header .user-loggedout{
-    top: 65px !important;
+    top: 63px !important;
     position: relative;
     /*right: 80px !important;*/
     /*right: 225px;*/
