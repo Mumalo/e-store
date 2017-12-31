@@ -11,11 +11,11 @@
 
         </div>
         <div class="col-sm-8 form-container">
-            <form method="POST" class="viewform">
+            <form methodterms="POST" class="viewform">
                 {% csrf_token %}
                 {% form form=user %}{% endform %}
                 {% form form=profile %}{% endform %}
-                <p><a href="#tacs">terms and conditions</a></p>
+                <p><a href="#tacs">Terms and Conditions</a></p>
                 <button type="submit" name="_submit" class="btn">Submit</button>
             </form>
 
