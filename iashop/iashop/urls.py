@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.sitemaps.views import sitemap
 # from photologue.sitemaps import GallerySitemap, PhotoSitemap
+from . import common
 #
 # sitemaps = {
 #             'photologue_galleries': GallerySitemap,
@@ -44,14 +45,15 @@ urlpatterns = [
 #     ratings app
     url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
 
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += staticfiles_urlpatterns()
+]
+# + static(common.STATIC_URL, document_root=common.STATIC_ROOT)
+# urlpatterns += staticfiles_urlpatterns()
 
 # urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-    document_root=settings.MEDIA_ROOT)
+if common.DEBUG:
+    urlpatterns += static(common.MEDIA_URL,
+    document_root=common.MEDIA_ROOT)
 
 
 # from django.conf.urls import handler400, handler403, handler404, handler500

@@ -35,8 +35,8 @@ STATIC_URL = 'https://iastore.com.ng/iashop/public/static/'
 
 STATIC_ROOT = '/home/iastorec/public_html/iashop/public/static/'
 
-# MEDIA_URL = 'https://iastore.com.ng/iashop/media/'
-# #
-# MEDIA_ROOT = '/home/iastorec/public_html/iashop/media/'
+MEDIA_URL = 'https://iastore.com.ng/iashop/media/'
+#
+MEDIA_ROOT = '/home/iastorec/public_html/iashop/media/'
 #
 # CKEDITOR_UPLOAD_PATH = 'uploads/'
