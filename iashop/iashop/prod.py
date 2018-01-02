@@ -31,12 +31,12 @@ DATABASES = {
 
 SECRET_KEY = SECRET_KEY
 
-STATIC_URL =  "http://iastore.com.ng/iashop/public/static/"
+STATIC_URL =  'http://iastore.com.ng/iashop/public/static/'
 
-STATIC_ROOT = "/home/iastorec/public_html/iashop/public/static/"
+STATIC_ROOT = '/home/iastorec/public_html/iashop/public/static/'
 
-MEDIA_URL = "http://iastore.com.ng/iashop/public/media/"
+MEDIA_URL = 'http://iastore.com.ng/iashop/public/media/'
 
-MEDIA_ROOT = "/home/iastorec/public_html/iashop/public/"
+MEDIA_ROOT = '/home/iastorec/public_html/iashop/public/'
 
-CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_UPLOAD_PATH = 'uploads/'
