@@ -175,7 +175,13 @@
                     </a>
 
                      <ul id="dropdown1" class="dropdown-content">
-                            <li><a href="{{ user.get_absolute_url }}" class="profile-dropdown-li">User<span class="pull-right"><img src="{{request.user.profile.photo.url}}" class="img-responsive img-circle" style="width: 26px; height: 26px"></span></a></li>
+                            <li><a href="{{ user.get_absolute_url }}" class="profile-dropdown-li">User
+                                <span class="pull-right">
+                                    {% if user.profile.photo %}
+                                        <img src="{{request.user.profile.photo.url}}" class="img-responsive img-circle" style="width: 26px; height: 26px">
+                                    {% endif %}
+                                </span>
+                            </a></li>
                             <li><a href="{% url 'accounts:edit' request.user.pk %}" class="profile-dropdown-li">Profile settings<span class="glyphicon glyphicon-cog pull-right"></span></a></li>
                             <li><a href="{% url 'accounts:logout' %}" class="profile-dropdown-li"><span class="glyphicon glyphicon-log-out pull-right"></span>Logout</a></li>
                             <li><a href="#!" class="profile-dropdown-li">Items<span class="badge pull-right" style="color: #EDF3FE">{% total_auctions request.user %}</span></a></li>

@@ -856,6 +856,16 @@ html{
 
 }
 
+@media screen and (max-width: 768px){
+    .home-page-container{
+        padding-left: 0 !important;
+    }
+
+}
+
+
+
+
 .home-page-container .row:first-child{
     /*margin-left: 22px;*/
 }

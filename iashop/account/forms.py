@@ -10,6 +10,8 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from material import Layout, Row, Fieldset
 from ckeditor.widgets import CKEditorWidget
+from .models import Profile, DEFAULT_PROFILE
+from django.forms .fields import ImageField
 
 
 
@@ -31,10 +33,6 @@ class UserForm(ModelForm):
                 raise forms.ValidationError("Password must be greater than 5 characters")
         return password2
 
-
-
-
-
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
         self.fields['password2'].label = 'Repeat Password'
@@ -48,16 +46,9 @@ class UserForm(ModelForm):
                              )
         )
 
-
-
-
-
-
     class Meta:
         model = User
         fields = ('username', 'email', 'first_name', 'last_name',  'password')
-
-
 
 
 
@@ -78,8 +69,6 @@ class LoginForm(forms.Form):
 
 class ProfileForm(ModelForm):
 
-
-
      def __init__(self, *args, **kwargs):
         self.layout = Layout(
            Fieldset('',
@@ -95,18 +84,9 @@ class ProfileForm(ModelForm):
              raise ValidationError('Click to agree to terms and conditions')
          return self.cleaned_data.get('agree_to_terms')
 
-
-
-
-
      class Meta:
          model = Profile
          fields = ('institution', 'gender','agree_to_terms')
-
-
-
-
-
 
 
 
@@ -164,7 +144,6 @@ class UserEditForm(ModelForm):
 
 class ProfileEditForm(ModelForm):
 
-
     def __init__(self, *args, **kwargs):
         self.layout = Layout(
             Row('photo'),
@@ -181,7 +160,13 @@ class ProfileEditForm(ModelForm):
         # widgets = {
         #      'bio':CKEditorWidget(config_name='awesome_ckeditor')
         #  }
-
+    #
+    # def save(self ,commit=True):
+    #     profile = super(ProfileEditForm, self).save(commit=False)
+    #     photo = self.cleaned_data.get('photo')
+    #
+    #     if not photo:
+    #         Profile.photo = ImageField()
 
 
 

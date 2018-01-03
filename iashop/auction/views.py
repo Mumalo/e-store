@@ -393,7 +393,13 @@ def create_budget_plan(request):
         if budget_form.is_valid():
             new_budget = budget_form.save(commit=False)
             new_budget.creator = request.user
+            current_user = get_user(request)
             new_budget.available = True
+
+            users = User.objects.exclude(id=current_user.id)
+            users = list(users)
+            notify.send(current_user, recipient=users, verb='added a new budget plan', target=new_budget)
+
             new_budget.save()
             messages.success(request, 'budget added successfully')
     else:
