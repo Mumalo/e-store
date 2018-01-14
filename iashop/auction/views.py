@@ -239,16 +239,35 @@ def auction_list(request):
 
         if general_search.is_valid():
 
-            g_search = general_search.search()
+            g_search_list = general_search.search()
+            number = g_search_list.count()
+            paginator = Paginator(g_search_list, 10)
+            page = request.GET.get('page')
+            try:
+                g_search = paginator.page(page)
+            except PageNotAnInteger:
+                g_search = paginator.page(1)
+            except EmptyPage:
+                g_search = paginator.page(paginator.num_pages)
+
             cat = general_search.category()
-            return render_to_response('auction/list.html', {'g_search':g_search}, context_instance=RequestContext(request, processors=[custom_processor]))
+            return render_to_response('auction/list.html', {'g_search':g_search, 'number':number}, context_instance=RequestContext(request, processors=[custom_processor]))
 
     if "sub_search" in request.GET:
         search_form = AdvancedSearchForm(data=request.GET)
         if search_form.is_valid():
-            search = search_form.search()
+            search_list = search_form.search()
+            number = search_list.count()
+            page = request.GET.get('page')
+            paginator = Paginator(search_list, 10)
+            try:
+                search = paginator.page(page)
+            except PageNotAnInteger:
+                search = paginator.page(1)
+            except EmptyPage:
+                search = paginator.page(paginator.num_pages)
 
-            return render_to_response('auction/list.html', {'search':search}, context_instance=RequestContext(request, processors=[custom_processor]))
+            return render_to_response('auction/list.html', {'search':search, 'number':number}, context_instance=RequestContext(request, processors=[custom_processor]))
 
 
     else:
