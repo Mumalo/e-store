@@ -251,7 +251,7 @@ def auction_list(request):
                 g_search = paginator.page(paginator.num_pages)
 
             cat = general_search.category()
-            return render_to_response('auction/list.html', {'g_search':g_search, 'number':number}, context_instance=RequestContext(request, processors=[custom_processor]))
+            return render_to_response('auction/list.html', {'g_search':g_search, 'gs_number':number}, context_instance=RequestContext(request, processors=[custom_processor]))
 
     if "sub_search" in request.GET:
         search_form = AdvancedSearchForm(data=request.GET)
@@ -267,7 +267,7 @@ def auction_list(request):
             except EmptyPage:
                 search = paginator.page(paginator.num_pages)
 
-            return render_to_response('auction/list.html', {'search':search, 'number':number}, context_instance=RequestContext(request, processors=[custom_processor]))
+            return render_to_response('auction/list.html', {'search':search, 's_number':number}, context_instance=RequestContext(request, processors=[custom_processor]))
 
 
     else:

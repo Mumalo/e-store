@@ -26,16 +26,16 @@
                     </li>
                     {% if g_search %}
                         <li>
-                            <a href="#"  style="font-weight: 800">{{number}} items were found matching your query</a>
+                            <a href="#"  style="font-weight: 800">{{gs_number}} items were found matching your query</a>
                         </li>
                     {% elif search %}
                         <li>
-                            <a href="#"  style="font-weight: 800">{{number}} items were found matching your query</a>
+                            <a href="#"  style="font-weight: 800">{{s_number}} items were found matching your query</a>
                         </li>
                     {% endif %}
               {% endif %}
 
-              {% if g_search.count == 0 or search.count == 0%}
+              {% if gs_number == 0 or s_number == 0%}
                     <li>
                          <a href="{% url 'auctions:list' %}" style="font-weight: 800">0 items were found matching your query</a>
                     </li>
