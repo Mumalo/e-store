@@ -278,14 +278,6 @@ class BudgetPlan(Advert):
 
 
 
-
-
-
-
-
-
-
-
 class Ratings(models.Model):
     time_frame = models.CharField(max_length=125, null=True)
 

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+    <div class="container-fluid page">
+        <ul class="breadcrumb">
+              <li>
+                <a href="{% url 'pages:home'%}">Home</a>
+              </li>
+              <li>
+                <a href="#">Our Team</a>
+              </li>
+        </ul>
+
+    <div class="container">
+        <div class="row">
+            <div class="heading-title text-center">
+                <h1 class="text-uppercase">Meet Our Team Members </h1>
+            </div>
+            {% for member in members %}
+                <div class="col-md-4 col-sm-4">
+                    <div class="team-member">
+                        <div class="team-img">
+                            <img src=" {{ member.photo.image.url }}" alt="team member" class="img-responsive team-member-img">
+                        </div>
+                        <div class="team-hover">
+                            <div class="desk">
+                                <h4>Hi There !</h4>
+                                <p>{{ member.short_intro }}</p>
+                            </div>
+                            <div class="s-link">
+                                <a href="{{ member.fb_page_url }}"><i class="fa fa-facebook"></i></a>
+                                <a href="{{ member.tw_page_url  }}"><i class="fa fa-twitter"></i></a>
+                                <a href="{{ member.inst_page_url  }}"><i class="fa fa-google-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-title">
+                        <h6 class="text-center">{{ member.name }}</h6>
+                        <p class="text-center">{{ member.position }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+{% endblock %}

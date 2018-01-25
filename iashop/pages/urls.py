@@ -12,7 +12,6 @@ urlpatterns = [
     url(r'^advertise/$', views.advertise, name='advertise'),
     url(r'^help/$', views.help, name='help'),
     url(r'^terms/$', views.terms, name='terms'),
-
-
+    url(r'^our_team/$', views.our_team, name='our_team')
     # url()
 ]

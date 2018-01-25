@@ -125,7 +125,7 @@ html{
 }
 
 #main-header .user-logged-in, #main-header .user-loggedout{
-    top: 63px !important;
+    top: 58px !important;
     position: relative;
     /*right: 80px !important;*/
     /*right: 225px;*/
@@ -135,6 +135,7 @@ html{
 
 #main-header .user-logged-in{
     left: 40px !important;
+    top: 65px !important;
 }
 
 
@@ -3183,4 +3184,6 @@ footer{
     /*margin-bottom: 10px;*/
 /*}*/
 
+
+/*Our profile page */
 

@@ -27,15 +27,37 @@ class Pages(models.Model):
     instagram_url = models.URLField(null=True, blank=True, help_text='use this option for home page only')
     twitter_url = models.URLField(null=True, blank=True, help_text='use this option for home page only')
 
-
-
     class Meta:
         verbose_name_plural = 'Page'
 
     def __str__(self):
         return self.title
 
+#
+# Temporal implementation of the company team page
+# #
 
+class Team(models.Model):
+    title = models.CharField(max_length=50, unique=True, null=True, default='our team')
+
+    class Meta:
+        verbose_name_plural = 'Team'
+
+    def __str__(self):
+        return "company profile"
+
+class TeamMember(models.Model):
+    short_intro = models.TextField(max_length=250, null=True, blank=True)
+    photo = models.ForeignKey(Photo, null=True)
+    fb_page_url = models.URLField(null=True, blank=True, help_text="link to member\'s facebook page")
+    tw_page_url = models.URLField(null=True, blank=True, help_text="link to member\'s twitter page")
+    inst_page_url = models.URLField(null=True, blank=True, help_text="link to member\'s instagram page")
+    name = models.CharField(max_length=150, null=True)
+    position = models.CharField(max_length=150, null=True)
+    team = models.ForeignKey(Team, help_text='Add Team', null=True)
+
+    def __str__(self):
+        return self.name
 
 
 

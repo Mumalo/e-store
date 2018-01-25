@@ -42,7 +42,7 @@
                         <div class="owl-carousel owl-theme" id="item-detail-carousel">
                             {% for image in auction.image.all %}
                                 <div class="item">
-                                    <img src="{{ image.image.url }}" class="img-responsive img-thumbnail auction-detail-image">
+                                    <img id="zoom_01" src="{{ image.image.url }}" class="img-responsive img-thumbnail auction-detail-image"  data-zoom-image="{{image.image.url}}">
                                 </div>
                             {%endfor %}
 
@@ -318,5 +318,14 @@
      <!-- Item filtering row end here -->
 
 </div> <!-- end of main container -->
+    {% block extrajs %}
+        <script>
+            $("#zoom_01").elevateZoom({
+                zoomType: "lens",
+                cursor: "crosshair"
+            });
+
+        </script>
+    {% endblock %}
 
 {% endblock %}

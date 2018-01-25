@@ -2,18 +2,30 @@ from django.shortcuts import render
 
 
 from django.shortcuts import render
-from .models import Pages
+from .models import Pages, Team, TeamMember
 from django.core.exceptions import ObjectDoesNotExist
 
 
+def our_team(request):
+
+    team = None
+    members = None
+    try:
+        team = Team.objects.all()[0]
+        members = TeamMember.objects.filter(team=team)
+
+    except ObjectDoesNotExist:
+        team = None
+        members = None
+
+
+    return render(request, 'pages/our_team.html', {'members':members, })
 
 def home(request):
 
     p = None
     images = None
-    terms = None
     text = None
-
     try:
         p = Pages.objects.get(title='Home')
         # images = [i for i in p.gallery.photos.all()]
