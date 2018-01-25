@@ -17,6 +17,7 @@
                 <h1 class="text-uppercase">Meet Our Team Members </h1>
             </div>
             {% for member in members %}
+                {% if member %}
                 <div class="col-md-4 col-sm-4">
                     <div class="team-member">
                         <div class="team-img">
@@ -39,6 +40,7 @@
                         <p class="text-center">{{ member.position }}</p>
                     </div>
                 </div>
+                {% endif %}
             {% endfor %}
         </div>
         </div>
