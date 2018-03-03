@@ -6,12 +6,12 @@
 
 
 {% block content %}
-    <div id="products" class="row list-group">
+    <div id="products" class="row list-group no-gutter">
                 {% for auction in items %}
                 {% if auction.available %}
                     <div class="item col-xs-12 col-md-3 col-sm-4 product-item-container ">
                         <!--place{{auction.place_on_auction}}-->
-                        <div class="thumbnail box">
+                        <div class="thumbnail box" style="width: 90%">
                             {% with auction.image.all|first as image %}
                                 {% if image.image %}
                                     <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{{ image.image.url }}" alt="" /></a>

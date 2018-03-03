@@ -222,13 +222,6 @@ class WatchList(BaseModel):
                                 on_delete=models.CASCADE, null=True)
     items = models.ManyToManyField(AuctionEvent)
 
-
-
-
-
-
-
-
 class Bid(BaseModel):
     amount = models.DecimalField(max_digits=50, decimal_places=2)
     bidder = models.ForeignKey(User,
@@ -280,7 +273,6 @@ class BudgetPlan(Advert):
 
 class Ratings(models.Model):
     time_frame = models.CharField(max_length=125, null=True)
-
 
 class ItemOfTheDay(BaseModel):
     category = models.ForeignKey(Category, blank=True, null=True, help_text='Please select a category to include')

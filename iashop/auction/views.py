@@ -22,7 +22,14 @@ from common.decorators import ajax_required
 from notifications.signals import notify
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+"""
+@description: for a given Sub category selected
+populate next drop down with items
+belonging to that sub category
+:param request
+:rtype json
 
+"""
 @ajax_required
 def sub_cats_for_cats(request):
     data = request.POST.get('cat')
@@ -41,6 +48,14 @@ def sub_cats_for_cats(request):
 
     return JsonResponse(items, safe=False)
 
+"""
+@description: for a given category selected
+populate next drop down with items
+belonging to that category
+:param request
+:rtype json
+
+"""
 @ajax_required
 @login_required
 def select_by_category(request):
@@ -75,6 +90,10 @@ def select_by_subcat(request):
     return JsonResponse(result, safe=False)
     ''
 
+"""
+Mark all notifications as read
+for a particular recipient
+"""
 @login_required
 @ajax_required
 def mark_all_as_read(request):
@@ -93,6 +112,10 @@ def mark_all_as_read(request):
         return JsonResponse({'status':'ok'})
     return JsonResponse({'status':'ko'})
 
+"""
+Mark a particular notification as read
+for a given recipient
+"""
 @login_required
 @ajax_required
 def mark(request):
@@ -108,6 +131,9 @@ def mark(request):
             return JsonResponse({'status':'ko'})
     return JsonResponse({'status':'ko'})
 
+"""
+Show all categories belonging to the system
+"""
 def all_categories(request):
     categories = Category.objects.all()
     items = AuctionEvent.objects.all()
@@ -115,6 +141,14 @@ def all_categories(request):
     return render(request,"auction/category/category_list.html",
                   {'categories':categories, 'items':items})
 
+"""
+example slug shoes
+slug is a string identifier for a category
+category detail page shows all items belinging to it
+:param category_id:
+:param category_slug
+
+"""
 def category_detail(request, category_id, category_slug):
 
     category = None
@@ -129,6 +163,7 @@ def category_detail(request, category_id, category_slug):
     return render(request, "auction/category/category_detail.html",
                   {'category': category, 'items': items,})
 
+
 def subcat_detail(request, subcat_id=None, subcat_slug=None):
 
     subcat = None
@@ -142,7 +177,12 @@ def subcat_detail(request, subcat_id=None, subcat_slug=None):
     return render(request, "auction/subcategory/detail.html", {'subcat':subcat, 'items':items})
 
 
+"""
+subcat2 represents a category under a subcategory
+Example: Category = Automobiles, subcategory = cars
+subcat2 = BMW
 
+"""
 def subcat2_detail(request, subcat_id=None, subcat_slug=None):
 
     subcat2 = None
@@ -152,6 +192,12 @@ def subcat2_detail(request, subcat_id=None, subcat_slug=None):
         pass
     return render(request, "auction/subcategory/subcat2-detail.html", {'subcat2':subcat2})
 
+
+"""
+subcategory and subcateory2 are autopopulated
+when adding a new item
+An item can have many photos
+"""
 @login_required
 def add_new_auction(request):
 
@@ -169,6 +215,10 @@ def add_new_auction(request):
             current_user = get_user(request)
             new_form.creator = current_user
             images = []
+            """
+            Save corresponding subcategories item belongs to
+            if they exist
+            """
             if cleaned_sub:
                 try:
                     sub_cat = SubCategory.objects.get(name=cleaned_sub)
@@ -187,6 +237,10 @@ def add_new_auction(request):
                 image = form.save()
                 new_form.image.add(image)
 
+            """
+            Send a notification to all users that this item has been added
+            except the current user
+            """
             users = User.objects.exclude(id=current_user.id)
             users = list(users)
             auction = new_form
@@ -194,13 +248,22 @@ def add_new_auction(request):
 
             return  render(request, 'auction/auction_complete.html')
     else:
+        """
+        if form validation falied
+        render an empty form and
+        stay on the same page
+        """
         form = AuctionForm()
         formset = ImageFormset()
     return render(request, 'auction/new_auction.html',
                   {'form': form, 'formset':formset}, )
 
 # ajax view to select by category
-
+"""
+custom comtext processor to
+render search forms and all items
+in the items index page
+"""
 def custom_processor(request):
 
     all_auctions_list  = AuctionEvent.objects.all()
@@ -226,7 +289,11 @@ def custom_processor(request):
          'auctions':auctions,
     }
 
-
+"""
+displays list of all items in the system
+paginated by n items a page
+n = 10 in this case
+"""
 def auction_list(request):
     categories = Category.objects.all()
     # Edit this line of code later
@@ -238,7 +305,10 @@ def auction_list(request):
 
 
         if general_search.is_valid():
-
+            """
+            if the user made a search
+            show only items belinging to that search query
+            """
             g_search_list = general_search.search()
             number = g_search_list.count()
             paginator = Paginator(g_search_list, 10)
@@ -254,6 +324,11 @@ def auction_list(request):
             return render_to_response('auction/list.html', {'g_search':g_search, 'gs_number':number}, context_instance=RequestContext(request, processors=[custom_processor]))
 
     if "sub_search" in request.GET:
+        """
+        this can be side bar search seen on the actions list page
+        show only items belonging to this search a search was
+        made in this form
+        """
         search_form = AdvancedSearchForm(data=request.GET)
         if search_form.is_valid():
             search_list = search_form.search()
@@ -268,14 +343,16 @@ def auction_list(request):
                 search = paginator.page(paginator.num_pages)
 
             return render_to_response('auction/list.html', {'search':search, 's_number':number}, context_instance=RequestContext(request, processors=[custom_processor]))
-
-
     else:
         g_search = None
         search = None
         cat = None
     return render_to_response('auction/list.html', context_instance=RequestContext(request, processors=[custom_processor]))
 
+"""
+:param request:
+:param: auction_id
+"""
 @login_required
 def edit_auction(request, auction_id):
 
@@ -310,8 +387,10 @@ def auction_detail(request, auction_id):
         except:
             creator = None
 
-
         if private_message.is_valid():
+            """
+            form to send private messages to owner of this item
+            """
             message = private_message.cleaned_data.get('message')
 
             if creator and sender and message:
@@ -319,14 +398,24 @@ def auction_detail(request, auction_id):
                 to_email = creator.email
                 subject = "{}, {} is interested in {}".format(sender, sender.email, auction.item)
                 message = "{}".format(message)
+                """
+                send message from user with from_email
+                to user with to_email
+                """
                 private_message.send(subject, message, from_email, [to_email])
 
 
         if bid_form.is_valid():
+            """
+            save if there was a bid on the item
+            """
             bidder = get_user(request)
             bid_form.save(commit=False)
 
             if auction.creator == bidder:
+                """
+                the owner of the item cannot bid on this
+                """
                 messages.error(request, 'You cannot Bid on your own item')
             elif auction.creator != bidder:
                 users = User.objects.filter(id=auction.creator.id)
@@ -336,17 +425,12 @@ def auction_detail(request, auction_id):
                 # return render(request, 'auction/bid_confirm.html', {'auction':auction})
 
                 messages.success(request, 'Your Bid was submitted')
-
-
         else:
             messages.error(request, 'error')
 
     else:
         bid_form = BidForm(auction=auction, bidder=request.user)
         private_message = EmailPostForm()
-
-
-
     return render(request, 'auction/auction_detail.html',
                   {'bid_form':bid_form,
                    'auction': auction,
@@ -444,6 +528,10 @@ def update_budget(request, budget_id):
         budget_form = BudgetForm(instance=budget)
     return render(request, 'auction/advert/budget_edit.html', {'budget_form':budget_form})
 
+
+"""
+Json delete view for budget plan and auction
+"""
 @login_required
 @ajax_required
 def delete_view(request):
@@ -453,7 +541,6 @@ def delete_view(request):
     action = request.POST.get('action', None)
 
     if id:
-
         if action == 'budget':
             try:
                 budget = BudgetPlan.objects.get(id=id)

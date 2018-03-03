@@ -6,133 +6,940 @@
 {% block title %}{% endblock %}
 
 {% block content %}
-    <div class="container-fluid text-center home-page-container">
-        <div class="row content main-slider" style="width: 100%;">
-            <div class="col-xs-12 col-sm-3 col-md-3 no-gutter" style="border-left: none !important; padding-right: 2px">
-                <div class="panel panel-default left-sidebar categories-main">
-                    <div class="panel-heading text-left">CATEGORIES<span class="text-right"><a href="{% url 'auctions:all_categories' %}">see all<i class="glyphicon glyphicon-triangle-right"></i></a></span></div>
-                    <div class="panel-body">
-                        {% product_categories 10 as category %}
-                             {% for c in category %}
-                                <div data-action="{{c}}" class="text-left cat-list"  id="category_list"><a href="{% url 'auctions:category_detail' category_id=c.id category_slug=c.slug %}" >{{ c }}</a></div>
-                                    <div class="container-fluid text-left sub-cat-on-hover row"  id="subcats">
+    <!-- NAVIGATION -->
+	<div id="navigation">
+		<!-- container -->
+		<div class="container">
+			<div id="responsive-nav">
+				<!-- menu nav -->
+				<div class="menu-nav" style="margin-left: 27%">
+					<span class="menu-header">Menu <i class="fa fa-bars"></i></span>
+					<ul class="menu-list">
+						<li><a href="{% url 'pages:home' %}">Home</a></li>
+						<li><a href="#">Shop</a></li>
+						<li class="dropdown mega-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women <i class="fa fa-caret-down"></i></a>
+							<div class="custom-menu">
+								<div class="row">
+									<div class="col-md-4">
+										<ul class="list-links">
+											<li>
+												<h3 class="list-links-title">Categories</h3></li>
+											<li><a href="#">Women’s Clothing</a></li>
+											<li><a href="#">Men’s Clothing</a></li>
+											<li><a href="#">Phones & Accessories</a></li>
+											<li><a href="#">Jewelry & Watches</a></li>
+											<li><a href="#">Bags & Shoes</a></li>
+										</ul>
+										<hr class="hidden-md hidden-lg">
+									</div>
+									<div class="col-md-4">
+										<ul class="list-links">
+											<li>
+												<h3 class="list-links-title">Categories</h3></li>
+											<li><a href="#">Women’s Clothing</a></li>
+											<li><a href="#">Men’s Clothing</a></li>
+											<li><a href="#">Phones & Accessories</a></li>
+											<li><a href="#">Jewelry & Watches</a></li>
+											<li><a href="#">Bags & Shoes</a></li>
+										</ul>
+										<hr class="hidden-md hidden-lg">
+									</div>
+									<div class="col-md-4">
+										<ul class="list-links">
+											<li>
+												<h3 class="list-links-title">Categories</h3></li>
+											<li><a href="#">Women’s Clothing</a></li>
+											<li><a href="#">Men’s Clothing</a></li>
+											<li><a href="#">Phones & Accessories</a></li>
+											<li><a href="#">Jewelry & Watches</a></li>
+											<li><a href="#">Bags & Shoes</a></li>
+										</ul>
+									</div>
+								</div>
+								<div class="row hidden-sm hidden-xs">
+									<div class="col-md-12">
+										<hr>
+										<a class="banner banner-1" href="#">
+											<img src="{% static 'img/banner05.jpg' %}" alt="">
+											<div class="banner-caption text-center">
+												<h2 class="white-color">NEW COLLECTION</h2>
+												<h3 class="white-color font-weak">HOT DEAL</h3>
+											</div>
+										</a>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="dropdown mega-dropdown full-width"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Men <i class="fa fa-caret-down"></i></a>
+							<div class="custom-menu">
+								<div class="row">
+									<div class="col-md-3">
+										<div class="hidden-sm hidden-xs">
+											<a class="banner banner-1" href="#">
+												<img src="{% static 'img/banner06.jpg' %}" alt="">
+												<div class="banner-caption text-center">
+													<h3 class="white-color text-uppercase">Women’s</h3>
+												</div>
+											</a>
+											<hr>
+										</div>
+										<ul class="list-links">
+											<li>
+												<h3 class="list-links-title">Categories</h3></li>
+											<li><a href="#">Women’s Clothing</a></li>
+											<li><a href="#">Men’s Clothing</a></li>
+											<li><a href="#">Phones & Accessories</a></li>
+											<li><a href="#">Jewelry & Watches</a></li>
+											<li><a href="#">Bags & Shoes</a></li>
+										</ul>
+									</div>
+									<div class="col-md-3">
+										<div class="hidden-sm hidden-xs">
+											<a class="banner banner-1" href="#">
+												<img src="{% static 'img/banner07.jpg' %}" alt="">
+												<div class="banner-caption text-center">
+													<h3 class="white-color text-uppercase">Men’s</h3>
+												</div>
+											</a>
+										</div>
+										<hr>
+										<ul class="list-links">
+											<li>
+												<h3 class="list-links-title">Categories</h3></li>
+											<li><a href="#">Women’s Clothing</a></li>
+											<li><a href="#">Men’s Clothing</a></li>
+											<li><a href="#">Phones & Accessories</a></li>
+											<li><a href="#">Jewelry & Watches</a></li>
+											<li><a href="#">Bags & Shoes</a></li>
+										</ul>
+									</div>
+									<div class="col-md-3">
+										<div class="hidden-sm hidden-xs">
+											<a class="banner banner-1" href="#">
+												<img src="{% static 'img/banner08.jpg' %}" alt="">
+												<div class="banner-caption text-center">
+													<h3 class="white-color text-uppercase">Accessories</h3>
+												</div>
+											</a>
+										</div>
+										<hr>
+										<ul class="list-links">
+											<li>
+												<h3 class="list-links-title">Categories</h3></li>
+											<li><a href="#">Women’s Clothing</a></li>
+											<li><a href="#">Men’s Clothing</a></li>
+											<li><a href="#">Phones & Accessories</a></li>
+											<li><a href="#">Jewelry & Watches</a></li>
+											<li><a href="#">Bags & Shoes</a></li>
+										</ul>
+									</div>
+									<div class="col-md-3">
+										<div class="hidden-sm hidden-xs">
+											<a class="banner banner-1" href="#">
+												<img src="{% static 'img/banner09.jpg' %}" alt="">
+												<div class="banner-caption text-center">
+													<h3 class="white-color text-uppercase">Bags</h3>
+												</div>
+											</a>
+										</div>
+										<hr>
+										<ul class="list-links">
+											<li>
+												<h3 class="list-links-title">Categories</h3></li>
+											<li><a href="#">Women’s Clothing</a></li>
+											<li><a href="#">Men’s Clothing</a></li>
+											<li><a href="#">Phones & Accessories</a></li>
+											<li><a href="#">Jewelry & Watches</a></li>
+											<li><a href="#">Bags & Shoes</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li><a href="#">Sales</a></li>
+						<li class="dropdown default-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Pages <i class="fa fa-caret-down"></i></a>
+							<ul class="custom-menu">
+								<li><a href="index.html">Home</a></li>
+								<li><a href="products.html">Products</a></li>
+								<li><a href="product-page.html">Product Details</a></li>
+								<li><a href="checkout.html">Checkout</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<!-- menu nav -->
+			</div>
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /NAVIGATION -->
 
-                                    </div>
-                             {% endfor %}
-                    </div>
+	<!-- HOME -->
+	<div id="home">
+		<!-- container -->
+		<div class="row container-fluid no-gutter">
+            <!-- category nav -->
+				<div class="category-nav col-sm-3 col-md-3" style="border: none">
+					<span class="category-header"><i class="fa fa-list text-left" style="float: left!important;padding-right: 6px"></i> Categories </span>
+					<ul class="category-list">
+                        {% product_categories 8 as category %}
+                        {% for c in category %}
+                            <li class="dropdown side-dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">{{ c.name }}<i class="fa fa-angle-right"></i></a>
+                                 {% if c.subcat %}
+                                     <div class="custom-menu">
+                                         <div class=row>
+                                             {% for sub in c.subcat.all %}
+                                                 <div class="col-md-4">
+                                                     <ul class="list-links">
+                                                         <li><h3 class="list-links-title">{{ c }}</h3></li>
+                                                         <li><a href="">{{ sub }}</a></li>
+                                                     </ul>
+                                                     <hr class="hidden-md hidden-lg">
+                                                 </div>
+                                             {% endfor %}
+                                         </div>
+
+                                        {% if c.image %}
+                                            <div class="row hidden-sm hidden-xs">
+                                                <div class="col-md-12">
+                                                    <hr>
+                                                    <a class="banner banner-1" href="#">
+                                                        <img src="{{ c.image.url }}" alt="" style="height: 160px; width: 100%">
+                                                        <div class="banner-caption text-center">
+                                                            <h2 class="white-color">NEW COLLECTION</h2>
+                                                            <h3 class="white-color font-weak">HOT DEAL</h3>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                         {% endif %}
+                                     </div>
+                                 {% endif %}
+                            </li>
+                        {% endfor %}
+						<li><a  href="{% url 'auctions:all_categories' %}">View All</a></li>
+					</ul>
+				</div>
+				<!-- /category nav -->
+			<!-- home wrap -->
+			<div class="home-wrap col-sm-6 col-md-6">
+				<!-- home slick -->
+				<div id="home-slick">
+					<!-- banner -->
+					<div class="banner banner-1">
+						<img src="{% static 'img/banner01.jpg' %}" alt="">
+						<div class="banner-caption text-center">
+							<h1>Bags sale</h1>
+							<h3 class="white-color font-weak">Up to 50% Discount</h3>
+							<button class="primary-btn">Shop Now</button>
+						</div>
+					</div>
+					<!-- /banner -->
+
+					<!-- banner -->
+					<div class="banner banner-1">
+						<img src="{% static 'img/banner02.jpg' %}" alt="">
+						<div class="banner-caption">
+							<h1 class="primary-color">HOT DEAL<br><span class="white-color font-weak">Up to 50% OFF</span></h1>
+							<button class="primary-btn">Shop Now</button>
+						</div>
+					</div>
+					<!-- /banner -->
+
+					<!-- banner -->
+					<div class="banner banner-1">
+						<img src="{% static 'img/banner02.jpg' %}" alt="">
+						<div class="banner-caption">
+							<h1 class="white-color">New Product <span>Collection</span></h1>
+							<button class="primary-btn">Shop Now</button>
+						</div>
+					</div>
+					<!-- /banner -->
+				</div>
+				<!-- /home slick -->
+			</div>
+			<!-- /home wrap -->
+            <!--best brand -->
+            <div class="col-sm-3 col-md-3">
+             <div class="panel panel-default left-sidebar best-brand" style="padding-bottom:100px !important; margin: 0;">
+                <div class="panel-heading text-center" style="width: 87%;margin-left: 14%;background: #11255e; color: #fff">
+                    BEST BRAND
                 </div>
-            </div>
 
-            <div class="col-xs-12 col-sm-6 col-md-6 no-gutter" style="padding-left:0; padding-right: 0">
-                <div class="owl-carousel owl-theme" id="carousel1">
-                    {% for image in images %}
-                         <div class="item">
-                             <img src="{{ image.get_thumbnail_url }}" class="img-responsive">
-                         </div>
+                {% item_of_the_day as items %}
+
+                <div class="best-brand-slick">
+                    {% for item in items %}
+                        {% with item.image.all|first as image %}
+                            {% if image.image %}
+                                {% for image in item.image.all %}
+                                <div class="img-container" style="width: 100%; margin-left: 2.4%">
+                                    <a href="{% url 'auctions:bid' item.id %}"><img  src="{{ image.image.url }}"  class="img-responsive"></a>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="img-container">
+                                    <a href="{% url 'auctions:bid' item.id %}"><img  src="{% static 'images/no_image.png' %}" class="img-responsive"></a>
+                                </div>
+                            {% endif %}
+                        {% endwith %}
                     {% endfor %}
                 </div>
             </div>
+            </div>
+            <!-- best brand -->
+		</div>
+		<!-- /container row -->
+	</div>
+	<!-- /HOME -->
 
-            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 text-center" style="border: none !important; padding-left:2px">
-                <div class="panel panel-default left-sidebar best-brand" style="padding-bottom:70px">
-                    <div class="panel-heading text-center">
-                        BEST BRAND
-                    </div>
+	<!-- section -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<!-- banner -->
+				<div class="col-md-4 col-sm-6">
+					<a class="banner banner-1" href="#">
+						<img src="{% static 'img/banner10.jpg' %}" alt="">
+						<div class="banner-caption text-center">
+							<h2 class="white-color">NEW COLLECTION</h2>
+						</div>
+					</a>
+				</div>
+				<!-- /banner -->
 
-                    {% item_of_the_day as items %}
-                        <div class="owl-carousel owl-theme" id="carousel4">
-                            {% for item in items %}
+				<!-- banner -->
+				<div class="col-md-4 col-sm-6">
+					<a class="banner banner-1" href="#">
+						<img src="{% static 'img/banner11.jpg"' %}" alt="">
+						<div class="banner-caption text-center">
+							<h2 class="white-color">NEW COLLECTION</h2>
+						</div>
+					</a>
+				</div>
+				<!-- /banner -->
+
+				<!-- banner -->
+				<div class="col-md-4 col-md-offset-0 col-sm-6 col-sm-offset-3">
+					<a class="banner banner-1" href="#">
+						<img src="{% static 'img/banner12.jpg' %}" alt="">
+						<div class="banner-caption text-center">
+							<h2 class="white-color">NEW COLLECTION</h2>
+						</div>
+					</a>
+				</div>
+				<!-- /banner -->
+
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+
+	<!-- section -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+            {% ending_soon as soon %}
+            {% if soon|length > 0 %}
+			<div class="row">
+				<!-- section-title -->
+				<div class="col-md-12">
+					<div class="section-title">
+						<h2 class="title">Ending Today Deals</h2>
+						<div class="pull-right">
+							<div class="product-slick-dots-1 custom-dots"></div>
+						</div>
+					</div>
+				</div>
+				<!-- /section-title -->
+
+				<!-- banner -->
+				<div class="col-md-3 col-sm-6 col-xs-6 no-gutter">
+                    {% with soon|first as first_item %}
+                        {% with first_item.image.all|first as first_image %}
+                            {% if first_image.image %}
+					            <div class="banner banner-2">
+					            	<img src="{{ first_image.image.url }}" alt="">
+					            	<div class="banner-caption">
+{#					            		<h2 class="white-color">NEW<br>COLLECTION</h2>#}
+					            		<button class="primary-btn">See Item</button>
+					            	</div>
+					            </div>
+                            {% endif %}
+                        {% endwith %}
+                    {% endwith %}
+				</div>
+				<!-- /banner -->
+
+				<!-- Product Slick -->
+				<div class="col-md-9 col-sm-6 col-xs-6" >
+					<div class="row">
+						<div id="product-slick-1" class="product-slick">
+							<!-- Product Single -->
+                            {% for item in soon %}
                                 {% with item.image.all|first as image %}
-                                    {% if image.image %}
-                                        {% for image in item.image.all %}
-                                        <div class="item">
-                                            <a href="{% url 'auctions:bid' item.id %}"><img  src="{{ image.image.url }}"  class="img-responsive"></a>
-                                        </div>
-                                        {% endfor %}
-                                    {% else %}
-                                        <div class="item">
-                                            <a href="{% url 'auctions:bid' item.id %}"><img  src="{% static 'images/no_image.png' %}" class="img-responsive"></a>
-                                        </div>
-                                    {% endif %}
+							        <div class="product product-single" style="background: red">
+							        	<div class="product-thumb">
+							        		<div class="product-label">
+{#							        			<span>New</span>#}
+{#							        			<span class="sale">-20%</span>#}
+							        		</div>
+							        		<ul class="product-countdown">
+							        			<li><span>00 H</span></li>
+							        			<li><span>00 M</span></li>
+							        			<li><span>00 S</span></li>
+							        		</ul>
+							        		<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+                                             <!-- if image exists -->
+                                            {% if image.image %}
+                                                <a href="{% url 'auctions:bid' item.id %}"><img src="{{ image.image.url }}"  class="img-responsive" ></a>
+                                                <a href="{% url 'auctions:bid' item.id %}"><img src="{{ image.image.url }}"  class="img-responsive" ></a>
+                                            {% else %}
+                                            <!-- use default image -->
+                                                <a href="{% url 'auctions:bid' item.id %}"><img  src="{% static 'images/no_image.png' %}" class="img-responsive"></a>
+                                                <a href="{% url 'auctions:bid' item.id %}"><img  src="{% static 'images/no_image.png' %}" class="img-responsive"></a>
+                                            {% endif %}
+							        	</div>
+							        	<div class="product-body">
+							        		<h3 class="product-price">{{ item.get_current_price }}
+{#                                                <del class="product-old-price">$45.00</del>#}
+                                            </h3>
+							        		<div class="product-rating">
+							        			<i class="fa fa-star"></i>
+							        			<i class="fa fa-star"></i>
+							        			<i class="fa fa-star"></i>
+							        			<i class="fa fa-star"></i>
+							        			<i class="fa fa-star-o empty"></i>
+							        		</div>
+							        		<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							        		<div class="product-btns">
+							        			<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+							        			<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+							        			<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							        		</div>
+							        	</div>
+							        </div>
                                 {% endwith %}
                             {% endfor %}
-                        </div>
-                </div>
-            </div>
+							<!-- /Product Single -->
+						</div>
+					</div>
+				</div>
+				<!-- /Product Slick -->
+			</div>
+            {% endif %}
+			<!-- /row -->
 
-        </div>
-        <!--<hr style="border-bottom: 2px solid #F3DAA0; width: 93%"/>-->
+			<!-- row -->
 
+            {% hottest_deals as top %}
+            {% if top|length > 0 %}
+                <div class="row">
+			    	<!-- section title -->
+			    	<div class="col-md-12">
+			    		<div class="section-title">
+			    			<h2 class="title">Deals Of The Day</h2>
+			    			<div class="pull-right">
+			    				<div class="product-slick-dots-2 custom-dots">
+			    				</div>
+			    			</div>
+			    		</div>
+			    	</div>
+			    	<!-- section title -->
 
-        <div class="home-page-nav-pills-container">
-            <!--New row starts here -->
-        <div class="row left-sidebar" style="width: 93%">
-            <ul class="nav nav-pills">
-                <li style="width: 180px" class="text-center">
-                    <a class="active" data-toggle="pill" href="#ending-soon">Ending Today</a>
-                </li>
-            </ul>
+			    	<!-- banner -->
+			    	<div class="col-md-3 col-sm-6 col-xs-6" style="border: 1px solid red; margin-right: 0; padding-right: 0">
+			    		<div class="banner banner-2">
+			    			<img src="{% static 'img/banner14.jpg' %}" alt="">
+			    			<div class="banner-caption">
+			    				<h2 class="white-color">HOTTEST<br>DEALS</h2>
+			    				<button class="primary-btn">Shop Now</button>
+			    			</div>
+			    		</div>
+			    	</div>
+			    	<!-- /banner -->
 
-            <div class="tab-content" style="padding-bottom: 49px">
-                <div class="tab-pane fade in active" id="ending-soon">
-                    <h5>Ending Today deals</h5>
-                    <div class="owl-carousel owl-theme" id="carousel2">
-                        {% ending_soon as soon %}
-                        {% for item in soon %}
-                            {% with item.image.all|first as image %}
-                                {% if image.image %}
-                                    {% for image in item.image.all %}
-                                    <div class="item">
-                                        <a href="{% url 'auctions:bid' item.id %}"><img src="{{ image.image.url }}"  class="img-responsive" ></a>
-                                    </div>
-                                    {% endfor %}
-                                {% else %}
-                                    <div class="item">
-                                        <a href="{% url 'auctions:bid' item.id %}"><img  src="{% static 'images/no_image.png' %}" class="img-responsive"></a>
-                                    </div>
-                                {% endif %}
-                            {% endwith %}
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
+			    	<!-- Product Slick -->
+                    {% for item in top %}
+                    {% with item.image.all|first as image %}
+			    	    <div class="col-md-9 col-sm-6 col-xs-6 text-left">
+			    	    	<div class="row" >
+			    	    		<div id="product-slick-2" class="product-slick">
+			    	    			<!-- Product Single -->
+			    	    			<div class="product product-single">
+			    	    				<div class="product-thumb">
+			    	    					<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+                                            {% if image.image %}
+			    	    					       <a href="{% url 'auctions:bid' item.id %}"><img src="{{ image.image.url }}"  class="img-responsive" ></a>
+                                            {% else %}
+                                                    <a href="{% url 'auctions:bid' item.id %}"><img  src="{% static 'images/no_image.png' %}" class="img-responsive"></a>
+                                            {% endif %}
+			    	    				</div>
+			    	    				<div class="product-body">
+			    	    					<h3 class="product-price">$32.50</h3>
+			    	    					<div class="product-rating">
+			    	    						<i class="fa fa-star"></i>
+			    	    						<i class="fa fa-star"></i>
+			    	    						<i class="fa fa-star"></i>
+			    	    						<i class="fa fa-star"></i>
+			    	    						<i class="fa fa-star-o empty"></i>
+			    	    					</div>
+			    	    					<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+			    	    					<div class="product-btns">
+			    	    						<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+			    	    						<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+			    	    						<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+			    	    					</div>
+			    	    				</div>
+			    	    			</div>
+			    	    			<!-- /Product Single -->
+			    	    		</div>
+			    	    	</div>
+			    	    </div>
+                    {% endwith %}
+                    {% endfor %}
+			    	<!-- /Product Slick -->
+			    </div>
+                <!-- /row -->
+            {% endif %}
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
 
-        <div class="row left-sidebar" style="width: 93%">
-            <ul class="nav nav-pills">
-                <li style="width: 180px" class="text-center">
-                    <a class="active" data-toggle="pill" href="#top-deals" >Top Deals</a>
-                </li>
-            </ul>
+	<!-- section -->
+{#	<div class="section section-grey">#}
+{#		<!-- container -->#}
+{#		<div class="container">#}
+{#			<!-- row -->#}
+{#			<div class="row">#}
+{#				<!-- banner -->#}
+{#				<div class="col-md-8">#}
+{#					<div class="banner banner-1">#}
+{#						<img src="{% static 'img/banner13.jpg' %}" alt="">#}
+{#						<div class="banner-caption text-center">#}
+{#							<h1 class="primary-color">HOT DEAL<br><span class="white-color font-weak">Up to 50% OFF</span></h1>#}
+{#							<button class="primary-btn">Shop Now</button>#}
+{#						</div>#}
+{#					</div>#}
+{#				</div>#}
+{#				<!-- /banner -->#}
+{##}
+{#				<!-- banner -->#}
+{#				<div class="col-md-4 col-sm-6">#}
+{#					<a class="banner banner-1" href="#">#}
+{#						<img src="{% static 'img/banner11.jpg' %}" alt="">#}
+{#						<div class="banner-caption text-center">#}
+{#							<h2 class="white-color">NEW COLLECTION</h2>#}
+{#						</div>#}
+{#					</a>#}
+{#				</div>#}
+{#				<!-- /banner -->#}
+{##}
+{#				<!-- banner -->#}
+{#				<div class="col-md-4 col-sm-6">#}
+{#					<a class="banner banner-1" href="#">#}
+{#						<img src="{% static 'img/banner12.jpg' %}" alt="">#}
+{#						<div class="banner-caption text-center">#}
+{#							<h2 class="white-color">NEW COLLECTION</h2>#}
+{#						</div>#}
+{#					</a>#}
+{#				</div>#}
+{#				<!-- /banner -->#}
+{#			</div>#}
+{#			<!-- /row -->#}
+{#		</div>#}
+{#		<!-- /container -->#}
+{#	</div>#}
+{#	<!-- /section -->#}
 
-            <div class="tab-content" style="padding-bottom: 49px">
-                <div class="tab-pane fade in active" id="top-deals">
-                    <h5>Hottest deals</h5>
-                    <div class="owl-carousel owl-theme" id="carousel3">
-                        {% hottest_deals as top %}
-                        {% for item in top %}
-                            {% with item.image.all|first as image %}
-                                {% if image.image %}
-                                    {% for image in item.image.all %}
-                                    <div class="item">
-                                        <a href="{% url 'auctions:bid' item.id %}"><img src="{{ image.image.url }}"  class="img-responsive" ></a>
-                                    </div>
-                                    {% endfor %}
-                                {% else %}
-                                    <div class="item">
-                                        <a href="{% url 'auctions:bid' item.id %}"><img  src="{% static 'images/no_image.png' %}" class="img-responsive"></a>
-                                    </div>
-                                {% endif %}
-                            {% endwith %}
-                        {% endfor %}
+	<!-- section -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<!-- section title -->
+				<div class="col-md-12">
+					<div class="section-title">
+						<h2 class="title">Latest Products</h2>
+					</div>
+				</div>
+				<!-- section title -->
 
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--End of new row -->
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="{% static 'img/product01.jpg' %}" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50</h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
 
-        </div>
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span>New</span>
+								<span class="sale">-20%</span>
+							</div>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="{% static 'img/product02.jpg' %}" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
 
-    </div>
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span>New</span>
+								<span class="sale">-20%</span>
+							</div>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="{% static 'img/product02.jpg' %}g" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span>New</span>
+							</div>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="{% static 'img/product04.jpg' %}" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50</h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+			</div>
+			<!-- /row -->
+
+			<!-- row -->
+			<div class="row">
+				<!-- banner -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="banner banner-2">
+						<img src="{% static 'img/banner15.jpg' %}" alt="">
+						<div class="banner-caption">
+							<h2 class="white-color">NEW<br>COLLECTION</h2>
+							<button class="primary-btn">Shop Now</button>
+						</div>
+					</div>
+				</div>
+				<!-- /banner -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span>New</span>
+								<span class="sale">-20%</span>
+							</div>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="{% static 'img/product07.jpg' %}" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span>New</span>
+								<span class="sale">-20%</span>
+							</div>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="{% static 'img/product06.jpg' %}" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span>New</span>
+								<span class="sale">-20%</span>
+							</div>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="{% static 'img/product06.jpg' %}" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+			</div>
+			<!-- /row -->
+
+			<!-- row -->
+			<div class="row">
+				<!-- section title -->
+				<div class="col-md-12">
+					<div class="section-title">
+						<h2 class="title">Picked For You</h2>
+					</div>
+				</div>
+				<!-- section title -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="{% static 'img/product04.jpg' %}" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50</h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span>New</span>
+							</div>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="{% static 'img/product03.jpg' %}" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50</h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span class="sale">-20%</span>
+							</div>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="{% static 'img/product02.jpg' %}" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+
+				<!-- Product Single -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<div class="product-label">
+								<span>New</span>
+								<span class="sale">-20%</span>
+							</div>
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+							<img src="{% static 'img/product01.jpg' %}" alt="">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">$32.50 <del class="product-old-price">$45.00</del></h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">Product Name Goes Here</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Product Single -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+
+    {% block extrajs %}
+        <script src="{% static 'js/slick.min.js' %}"></script>
+        <script src="{% static 'js/nouislider.min.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
     {% endblock %}
+{% endblock %}

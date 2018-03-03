@@ -1,292 +1,345 @@
-<!--{% load bootstrap3 %}-->
 {% load staticfiles %}
 {% load static %}
 {% load auction_tags %}
 {% load notifications_tags %}
 {% load auction_tags %}
 {% load page_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width; initial-scale=1.0;">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>{% block title %}{% endblock %}</title>
+	<title>{% block title %}IA-STORE{% endblock %}</title>
+
 
     {% block head %}
-        <!--<link rel="stylesheet" type="text/css" href="{% static 'css/jquery.flipcountdown.css' %}" />-->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <!--<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link href="{% static 'css/home.css' %}" rel="stylesheet">
-        <link href="{% static 'css/pages_css.css' %}" rel="stylesheet">
-        <!--<link rel="stylesheet" href="{% static 'css/flipclock.css' %}">-->
-        {% include 'material/includes/material_css.html' %}
-        <link  href="{% static 'css/owlcarousel/owl.carousel.min.css' %}" rel="stylesheet">
-        <link  href="{% static 'css/owlcarousel/owl.theme.default.min.css' %}" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
-        <!--<link href="{% static 'selectable/css/dj.selectable.css' %}" type="text/css" media="all" rel="stylesheet">-->
-        {% block extrahead %}{% endblock %}
-    {% endblock %}
+	<!-- Google font -->
+	<link href="https://fonts.googleapis.com/css?family=Hind:400,700" rel="stylesheet">
+
+	<!-- Bootstrap -->
+	<!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<!-- Slick -->
+	<link rel="stylesheet" href="{% static 'css/slick.css'  %}" />
+	<link rel="stylesheet" href="{% static 'css/slick-theme.css' %}" />
+
+	<!-- nouislider -->
+	<link rel="stylesheet" href="{% static 'css/slick-theme.css' %}" />
+
+	<!-- Font Awesome Icon -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<!-- Custom stlylesheet -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <!-- owl carousel -->
+    <link  href="{% static 'css/owlcarousel/owl.carousel.min.css' %}" rel="stylesheet">
+    <link  href="{% static 'css/owlcarousel/owl.theme.default.min.css' %}" rel="stylesheet">
+
+    <!-- star ratings  -->
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+   {% block extrahead %}{% endblock %}
+   {% endblock %}
+
+
 </head>
 
 <body>
-<div class="main-header-container">
-   <div class="navbar navbar-default "  id="main-header" style="z-index: 3">
-       <div class="container-fluid header-content">
-           <div class="navbar-header">
-               <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">-->
-                    <!--<span class="icon-bar"></span>-->
-                    <!--<span class="icon-bar"></span>-->
-                    <!--<span class="icon-bar"></span>-->
-               <!--</button>-->
-               <a class="navbar-brand text" href="{% url 'pages:home' %}" style="color: #fff;"><img src="{% static 'images/background/logo.jpg' %}" class="img-responsive logo">
-                   <span class="logo-text" style="z-index: 4">IA STORE</span>
-                   <span style="position: absolute;left: 75px; top: 55px; font-family: Helvetica; font-size: 9px">SHOP BETTER LIVE BETTER</span>
-               </a>
-           </div>
-
-       <!--<div class="collapse navbar-collapse container-fluid" id="myNavbar" style="width: 100% !important; overflow: hidden">-->
-           <ul class="nav navbar-nav navbar-right right-header">
-                    <!--<li>-->
-                        <!--<i class="fa fa-shield text" aria-hidden="true"><span>Buyer Protection</span></i>-->
-                    <!--</li>-->
-
-                    <!--<li>-->
-                        <!--<img src="{% static 'images/nigeria_flag.gif' %}" class="img-responsive nigeria-flag">-->
-                        <!--<span class="text flag-text">NIG</span>-->
-                    <!--</li>-->
+	<!-- HEADER -->
+	<header>
+		<!-- top Header -->
+		<div id="top-header">
+			<div class="container" style="">
+				<div class="pull-left">
+					<span>Welcome to IA-SHOP!</span>
+				</div>
+				<div class="pull-right">
+                    &nbsp;&nbsp;&nbsp;
+					<ul class="header-top-links">
+						<li><a href="#">Buy</a></li>
+						<li><a href="#">Sell</a></li>
+						<li><a href="#">FAQ</a></li>
+                    <!-- Site notification begins here -->
                     {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' %}
                     {% notifications_unread as unread_count %}
-                    <li class="dropdown pagination-centered bell">
-                        <a href="#" class="dropdown-button notification-badge" data-activates="dropdown2" style="padding-left: 0; padding-right: 0">
 
-                             {% if not request.user.is_authenticated %}
-                                <i class="glyphicon glyphicon-bell" onclick="loginalert()">
-                                    <span class="notification-count text-center" style="color: #fff; background: #990000">0</span>
-                                </i>
-                            {% endif %}
-                            {% if  request.user.is_authenticated and unread_count > 0%}
-                                <i class="glyphicon glyphicon-bell" data-action="{{request.user}}">
-                                    <div class="notification-count text-center" style="color: #fff; background: #990000">{% live_notify_badge %}</div>
-                                </i>
-                            {% elif  request.user.is_authenticated and unread_count == 0 %}
-                                <i class="glyphicon glyphicon-bell" data-action="{{request.user}}">
-                                    <div class="notification-count text-center" style="color: #333">{% live_notify_badge %}</div>
-                                </i>
-                            {% endif %}
-                        </a>
+                    <!-- notification lif starts here -->
+{#                        <li class="dropdown pagination-centered bell">#}
+{#                            <a href="#" class="dropdown-button notification-badge" data-activates="dropdown2" style="padding-left: 0; padding-right: 0">#}
+{##}
+{#                                 {% if not request.user.is_authenticated %}#}
+{#                                    <i class="glyphicon glyphicon-bell" onclick="loginalert()">#}
+{#                                        <span class="notification-count text-center" style="color: #fff; background: #990000">0</span>#}
+{#                                    </i>#}
+{#                                {% endif %}#}
+{#                                {% if  request.user.is_authenticated and unread_count > 0%}#}
+{#                                    <i class="glyphicon glyphicon-bell" data-action="{{request.user}}">#}
+{#                                        <div class="notification-count text-center" style="color: #fff; background: #990000">{% live_notify_badge %}</div>#}
+{#                                    </i>#}
+{#                                {% elif  request.user.is_authenticated and unread_count == 0 %}#}
+{#                                    <i class="glyphicon glyphicon-bell" data-action="{{request.user}}">#}
+{#                                        <div class="notification-count text-center" style="color: #333">{% live_notify_badge %}</div>#}
+{#                                    </i>#}
+{#                                {% endif %}#}
+{#                            </a>#}
+{#                   <!--if there is an unread notification, show dropdown -->#}
+{#                        {% if request.user.is_authenticated %}#}
+{#                            <ul id="dropdown2" class="dropdown-content notifications list-group">#}
+{#                                <li class="list-group-item">#}
+{#                                    <!--<div class="notification-heading" >-->#}
+{#                                        <table style="border: none" >#}
+{#                                            <tr >#}
+{#                                                <td class="user-notifications menu-title" data-action="{{request.user}}"><a href="#"><span class="glyphicon glyphicon-remove-sign"></span>Mark All as Read</a></td>#}
+{##}
+{#                                            </tr>#}
+{#                                        </table>#}
+{#                                </li>#}
+{##}
+{#                                 <!-- left so for testing purposes -->#}
+{#                                {% notifications_unread as unread_count %}#}
+{#                                {% if unread_count %}#}
+{#                                 {% for notification in user.notifications.unread %}#}
+{#                                    <li class="notification-dropdown-li list-group-item">#}
+{#                                        <div class="row no-gutter all-notifications" style="margin-bottom: 0px !important; margin-top: 0px !important;">#}
+{#                                            <div class="col-xs-2 col-md-2 col-sm-2 notification">#}
+{#                                                {% if notification.actor.profile.photo %}#}
+{#                                                    <img src="{{ notification.actor.profile.photo.url}}" class="img-responsive small-image">#}
+{#                                                {% else %}#}
+{#                                                    <img src="{% static 'images/no_image.png' %}" class="img-responsive small-image">#}
+{#                                            </div>#}
+{##}
+{#                                            <div class="col-sm-8 col-xs-8 col-md-8 notification text-center notification-text" >#}
+{#                                                <p>#}
+{#                                                    <a href="{{notification.actor.get_absolute_url}}" >{{ notification.actor}}</a>  {{ notification.verb }}#}
+{#                                                     {{ notification.timesince }} ago#}
+{#                                                </p>#}
+{#                                            </div>#}
+{##}
+{#                                            <div class="col-xs-2 col-sm-2 col-md-2 notification" style="padding-right: 0 !important;">#}
+{#                                                {% if notification.target %}#}
+{#                                                    {% with notification.target.image.all|first as image %}#}
+{#                                                        {% if image.image %}#}
+{#                                                            <a href="{% url 'auctions:bid' notification.target.id %}">#}
+{#                                                                <img src="{{ image.image.url}}" class="img-responsive small-image">#}
+{#                                                            </a>#}
+{#                                                        {% else %}#}
+{##}
+{#                                                            <a href="{% url 'auctions:bid' notification.target.id %}">#}
+{#                                                                <img src="{% static 'images/no_image.png' %}" class="img-responsive small-image">#}
+{#                                                            </a>#}
+{#                                                        {% endif %}#}
+{#                                                    {% endwith %}#}
+{##}
+{#                                                {% endif %}#}
+{#                                                <span class="glyphicon glyphicon-remove-circle mark-as-read" data-id="{{notification.id}}" id="{{notification.id}}"></span>#}
+{#                                            </div>#}
+{#                                        </div>  <!-- end the div row -->#}
+{#                                    </li>#}
+{#                                 {% endfor  %}#}
+{#                            {% endif %}<!-- end if uncread_count -->#}
+{#                            </ul>#}
+{#                        {% endif %}#}
+{#                        </li>#}
+                    <!-- end of notification -->
+					</ul>
+                    <!-- end of header top links -->
+				</div>
+			</div>
+		</div>
+		<!-- /top Header -->
 
+		<!-- header -->
+		<div id="header">
+			<div class="container">
+					<div class="wrap">
+						{% search_form %}
+					</div>
+					<!-- /Search -->
+				<div class="pull-right">
+					<ul class="header-btns">
+						<!-- Account -->
+						<li class="header-account dropdown default-dropdown">
+							<div class="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="true">
+								<div class="header-btns-icon">
+									<i class="fa fa-user-o"style=""></i>
+								</div>
+                                <a href="#" class="text-uppercase">Login</a> / <a href="#" class="text-uppercase">Join</a>
+							</div>
+                            <a>MY STORE</a>
+							<ul class="custom-menu">
+								<li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+								<li><a href="#"><i class="fa fa-heart-o"></i> My Wishlist</a></li>
+								<li><a href="#"><i class="fa fa-exchange"></i> Compare</a></li>
+								<li><a href="{% url 'accounts:login' %}"><i class="fa fa-unlock-alt"></i> Login</a></li>
+								<li><a href="#"><i class="fa fa-user-plus"></i> Create An Account</a></li>
+							</ul>
+						</li>
+						<!-- /Account -->
 
-                   <!--if there is an unread notification, show dropdown -->
-                        {% if request.user.is_authenticated %}
-                                <ul id="dropdown2" class="dropdown-content notifications list-group">
-                                    <li class="list-group-item">
-                                            <!--<div class="notification-heading" >-->
-                                                <table style="border: none" >
-                                                    <tr >
-                                                        <td class="user-notifications menu-title" data-action="{{request.user}}"><a href="#"><span class="glyphicon glyphicon-remove-sign"></span>Mark All as Read</a></td>
-
-                                                    </tr>
-                                                </table>
-                                            <!--</div>-->
-                                    </li>
-                                    <!--<li class="divider"></li>-->
-
-                                         <!-- left so for testing purposes -->
-                                        {% notifications_unread as unread_count %}
-                                        {% if unread_count %}
-                                             {% for notification in user.notifications.unread %}
-                                                <li class="notification-dropdown-li list-group-item">
-                                                        <div class="row no-gutter all-notifications" style="margin-bottom: 0px !important; margin-top: 0px !important;">
-                                                            <div class="col-xs-2 col-md-2 col-sm-2 notification">
-                                                                {% if notification.actor.profile.photo %}
-                                                                    <img src="{{ notification.actor.profile.photo.url}}" class="img-responsive small-image">
-                                                                {% else %}
-                                                                    <img src="{% static 'images/no_image.png' %}" class="img-responsive small-image">
-                                                                {% endif %}
-                                                                <!--<p></p>-->
-                                                            </div>
-
-                                                            <div class="col-sm-8 col-xs-8 col-md-8 notification text-center notification-text" >
-                                                                <p>
-                                                                    <a href="{{notification.actor.get_absolute_url}}" >{{ notification.actor}}</a>  {{ notification.verb }}
-                                                                     {{ notification.timesince }} ago
-                                                                </p>
-
-
-                                                            </div>
-
-                                                            <div class="col-xs-2 col-sm-2 col-md-2 notification" style="padding-right: 0 !important;">
-                                                                {% if notification.target %}
-                                                                    {% with notification.target.image.all|first as image %}
-                                                                        {% if image.image %}
-                                                                            <a href="{% url 'auctions:bid' notification.target.id %}">
-                                                                                <img src="{{ image.image.url}}" class="img-responsive small-image">
-                                                                            </a>
-                                                                        {% else %}
-
-                                                                            <a href="{% url 'auctions:bid' notification.target.id %}">
-                                                                                <img src="{% static 'images/no_image.png' %}" class="img-responsive small-image">
-                                                                            </a>
-                                                                        {% endif %}
-                                                                    {% endwith %}
-
-                                                                {% endif %}
-                                                                <span class="glyphicon glyphicon-remove-circle mark-as-read" data-id="{{notification.id}}" id="{{notification.id}}"></span>
-                                                            </div>
-
-
-                                                        </div>  <!-- end the div row -->
-                                                    </a>
-                                                </li>
-                                            {% endfor  %}
-                                        {% endif %}<!-- end if uncread_count -->
-                                </ul>
-                        {% endif %}
-               </li> <!-- end of notification -->
-
-                     <!--<li class="ad"><a href="#"><button type="button" class="btn btn-primary btn-xs" href="#"  id="post-ad">Post Ad</button></a></li>-->
-                    <!--<ul>-->
-
-                        <li class="watch-list-li">
-                            <a {% if request.user.is_authenticated %}href="#WatchList" {% else %} href="{% url 'accounts:login' %}" {% endif %} class="watchlist"><span class="glyphicon glyphicon-heart text"><span>Watch <span>List</span></span></span></a>
+						<!-- Notification -->
+                        <li class="notifications" style="margin-top: 3px">
+                            <a><i class="fa fa-heart-o" ></i></a>
                         </li>
+						<!-- /Notification -->
 
+						<!-- Mobile nav toggle-->
+						<li class="nav-toggle">
+							<button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
+						</li>
+						<!-- / Mobile nav toggle -->
+					</ul>
+				</div>
+			</div>
+			<!-- header -->
+		</div>
+		<!-- container -->
+	</header>
+	<!-- /HEADER -->
 
+    {% block content %}
 
-                        {% if not request.user.is_authenticated %}
-                            <li class="user-loggedout-li"><a  href="{% url 'accounts:login' %}" class="text user-loggedout"><span class="glyphicon glyphicon-user"><span class="register"> Sign Up</span></span></a></li>
+    {% endblock %}
 
-                            <!--<li><a href="{% url 'accounts:login' %}" class="login text"><span style="font-size: 10px !important; font-weight: 300"> sign in or</span></span></a></li>-->
-                        {% endif %}
+	<!-- FOOTER -->
+	<footer id="footer" class="section section-grey">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<!-- footer widget -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="footer">
+						<!-- footer logo -->
+						<div class="footer-logo">
+							<a class="logo" href="#">
+		            <img src="{% static 'img/logo.png' %}" alt="">
+		          </a>
+						</div>
+						<!-- /footer logo -->
 
-               <!--<li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span>Shop</a></li>-->
-             {% if request.user.is_authenticated %}
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
 
-               <!--Drop down profile showing user's informaton -->
+						<!-- footer social -->
+						<ul class="footer-social">
+							<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+							<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+							<li><a href="#"><i class="fa fa-instagram"></i></a></li>
+							<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+							<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+						</ul>
+						<!-- /footer social -->
+					</div>
+				</div>
+				<!-- /footer widget -->
 
+				<!-- footer widget -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="footer">
+						<h3 class="footer-header">My Account</h3>
+						<ul class="list-links">
+							<li><a href="#">My Account</a></li>
+							<li><a href="#">My Wishlist</a></li>
+							<li><a href="#">Compare</a></li>
+							<li><a href="#">Checkout</a></li>
+							<li><a href="#">Login</a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- /footer widget -->
 
+				<div class="clearfix visible-sm visible-xs"></div>
 
-               <li class="list-unstyled user-logged-in-li" style="padding-left: 15px">
-                     <a class='dropdown-button user-logged-in' href='#' data-activates='dropdown1' style="padding-left: 0; padding-right: 0">
-                        <span class="glyphicon glyphicon-user" style="color: #F3DAA0;"></span>
-                    </a>
+				<!-- footer widget -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="footer">
+						<h3 class="footer-header">Customer Service</h3>
+						<ul class="list-links">
+							<li><a href="#">About Us</a></li>
+							<li><a href="#">Shiping & Return</a></li>
+							<li><a href="#">Shiping Guide</a></li>
+							<li><a href="#">FAQ</a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- /footer widget -->
 
-                     <ul id="dropdown1" class="dropdown-content">
-                            <li><a href="{{ user.get_absolute_url }}" class="profile-dropdown-li">User
-                                <span class="pull-right">
-                                    {% if user.profile.photo %}
-                                        <img src="{{request.user.profile.photo.url}}" class="img-responsive img-circle" style="width: 26px; height: 26px">
-                                    {% endif %}
-                                </span>
-                            </a></li>
-                            <li><a href="{% url 'accounts:edit' request.user.pk %}" class="profile-dropdown-li">Profile settings<span class="glyphicon glyphicon-cog pull-right"></span></a></li>
-                            <li><a href="{% url 'accounts:logout' %}" class="profile-dropdown-li"><span class="glyphicon glyphicon-log-out pull-right"></span>Logout</a></li>
-                            <li><a href="#!" class="profile-dropdown-li">Items<span class="badge pull-right" style="color: #EDF3FE">{% total_auctions request.user %}</span></a></li>
-                     </ul>
-                </li>
-             {% endif %} <!-- end user authenticated -->
-           </ul>
+				<!-- footer subscribe -->
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="footer">
+						<h3 class="footer-header">Stay Connected</h3>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+						<form>
+							<div class="form-group">
+								<input class="input" placeholder="Enter Email Address">
+							</div>
+							<button class="primary-btn">Join Newslatter</button>
+						</form>
+					</div>
+				</div>
+				<!-- /footer subscribe -->
+			</div>
+			<!-- /row -->
+			<hr>
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<!-- footer copyright -->
+					<div class="footer-copyright">
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					</div>
+					<!-- /footer copyright -->
+				</div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</footer>
+	<!-- /FOOTER -->
 
-       <!--</div> &lt;!&ndash; end of nav-bar container &ndash;&gt;-->
-   </div>
-   </div>
-</div>
-
-<!--Search-->
-
-<div class="search">
-    <div class="navbar navbar-default search-box-container row">
-       <div class="col-xs-0 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-
-       </div>
-       <div class="col-sm-8 col-md-8 col-lg-8 col-xs-8 text-center search-form">
-           {% search_form %}
-       </div>
-       <div class="col-sm-2 col-md-2 col-sm-2">
-
-       </div>
-        <div class="row home-page-auctions">
-            <div class="col-xs-0 col-sm-3 col-md-3"></div>
-            <div class="col-xs-12 col-sm-2  col-md-2">
-                 <a href="{% url 'auctions:list' %}" class="text">All Items</a>
-            </div>
-
-            <div class="col-xs-12 col-sm-2 col-md-2" >
-               <a href="{% url 'auctions:add_new_auction' %}" class="text">Add  Item</a>
-            </div>
-            <div class="col-xs-0 col-sm-3 col-md-3"></div>
-
-
-        </div>
-   </div>
-</div>
-{% if request.user.is_authenticated %}
-<div class="modal modal-fixed-footer" id="WatchList">
-    <div class="modal-content">
-        <h4 class="text-center">Watch List</h4>
-        <!--{% for i in detail.html %}-->
-        <!--{{i.product}}-->
-        <!--{% endfor %}-->
-        <!--{{detail.html}}-->
-        <ul class="collection">
-            {% watch_list request.user as lists %}
-            {% for list in lists %}
-            {% for item in list.items.all %}
-            <div class="watch-list-content">
-                <li class="collection-item avatar" id="{{item.id}}">
-                    {% with item.image.all|first as image %}
-                        {% if image.image %}
-                            <a  href="{% url 'auctions:bid' item.id %}">
-                                <img  class="circle img-responsive" src="{{ image.image.url }}" alt="">
-                            </a>
-                        {% else %}
-                            <a  href="{% url 'auctions:bid' item.id %}">
-                               <img class="circle img-responsive" src="{% static 'images/no_image.png' %}">
-                            </a>
-                        {% endif %}
-                    {% endwith %}
-                    <span class="title">{{ item}}</span>
-                    <p><a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>
-                    <p class="lead">{% if item.place_on_auction %}current Bid at {% else %}Price{% endif %} </p>
-                    <p class="lead">
-                        <span>&#x20A6 {{ item.get_current_price }}</span>
-                    </p><br />
-                    <p><span class="watch-auction" data-action="unwatch" data-id="{{item.id}}">Unwatch</span></p>
-                    <a href="#" class="secondary-content">
-                        <i class="material-icons">grade</i>
-                    </a>
-                </li>
-            </div>
-            {% endfor %}
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="modal-footer" >
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-    </div>
-</div>
-<!--Modal3 ends here -->
-<!--End of search -->
-{% endif %}
-    <div class="container-fluid body-content">
-        {% block content %}
-
-        {% endblock %}
-    </div>
-
-
-   <footer class="section section-primary main-footer">
-
-       {% block js %}
+	<!-- jQuery Plugins -->
+    {% block js %}
             <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
-             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-             <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
-             <script src="{% static 'js/jquery.matchHeight.js' %}" type="text/javascript"></script>
-             <script src="{% static 'js/jquery.formset.js' %}" type="text/javascript"></script>
+            <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+            <script src="{% static 'js/jquery.matchHeight.js' %}" type="text/javascript"></script>
+            <script src="{% static 'js/jquery.formset.js' %}" type="text/javascript"></script>
+            <script>
+                $('.image-formset').formset({
+                   addText: 'Add',
+                   deleteText: 'remove',
+                   addCssClass: 'add',
+                   deleteCssClass: 'del'
+
+                });
+            </script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
+            <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+            <script type="text/javascript" src="https://simplewebrtc.com/latest-v2.js"></script>
+            <script src="{% static 'js/home.js' %}"></script>
+
+            <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+            <script src="{% static 'js/jquery.matchHeight.js' %}" type="text/javascript"></script>
+            <script src="{% static 'js/jquery.formset.js' %}" type="text/javascript"></script>
+             <!--<script src="{% static 'js/countdown.js' %}"></script>-->
+            <script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
+            <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+            <script type="text/javascript" src="https://simplewebrtc.com/latest-v2.js"></script>
                 <script>
                     $('.image-formset').formset({
                        addText: 'Add',
@@ -297,39 +350,7 @@
                     });
                 </script>
 
-             <script src="{% static 'js/smart-selects/admin/js/chainedfk.js' %}"></script>
-             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-            {% include 'material/includes/material_js.html' %}
-
-            <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-            <!--<script src="{% static 'material/js/jquery.js' %}"></script>-->
-
-
-
-            <!--<script src="{% static 'js/countdown.js' %}"></script>-->
-            <script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
-            <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
-            <script type="text/javascript" src="https://simplewebrtc.com/latest-v2.js"></script>
-            <script src="{% static 'js/owlcarousel/owl.carousel.min.js' %}"></script>
-            <!--<script src="{% static 'django_select2/django_select2.js' %}"></script>-->
-            <!--Elevator zoom-->
-            <script src="{% static 'js/jquery.elevatezoom.js' %}" type="text/javascript"></script>
-            <!--<script>-->
-                <!--var csrftoken = $.cookie('csrftoken');-->
-                    <!--function csrfSafeMethod(method) {-->
-                    <!--// these HTTP methods do not require CSRF protection-->
-                    <!--return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));-->
-                    <!--}-->
-                    <!--$.ajaxSetup({-->
-                    <!--beforeSend: function(xhr, settings) {-->
-                    <!--if (!csrfSafeMethod(settings.type) && !this.crossDomain) {-->
-                    <!--xhr.setRequestHeader("X-CSRFToken", csrftoken);-->
-                    <!--}-->
-                    <!--}-->
-                    <!--});-->
-            <!--</script>-->
-            <script src="{% static 'js/home.js' %}"></script>
-            <script>
+         <script>
                 $(document).ready(function() {
 
                     $('#cat-select').on('change', function () {
@@ -341,23 +362,13 @@
                         $.post("{% url 'auctions:select-by-category' %}",
                                 {category: cat_name},
                                 function (data) {
-//                                    alert(data)
-
-//                                    var json_data = $.parseJSON(data)
-
-
                                      $('#sub-cat-select').each(function(){
                                          $('#sub-cat-select option').remove()
                                      })
                                     for (i = data.length -1; i >= 0; i--){
-
-//
                                         options += ('<option  value="' + data[i] + '">'+ data[i] + '</option>')
-
                                     }
-
                                   $('#sub-cat-select').append(options)
-//
                                 });
 
                     }).change()
@@ -437,14 +448,7 @@
                                 if (item.attr('id').includes(heads.attr('id'))){
                                     heads.append(item)
                                 }
-
-
                             }
-
-
-
-
-
                     })
 
                     },
@@ -455,8 +459,6 @@
                     );
 
 //                    End of hover display function
-
-
 
                     $('.follow-button').click(function(e){
                         e.preventDefault
@@ -495,7 +497,6 @@
 
 //                    Watch auction function
 
-
                     $('.watch-auction').click(function(e){
                         e.preventDefault
 //                            alert($(this).data('id'))
@@ -506,18 +507,11 @@
                                     action: $(this).data('action')
                                 },
                                 function(data){
-//                                    alert("I am working")
-//                                    alert($(this).attr('class'))
-
 //
                                         if (data['status'] == 'ok'){
                                             id = String(data['id'])
-//                                            alert(id)
 //                                            Toggle the data
                                            var  prev_action = $('#' +id).data('action')
-//                                            alert(prev_action)
-//                                            alert(id)
-
                                             $('#' +id).data('action',
                                             prev_action == 'watch' ? 'unwatch' : 'watch')
 
@@ -526,9 +520,6 @@
                                             $('#' +id).text(
                                                     prev_action == 'watch' ? 'Unwatch': 'Watch'
                                             )
-
-
-
                                         }
                                 }
                         )
@@ -551,8 +542,6 @@
                         })
 
                      $('.mark-as-read').click(function(){
-//                         alert('I am clicked')
-//                         id = $(this).data('id')
                             var el_id = $(this).data('id')
 
                          $.post('{% url "auctions:mark-as-read" %}',
@@ -567,8 +556,6 @@
                                         $("#" + el_id).fadeOut(1000)
                                      }
                                  }
-
-
                          )
                      })
 
@@ -734,164 +721,11 @@
                 function loginalert(){
                         alert('Please Login')
                     }
-
-
             </script>
 
-
             {% block extrajs %}{% endblock %}
+    {% endblock %}
 
-   <div class="footer-container">
-       <div class="footer">
-           <div class="footer-header text-center">
-                <a href="#main-header" style="color: #0a0a0a !important; font-weight: bold">Back to Top</a>
-           </div>
-
-       <div class="row footer-content">
-           <div class="col-xs-0 col-sm-2 col-md-2">
-
-           </div>
-
-           <div class="col-xs-12 col-sm-8 col-md-8 ">
-                <div class="row">
-                    <div class="col-xs-4 col-sm-4 col-md-4 left-footer-content text-left">
-                        <ul class="list-unstyled">
-                             <li><a href="{% url 'pages:about' %}">Know More About Us</a></li>
-                             <li><a href="{% url 'pages:our_team' %}">Our Team</a></li>
-                             <li><a href="{% url 'auctions:list' %}">IA Devices</a></li>
-                             <li><a href="{% url 'pages:contact' %}">Contact Us</a></li>
-                             <li><a href="{% url 'pages:terms' %}">Terms of Use</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col-xs-4 col-sm-4 col-md-4 middle-footer-content text-left">
-                        <ul class="list-unstyled">
-                             <li><a href="{% url 'pages:make-money' %}">Make Money With Us</a></li>
-                             <li><a href="{% url 'auctions:add_new_auction' %}">Sell With IA Store</a></li>
-                             <li><a href="{% url 'pages:partner' %}">Partner With IA Store</a></li>
-                             <li><a href="{% url 'pages:advertise' %}">Advertise With IA Store</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col-xs-4 col-sm-4 col-md-4 right-footer-content text-left">
-                        <ul class="list-unstyled">
-                            <li><a href="{% url 'pages:help' %}">Get Help</a></li>
-                             <li><a href="{% url 'accounts:login' %}">Your Account</a></li>
-                             <!--<li><a href="#">Buyer Protection</a></li>-->
-                        </ul>
-                    </div>
-
-                </div>
-           </div>
-
-
-           <div class="col-xs-0 col-sm-2 col-md-2">
-           </div>
-
-       </div>
-           <!--End of footer content -->
-
-      <div class="row footer-subcontent" style="">
-          <div class="col-xs-0 col-sm-1 col-md-1 text-left">
-
-          </div>
-
-          <div class="col-xs-12 col-sm-10 col-md-10">
-              <h6 class="text-left" style="padding-left: 41%; margin-bottom: 30px">Coming Soon</h6>
-              <div class="row">
-                  <div class="col-xs-4 col-sm-2 col-md-2 text-left">
-                        <ul class="list-unstyled">
-                           <li class="heading"><a>IA Music</a></li>
-                           <li class="text-left content"><a>Stream <br>Millions<br>of Music</a></li>
-                        </ul>
-                  </div>
-
-                  <div class="col-xs-4 col-sm-2 col-md-2 text-left">
-                        <ul class="list-unstyled">
-                           <li class="heading"><a>IA Movies</a></li>
-                           <li class="text-left content"><a>Stream<br>Download<br>Movies</a></li>
-                        </ul>
-                  </div>
-
-                  <div class="col-xs-3 col-sm-2 col-md-2 text-left">
-                        <ul class="list-unstyled">
-                           <li class="heading"><a>IA Job Search</a></li>
-                            <li class="text-left content"><a>Search for jobs <br>across the<br>World</a></li>
-                        </ul>
-                  </div>
-
-                  <div class="col-xs-6 col-sm-2 col-md-2 text-left">
-                        <ul class="list-unstyled">
-                           <li class="heading"><a>IA Travels</a></li>
-                            <li class="text-left content"><a>Book your <br>Flight</a></li>
-                        </ul>
-                  </div>
-
-
-
-                  <div class="col-xs-6 col-sm-2 col-md-2 text-left">
-                        <ul class="list-unstyled">
-                           <li class="heading"><a>Digital Photography</a></li>
-                           <li class="text-left content"><a>Book for Photography jobs <br/>And buy our photos</a></li>
-                        </ul>
-                  </div>
-              </div>
-
-          </div>
-
-          <div class="col-xs-0 col-sm-1 col-md-1">
-                <!--Shite-->
-          </div>
-
-          <div class="row">
-              <div class="col-sm-2 col-md-2">
-
-              </div>
-
-              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center social-media">
-                  {% social_media_links as links %}
-                    <h6>Social Media</h6>
-                  <div class="container-fluid">
-                      <a class="social facebook" {% if links.fb %}href="{{links.fb}}"{% else %}href="#"{% endif %}> <i class="fa fa-facebook"></i></a>
-                      <a class="social twitter" {% if links.tw %}href="{{links.tw}}"{% else %}href="#"{% endif %}><i class="fa fa-twitter"></i></a>
-                      <a class="social instagram" {% if links.ins %}href="{{links.ins}}"{% else %}href="#"{% endif %}><i class="fa fa-instagram"></i></a>
-                  </div>
-
-              </div>
-
-              <div class="col-sm-4 col-md-4">
-
-              </div>
-
-          </div>
-
-      </div>
-           <!--End of footer subcontent -->
-
-      <div class="row footer-contact-info text-center">
-          <div class="container-fluid row" style="color: #fff !important;">
-                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-
-                  </div>
-
-                  <div class="container-fluid text-center" style="position: relative; left: 10%">
-                       <img src="{% static 'images/background/logo.jpg' %}" class="img-responsive img-circle" style="width:40px; height: 40px; border: 1px solid #fff; position: absolute; left: -5%; top: -34px">
-                      <span class="text-left" style="position: absolute; left: 36%; top: 10px">IA STORE</span>
-{#                      <span style="position: absolute !important; left: 90px; top: 55px; font-family: Helvetica; font-size: 9px">SHOP BETTER LIVE BETTER</span>#}
-                  </div>
-
-                   <div class="container-fluid">
-                        <span class="text-left" style="position:relative; top: 50px !important;">Copyright@2017-IA-STORE All Rights Reserved</span>
-                   </div>
-          </div>
-
-      </div>
-      <!--End of footer contact info-->
-
-       </div>
-   </div>
-
-       {% endblock %}
-   </footer>
 </body>
+
 </html>

@@ -30,6 +30,13 @@ class EmailPostForm(forms.Form):
                      'message')
         )
 
+    """
+    send mail to user with to_email
+    :param: subject:
+    :param: message:
+    :param: from_email:
+    :param: to_email:
+    """
     def send(self, subject, message, from_email, to_email):
         sent = False
 
@@ -49,8 +56,8 @@ class GeneralSearchForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(GeneralSearchForm, self).__init__(*args, **kwargs)
-        self.fields['s_key'].widget.attrs.update({'class':'search-key'})
-        self.fields['in_category'].widget.attrs.update({'class': 'browser-default', 'id':'in_category_field'})
+        self.fields['s_key'].widget.attrs.update({'class':'searchTerm'})
+        self.fields['in_category'].widget.attrs.update({'class': 'browser-default', 'class':'in_category_field'})
 
         
 
