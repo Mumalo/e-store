@@ -13,8 +13,5 @@ htmlcov
 myvenv/Include/
 /myvenv/
 iashop/shop/templates/
-
-
 /iashop/iashop/secret.py
-iashop/media
 
