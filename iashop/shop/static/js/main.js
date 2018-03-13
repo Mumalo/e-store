@@ -1,6 +1,38 @@
-(function($) {
-  "use strict"
 
+$(document).ready(function(){
+
+  // ANIMATEDLY DISPLAY THE NOTIFICATION COUNTER.
+  //$('#noti_Counter')
+  //    .css({ opacity: 0 })
+  //    .text('7')              // ADD DYNAMIC VALUE (YOU CAN EXTRACT DATA FROM DATABASE OR XML).
+  //    .css({ top: '-10px' })
+  //    .animate({ top: '-2px', opacity: 1 }, 500);
+
+  $('#noti_Button').click(function () {
+
+      // TOGGLE (SHOW OR HIDE) NOTIFICATION WINDOW.
+      $('#notifications').fadeToggle('fast', 'linear', function () {
+          if ($('#notifications').is(':hidden')) {
+            //do something
+          }
+          //else $('#noti_Button').css('background-color', '#FFF'); // CHANGE BACKGROUND COLOR OF THE BUTTON.
+      });
+
+      //$('#noti_Counter').fadeOut('slow'); // HIDE THE COUNTER.
+
+      return false;
+  });
+// HIDE NOTIFICATIONS WHEN CLICKED ANYWHERE ON THE PAGE.
+  $(document).click(function () {
+      $('#notifications').hide();
+  });
+
+  $('#notifications').click(function () {
+      return false;       // DO NOTHING WHEN CONTAINER IS CLICKED.
+  });
+
+  (function($) {
+  "use strict"
   // NAVIGATION
   var responsiveNav = $('#responsive-nav'),
     catToggle = $('#responsive-nav .category-nav .category-header'),
@@ -42,6 +74,12 @@
     speed: 500,
     fade: true,
     cssEase: 'linear'
+  })
+
+   $(".slideshow-block").slick({
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 3
   })
 
   // HOME SLICK
@@ -153,5 +191,7 @@
       }
     });
   }
-
 })(jQuery);
+})
+
+

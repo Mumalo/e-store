@@ -5,25 +5,22 @@
 {% load disqus_tags %}
 {% disqus_dev %}
 {% load ratings %}
-{% block title %}{% endblock %}
-
+{% block title %}{{ auction }}{% endblock %}
+{% block extrahead %}
+     <link  href="{% static 'css/product_detail.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
 <div class="container-fluid">
-
     <!--BBreadcrumb-->
     <ul class="breadcrumb">
-              <li>
-                <a href="{% url 'pages:home' %}">Home</a>
-              </li>
-              <li>
-                <a href="{% url 'auctions:list' %}">items</a>
-              </li>
-              <li class="active">item detail</li>
+      <li><a href="{% url 'pages:home' %}">Home</a></li>
+      <li><a href="{% url 'auctions:list' %}">items</a></li>
+      <li class="active">item detail</li>
     </ul>
-
-    <div class="row">
-        <div class="col-sm-12 col-md-7 left-sidebar" style="border: 1px solid #DADADA; ">
+    <!-- row -->
+    <div class="row section">
+        <div class="col-sm-7 col-md-7 white-background left-sidebar box">
             <div class="row" style="margin-left: 10px;">
             <div class="col-sm-2 col-md-2"></div>
                 <div class="col-xs-12 col-sm-8 col-md-8">
@@ -61,107 +58,98 @@
                 </div>
             </div>
         </div>
-         {#end of left side bar#}
-
-        <div class="col-xs-12 col-sm-5 col-md-5 right-sidebar" style="border:1px solid #DADADA; padding-top: 0">
-            <div class="product-information" style="padding-top: 4px; margin-top: 4px; padding-left: 8px"><!--/product-information-->
-                <span style="font-size: 10px" class="rating-no-detail">
-                    <p>{% ratings auction 15 15 %}
+        <!-- end of right side bar -->
+    <div class="col-xs-12 col-sm-5 col-md-5 white-background right-sidebar box">
+        <!--/product-information-->
+        <div class="product-information">
+            <span style="font-size: 10px" class="rating-no-detail">
+                <p>{% ratings auction 15 15 %}
+                    {% if auction.creator.profile.institution %}
                         <a href="" style="top: -15px !important;">posted from {{ auction.creator.profile.institution }}</a>
-                    </p>
-                </span>
-
-                <h3 class="subtitle">{{ auction.category }}</h3>
-                <h1>{{ auction }}</h1>
-                <h3 class="price-big">&#x20A6 {{ auction.get_current_price }}</h3>
-                <p>Product ID: {{ auction.id }}</p>
-                <p class="bottom-line"></p>
-                <div class="prod-description">
-                    production description here
-                </div>
-                <p class="bottom-line"></p>
-                {% if auction.place_on_auction %}
-                    <div class="container-fluid" style="margin-left: 21px;">
-                        <div class="row myClock" style="padding-left: 18px; margin-bottom: -5px" data-action='{{ auction.end_time|to_json }}'>
-                            <div class="row">
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 hours"></div>
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 minutes"></div>
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 seconds"></div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">D</div>
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">H</div>
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">M</div>
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">S</div>
-                            </div> <!-- counter text ends here -->
-                        </div>
-                    </div>
-            {% endif %}
-{#                ratings here #}
-                <span class="">
-                     <p>Current bid at: &#x20A6 {{ auction.get_current_price }}
-                            <a href="#" style="padding-left: 120px">
-                                <label>Quantity:</label><input type="text" value="3" />
-                            </a>
-                     </p>
-
-                    {% if auction.place_on_auction %}
-                        <form class="form-group">
-                         {% csrf_token %}
-                            <div class="row">
-                                <div class="col-sm-8 col-md-8">
-                                    <button class="bid-button" style="margin-left: 10px">
-                                        PLACE BID
-                                    </button>
-                                </div>
-                                <div class="col-sm-4 col-md-4">
-                                    <select class="price-select">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <span class="glyphicon glyphicon-chevron-down"></span>
-                                    </select>
-                                </div>
-                            </div>
-                        </form>
                     {% endif %}
-                </span>
+                </p>
+            </span>
 
-{#                <button tyle="button" class="button btn fefault contact cart" style="padding-bottom: 7px">#}
-{#                    call#}
-{#                </button>#}
-{#                {% if auction.creator.profile.phone %}#}
-{#                    <span class="phone">#}
-{#                        {{ auction.creator.profile.phone }}#}
-{#                    </span>#}
-{#                {% endif %}#}
-
+            <h3 class="subtitle">{{ auction.category }}</h3>
+            <h1 class="product-name">{{ auction }}</h1>
+            <h3 class="price-big">&#x20A6 {{ auction.get_current_price }}</h3>
+            <p>Product ID: {{ auction.id }}</p>
+            <p class="bottom-line"></p>
+            <div class="prod-description">
                 <div>
-{#                    <p style="margin-top: 10px"><b>Availability:</b> In Stock</p>#}
-{#                    <p><b>Condition:</b> New</p>#}
+                    <p><b>Condition:</b> New</p>
                 </div>
-            </div><!--/product-information-->
+            </div>
+            <p class="bottom-line"></p>
+            {% if auction.place_on_auction %}
+                <div class="container-fluid" style="margin-left: 21px;">
+                    <div class="row myClock" style="padding-left: 18px; margin-bottom: -5px" data-action='{{ auction.end_time|to_json }}'>
+                        <div class="row">
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 hours"></div>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 minutes"></div>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 seconds"></div>
+                        </div>
 
-        </div> <!-- end of right side bar -->
-    </div> <!-- end of main row -->
+                        <div class="row">
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">D</div>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">H</div>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">M</div>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">S</div>
+                        </div> <!-- counter text ends here -->
+                    </div>
+                </div>
+            {% endif %}
+            <div class="container-fluid bid-form-container row no-gutter">
+                 <p>Current bid at: &#x20A6 {{ auction.get_current_price }}</p>
+                {% if auction.place_on_auction %}
+                     {% csrf_token %}
+                        <form method="post" class="form-group">
+                        {% csrf_token %}
+                            <div class="col-sm-8 col-md-8">
+                                <button class="bid-button" style="margin-left: 10px" type="submit">
+                                    PLACE BID
+                                </button>
+                            </div>
+                            <div class="col-md-4 col-sm-4 amount">
+                                {{ bid_form.amount }}
+                            </div>
+                            {% if messages %}
+                                <ul class="messages">
+                                    <li class="error">{{ bid_form.errors }}</li>
+                                    {% for message in messages %}
+                                        <li class="{{ message.tags }}">{{ message|safe }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </form>
+                {% endif %}
+            </div>
+        </div><!--/product-information-->
+    </div>
+    <!-- end of right side bar -->
+    </div><!-- row -->
 
-    <!-- Item filtering row starts here -->
-    <div class="row">
-        <div class="product-tab" style="background: #fff">
-            <ul class="tab-nav">
-                <li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-                <li><a data-toggle="tab" href="#tab1">Best Offers</a></li>
-                <li><a data-toggle="tab" href="#tab3">Comment</a></li>
-                <li><a data-toggle="tab" href="#tab4">Private Message</a></li>
-                <li><a data-toggle="tab" href="#tab5">Feedback</a></li>
+    <!-- nav container -->
+    <div class="section row white-background product-detail-tabs">
+        <div class="col-xs-12 col-md-12" role="tabpanel"  data-example-id="togglable-tabs">
+            <ul class="nav nav-tabs" role="tablist">
+                <li><a  class="active" data-toggle="tab" href="#desc">Description</a></li>
+                <li><a data-toggle="pill" href="#best-offers">Best Offers</a></li>
+                <li><a data-toggle="pill" href="#comment">Comment</a></li>
+                <li><a data-toggle="pill" href="#private-message">Private Message</a></li>
+                 <li><a data-toggle="pill" href="#rate">Feedback</a></li>
             </ul>
-            <div class="tab-content">
-                <div id="tab1" class="tab-pane fade in active">
+
+            <div class="tab-content" style="min-height: 98px">
+                <div id="desc" class="tab-pane fade in active">
+                    <h4 class="text-center">Product Description</h4>
                     <div class="container-fluid text-left">{{auction.description}}</div>
                 </div>
-                <div id="tab2" class="tab-pane fade in">
-                   <ul class="collection">
+
+                <div id="best-offers" class="tab-pane fade">
+                    <h4 class="text-center">Best Offers </h4>
+                    <ul class="collection">
                         {% best_offers auction as best %}
                         {% for b in best %}
                             <li class="collection-item avatar">
@@ -172,14 +160,17 @@
                             </li>
                         {% endfor %}
                     </ul>
+
                 </div>
-                <div id="tab3" class="tab-pane fade in">
-                   <div class="container">
+
+                <div id="comment" class="tab-pane fade">
+                    <h4 class="text-center">Drop Comment</h4>
+                    <div class="container-fluid">
                         {% disqus_show_comments %}
                     </div>
                 </div>
 
-                <div id="tab4" class="tab-pane fade in">
+                <div id="private-message" class="tab-pane fade">
                     <div class="row">
                         <div class="col-xs-0 col-sm-2 col-md-2">
 
@@ -187,39 +178,44 @@
 
                         <div class="col-xs-12 col-sm-8 col-md-8">
                             {% if sent %}
-                                <span class="text-center">Your message has been sent</span>
+                                <h4 class="text-center">Your message has been sent</h4>
                             {% else %}
-                                 <span class="text-center">Private message here</span>
+                                 <h4 class="text-center">Drop a private message here</h4>
                             {% endif %}
-                            <form method="post">
-                                {% csrf_token %}
-                                {%form form=private_message %}{% endform %}
-                                 <button type="submit" name="_message" class="button cart">Submit</button>
+                            <form method="post" class="form-group text-center">
+                                {{ private_message.as_p }}
+{#                                {%form form=private_message %}{% endform %}#}
+                                 <button type="submit" name="_message" class="btn">Submit</button>
                             </form>
                         </div>
-{##}
+
                         <div class="col-xs-0 col-sm-2 col-md-2">
 
                         </div>
 
                     </div>
+
                 </div>
 
-                <div id="tab5" class="tab-pane fade in">
-                   <h6 class="text-center">Rate this item</h6>
+                <div id="rate" class="tab-pane fade">
+                    <h4 class="text-center">Rate this item</h4>
                     <div class="container-fluid text-center">
                        {% ratings auction %}
                     </div>
                 </div>
-
-            </div>
+            </div> <!-- end of tab content -->
         </div>
     </div>
-     <!-- Item filtering row end here -->
-
+    <!-- nav container -->
 </div> <!-- end of main container -->
     {% block extrajs %}
+        <!--Elevator zoom-->
+        <script src="{% static 'js/jquery.elevatezoom.js' %}" type="text/javascript"></script>
+        <!-- load fancy box from CDN-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" type="text/javascript"></script>
+        <script src="{% static 'js/jquery.matchHeight.js' %}" type="text/javascript"></script>
         <script>
+            $('.close').click(function(){$('.messages').fadeOut(1000)})
             $("#zoom_01").elevateZoom({
                 gallery: "gallery_01",
                 cursor: 'pointer',
@@ -232,28 +228,20 @@
                 zoomWindowHeight:300,
                 zoomWindowOffetx: 10,
             });
+            //auto match height of left sidebar and right sidebar
+            $(".box").matchHeight()
 
-           $("[data-fancybox]").fancybox({
-		        // Options will go here
-	        });
-{#            $("#zoom_03").bind("click", function(e) {#}
-{#                var ez =   $('#zoom_03').data('elevateZoom');#}
-{#	            $.fancybox(ez.getGalleryList());#}
-{#                return false;#}
-{#            });#}
-
-        //this function shows the user's number when the call button is clicked
-        $(".contact").click(function(){
-            var contact_button = $('.contact')
-            var position = contact_button.position()
-            var target = $('.phone')
-            target.css('position', 'absolute', 'left', position.left, 'top', position.top)
-            target.css('margin-bottom', '15px')
-            contact_button.hide()
-            target.css('visibility', 'visible')
-            alert(position.left)
-        })
+            //show item owner's number when button clicked
+            $(".contact").click(function(){
+                var contact_button = $('.contact')
+                var position = contact_button.position()
+                var target = $('.phone')
+                target.css('position', 'absolute', 'left', position.left, 'top', position.top)
+                target.css('margin-bottom', '15px')
+                contact_button.hide()
+                target.css('visibility', 'visible')
+                alert(position.left)
+            })
         </script>
     {% endblock %}
-
 {% endblock %}

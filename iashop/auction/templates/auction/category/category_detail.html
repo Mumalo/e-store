@@ -29,8 +29,6 @@
                 {% for s in category.subcat.all %}
                     <a class="list-group-item" href="{% url 'auctions:subcat_detail'  subcat_id=s.id subcat_slug=s.slug %}">{{ s }}</a>
                 {% endfor %}
-
-
             </div>
 
         </div>

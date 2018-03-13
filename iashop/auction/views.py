@@ -371,8 +371,6 @@ def edit_auction(request, auction_id):
     return render(request, 'auction/edit_auction.html', {'edit_form': edit_form})
 
 
-
-
 @login_required
 def auction_detail(request, auction_id):
     auction = get_object_or_404(AuctionEvent, id=auction_id)
@@ -404,7 +402,6 @@ def auction_detail(request, auction_id):
                 """
                 private_message.send(subject, message, from_email, [to_email])
 
-
         if bid_form.is_valid():
             """
             save if there was a bid on the item
@@ -419,10 +416,6 @@ def auction_detail(request, auction_id):
                 messages.error(request, 'You cannot Bid on your own item')
             elif auction.creator != bidder:
                 users = User.objects.filter(id=auction.creator.id)
-                bidder = bid_form.bidder
-                users = list(users)
-                # notify.send(actor=current_user, recipient=users, verb='Placed a bid on', target=auction)
-                # return render(request, 'auction/bid_confirm.html', {'auction':auction})
 
                 messages.success(request, 'Your Bid was submitted')
         else:
@@ -432,11 +425,10 @@ def auction_detail(request, auction_id):
         bid_form = BidForm(auction=auction, bidder=request.user)
         private_message = EmailPostForm()
     return render(request, 'auction/auction_detail.html',
-                  {'bid_form':bid_form,
+                  {'bid_form': bid_form,
                    'auction': auction,
                    'private_message':private_message,
                    'sent': sent})
-
 
 
 @login_required
@@ -454,6 +446,7 @@ def create_advert(request):
         advert_form = AdvertForm()
     return render(request, 'auction/advert/new_advert.html')
 
+
 @login_required
 def post_advert(request, advert_id):
     advert = get_object_or_404(Advert, pk=advert_id)
@@ -464,10 +457,6 @@ def advert_list(request):
     adverts = Advert.objects.filter(available=True)
 
     return render(request, 'auction/adverts.html', {'adverts', adverts})
-
-
-
-
 
 
 @login_required
@@ -483,6 +472,7 @@ def edit_advert(request, pk):
     else:
         advert_form = AdvertForm(instance=Advert)
     return render(request, 'auction/edit_advert.html', {'advert_form': advert_form, 'creator':creator})
+
 
 class AdvertDelete(DeleteView):
     model = Advert

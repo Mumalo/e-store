@@ -1573,9 +1573,6 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 
-
-
-
 .owl-carousel .item img, .owl-carousel img {
     /*width: 950px;;*/
     height: 400px;
@@ -3025,15 +3022,9 @@ footer{
 }
 
 
-.footer-content ul li{
+.footer ul li{
     padding: 7px;
 }
-
-.footer-subcontent {
-    /*margin-top: -40px*/
-}
-
-
 
 .footer-subcontent li a{
     color: #333 !important;

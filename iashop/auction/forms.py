@@ -12,12 +12,6 @@ import arrow
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import HttpResponse
 
-    # def get_item_label(self, item):
-    #     return "{}, {}".format(item.name, item.category)
-
-     # def get_item_label(self, item):
-     #     return "{}, {}" .format (item.name, item.category)
-
 
 class EmailPostForm(forms.Form):
     message = forms.CharField(widget=Textarea, required=False)
@@ -47,6 +41,7 @@ class EmailPostForm(forms.Form):
             return HttpResponse('Invalid Header found')
         ''
 
+
 class GeneralSearchForm(forms.Form):
     first_choice = ('All','All')
     CHOICES = [(c.id, str(c.name)) for c in Category.objects.all()]
@@ -58,8 +53,6 @@ class GeneralSearchForm(forms.Form):
         super(GeneralSearchForm, self).__init__(*args, **kwargs)
         self.fields['s_key'].widget.attrs.update({'class':'searchTerm'})
         self.fields['in_category'].widget.attrs.update({'class': 'browser-default', 'class':'in_category_field'})
-
-        
 
     def search(self):
         cleaned_key = self.cleaned_data.get('s_key')
@@ -78,11 +71,6 @@ class GeneralSearchForm(forms.Form):
     def category(self):
         cat =  self.cleaned_data.get('in_category')
         return cat
-
-
-
-
-
 
 
 class AuctionForm(ModelForm):
@@ -105,7 +93,6 @@ class AuctionForm(ModelForm):
         self.fields['end_time'].required = False
         self.fields['start_price'].widget.attrs.update({'id':'start_price'})
         self.fields['start_price'].required = False
-
 
         self.layout = Layout(
             Fieldset(
@@ -148,18 +135,14 @@ class AuctionForm(ModelForm):
         if start_time and end_time and start_time > end_time:
             raise ValidationError('start time cannot be greater than end time')
 
-
-
-
-
-
     class Meta:
         model = AuctionEvent
-        fields = ['item', 'category', 'sub_category' ,'sub_category2' ,'target_price', 'start_price', 'start_time', 'end_time', 'available', 'description', 'place_on_auction']
-        exclude = ['subcategory','image',]
+        fields = ['item', 'category', 'sub_category' , 'sub_category2' , 'target_price', 'start_price', 'start_time', 'end_time', 'available', 'description', 'place_on_auction']
+        exclude = ['subcategory', 'image', ]
         # widgets = {
         #     'sub_category': autocomplete.ModelSelect2(url='auctions:subcategory-autocomplete', forward=['category'])
         # }
+
 
 class ImageForm(ModelForm):
     class Meta:
@@ -180,6 +163,7 @@ class ImageForm(ModelForm):
 #         super(BaseImageFormSet, self).add_fields(form, index)
 #         form.fields["DELETE"] = forms.BooleanField()
 
+
 class BidForm(ModelForm):
     def __init__(self, data=None, auction=None, bidder=None, *args, **kwargs):
         self.event = auction
@@ -187,15 +171,17 @@ class BidForm(ModelForm):
         super(BidForm, self).__init__(data, *args, **kwargs)
 
     def clean_amount(self):
-        current_bid = self
         current_auction = self.event
         current_price = current_auction.get_current_price() + Decimal('0.00')
         submitted_offer = self.cleaned_data.get('amount')
-        if submitted_offer:
-            if submitted_offer <= current_price:
-                raise ValidationError('Offer {} must be greater than current bid {}'.format(submitted_offer, current_price))
 
-
+        try:
+            submitted_offer = round(float(self.cleaned_data.get('amount')), 2)
+        except:
+            print("{} cannot be converted to float".format(submitted_offer))
+        if submitted_offer and isinstance(submitted_offer, float):
+            print("valid input")
+            # add submitted offer to current price
         return submitted_offer
 
     def clean(self):
@@ -205,22 +191,22 @@ class BidForm(ModelForm):
         if event_end_time and now > event_end_time:
             raise ValidationError('This Auction has ended')
 
-
-
-
-    def save(self ,commit=True):
+    def save(self, commit=True):
         bid = super(BidForm, self).save(commit=False)
 
         if self.bidder != self.event.creator:
+
             bid.event = self.event
+            current_auction_price = bid.event.get_current_price()
+            bid.amount = self.amount
+            bid.amount = self.amount + current_auction_price
             bid.bidder = self.bidder
             bid.save()
-
-
 
     class Meta:
         model = Bid
         fields = ['amount']
+
 
 class AdvancedSearchForm(forms.Form):
     key = forms.CharField(max_length=200, required=False)

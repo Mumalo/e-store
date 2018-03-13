@@ -1,5 +1,6 @@
 import datetime, time
 import arrow
+import random
 from django import template
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
 from ..models import AuctionEvent, Bid, Category, SubCategory, WatchList, ItemOfTheDay, BudgetPlan
@@ -40,6 +41,7 @@ def search_form(context):
     return {'form':form}
 
 @register.inclusion_tag(file_name='auction/tags/product_list.html', takes_context=True)
+
 def product_list(context, items):
 
     if items is not None:
@@ -58,8 +60,6 @@ def product_list(context, items):
                 for item in list.items.all():
                     watching.append(item)
             owner = [list.creator for list in watch_list][:1]
-
-
         return {'request':request,'items':items,'owner':owner, 'watch_list':watching}
 
 
@@ -79,15 +79,7 @@ def product_list(context, items):
 #
 #
 
-
-
-
-
-
-
-
 # return total auctions for a particular user or general if user object is not passed
-
 @register.simple_tag
 def total_auctions(user=None):
 
@@ -96,6 +88,7 @@ def total_auctions(user=None):
     else:
         return AuctionEvent.objects.filter(available=True).count()
 
+# return categories in list of size N (10 is default value)
 @register.assignment_tag
 def product_categories(count=10):
     return Category.objects.all()[:count]
@@ -181,9 +174,6 @@ def wond_bids(user=None):
     bids = {}
     won = []
     lost = []
-
-
-
     if user is not None:
         auctions = AuctionEvent.objects.filter(available=True)
         bidders = [ bid.bidder for bid in Bid.objects.filter(bidder=user)]
@@ -211,7 +201,6 @@ def watch_list(user=None):
 def item_of_the_day(count=10):
 
     for i in ItemOfTheDay.objects.all():
-
         if i.category:
             return i.category.cat_products.all()[:count]
         elif i.subcategory:
@@ -227,6 +216,25 @@ def budget_plan(context, user=None):
     if user:
         budget = BudgetPlan.objects.filter(creator=user)
     return budget
+
+# pick three random categories on daily basis and add to this section
+@register.assignment_tag()
+def new_collection():
+    today = datetime.datetime.now()
+    hour = today.hour
+    minute = today.minute
+    second = today.second
+    category_list = Category.objects.all()
+    collection = category_list[:3]
+    is_midnight = hour == 0 and minute == 0 and second == 0
+    if is_midnight:
+        collection.clear()
+        for index in range(3):
+            collection.append(category_list[random.randint(1, len(category_list))])
+    return collection
+
+
+
 
 
 # @register.inclusion_tag(file_name="auction/tags/budget_reply.html",takes_context=True)
