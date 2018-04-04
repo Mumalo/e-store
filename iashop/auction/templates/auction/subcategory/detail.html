@@ -1,91 +1,77 @@
 {% extends "base.html" %}
 {% load static %}
 {% load auction_tags %}
+{% load ratings %}
 {% block title %}add-auction{% endblock %}
 
 {% block content %}
 
 <div class="container-fluid">
-    <div class="page-heading container-fluid">
-        <div class="text-center ">
-            <h5>{{subcat}}</h5>
-        </div>
-    </div>
-
     <ul class="breadcrumb">
-              <li>
-                <a href="{% url 'pages:home' %}">Home</a>
-              </li>
-              <li>
-                <a href="{% url 'auctions:all_categories' %}">{{subcat}}</a>
-              </li>
-
+        <li><a href="{% url 'pages:home' %}">Home</a></li>
+        <li><a href="{% url 'auctions:all_categories' %}">{{subcat}}s</a></li>
     </ul>
 
-    <div class="row category-detail">
-        <div class="col-xs-12 col-sm-3 col-md-3 left-sidebar">
-            <div class="category-heading"><a href="#">{{ subcat }}</a></div>
-            <div class="list-group">
-                {% for s in subcat.subcat2.all %}
-                    <a class="list-group-item" href="{% url 'auctions:subcat2_detail' subcat_id=s.id subcat_slug=s.slug %}">{{ s }}</a>
-                {% endfor %}
-
-
-            </div>
-
-        </div>
-
-        <div class="col-xs-12 col-sm-8 col-md-8 category-detail">
-            {% for auction in subcat.sub_products.all %}
-              <div class="col-xs-12 col-sm-3 col-md-3 text-center">
-                  <div class="thumbnail box">
-                        {% with auction.image.all|first as image %}
-                            {% if image.image %}
-                                <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{{ image.image.url }}" alt="" /></a>
-                            {% else %}
-                                <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" /></a>
-                            {% endif %}
-                        {% endwith %}
-                        <div class="caption">
-                            <h4 class="group inner list-group-item-heading">{{ auction.item }}</h4>
-                            <p class="group inner list-group-item-text"></p>
-                            <div class="row">
-                                <div class="col-xs-12 col-md-12 text-center">
-                                    <p class="lead">N{{ auction.get_current_price }}</p>
-                                </div>
-                            </div> <!-- end of row class for price and bid -->
-                            {% if auction.place_on_auction %}
-                                <div class="row myClock" style="margin-top: -49px" data-action='{{ auction.end_time|to_json }}'>
-                                    <div class="row">
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 hours"></div>
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 minutes"></div>
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 seconds"></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Days</div>
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Hours</div>
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Minutes</div>
-                                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">Seconds</div>
-                                    </div> <!-- counter text ends here -->
-                                </div>
-                            {% endif %}
-                        </div>
-                        <!-- end of caption -->
-                    </div> <!-- end of thumbnail -->
+    <div class="">
+        <div class="row category-detail">
+            <div class="col-xs-12 col-sm-2 col-md-2 white-background" style="border-right: 20px solid #f5f5f5">
+                <div class="category-heading"><a href="#">{{ subcat }}</a></div>
+                <div class="list-group">
+                    {% for s in subcat.subcat2.all %}
+                        <a class="list-group-item" href="{% url 'auctions:subcat2_detail' subcat_id=s.id subcat_slug=s.slug %}">{{ s }}</a>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-
+            </div>
+               <div class="col-xs-12 col-sm-10 col-md-10 category-detail white-background">
+                {% for auction in subcat.sub_products.all %}
+                    <div class="col-xs-12 col-sm-3 col-md-3">
+                        <div class="product product-single" style="position: relative; width: 100%">
+                            <div class="product-thumb">
+                                <button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>
+                                {% with auction.image.all|first as image %}
+                                    {% if image.image %}
+                                        <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{{ image.image.url }}" alt="" /></a>
+                                    {% else %}
+                                        <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" /></a>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div class="caption">
+                                <span class="product-name">{{ auction.item }}</span>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12 text-center">
+                                        <span class="lead item-price"><span>&#x20A6<</span>{{ auction.get_current_price }}</span>
+                                    </div>
+                                </div> <!-- end of row class for price and bid -->
+                                {% if auction.place_on_auction %}
+                                    <div class="row myClock text-center" style="margin-top: -49px" data-action='{{ auction.end_time|to_json }}'>
+                                        <div class="row">
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 hours"></div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 minutes"></div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 seconds"></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">D</div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">H</div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">M</div>
+                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">S</div>
+                                        </div> <!-- counter text ends here -->
+                                    </div>
+                                {% endif %}
+                                 <div class="simpleCart_shelfItem text-center">
+                                    <p><a class="item_add" href="#">Watch Now</a></p>
+                                </div>
+                            </div>
+                        <!-- end of caption -->
+                        </div> <!-- end of thumbnail -->
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-
     </div>
-
     {% block extrajs %}
 
     {% endblock %}
-
 </div>
-
-
-
 {% endblock %}

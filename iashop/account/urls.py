@@ -12,12 +12,15 @@ urlpatterns = [
     url(r'^account/logout/$', views.logout_user, name='logout'),
     url(r'^account/edit/user/(?P<pk>[0-9]+)$', views.edit_profile, name='edit'),
 
+    #smart select for state
+    url(r'^account/edit/lgas-for-state/$', views.lgas_for_state, name='lgas-for-state'),
+
     # password change and reset views
-    # url(r'^account/password-change/$',auth_views.password_change,name='password_change'),
-    # url(r'^account/password-change/done/$',auth_views.password_change_done,name='password_change_done'),
-    #
-    # url(r'^account/password-reset/$',auth_views.password_reset,name='password_reset'),
-    # url(r'^account/password-reset/done/$',auth_views.password_reset_done, name='password_reset_done'),
-    # url(r'^account/password-reset/confirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$',auth_views.password_reset_confirm, name='password_reset_confirm'),
-    # url(r'^account/password-reset/complete/$',auth_views.password_reset_complete,name='password_reset_complete'),
+    url(r'^account/password-change/$',auth_views.password_change,name='password_change'),
+    url(r'^account/password-change/done/$',auth_views.password_change_done,name='password_change_done'),
+
+    url(r'^password-reset/$',auth_views.password_reset,name='password_reset'),
+    url(r'^password-reset/done/$',auth_views.password_reset_done, name='password_reset_done'),
+    url(r'^password-reset/confirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)/$',auth_views.password_reset_confirm, name='password_reset_confirm'),
+    url(r'^password-reset/complete/$',auth_views.password_reset_complete,name='password_reset_complete'),
 ]

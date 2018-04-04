@@ -1,51 +1,96 @@
 {% extends "base.html" %}
 {% load static %}
 {% load page_tags %}
-{% load material_form %}
 {% block title %}{% endblock %}
 
 {% block content %}
-<div class="container container-fluid" >
+<div class="container container-fluid register">
     <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-3"></div>
+           <div class="col-md-6" style="margin-top: 70px">
+               {% if messages %}
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <li class="{{ message.tags }}">{{ message|safe }}<a href="#" class="close">✖</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endif %}
+               <div class="login-wrap">
+                   <div class="login-html white-background">
+                        <h4 class="text-center">Sign Up Below</h4>
+                        <div class="login-form">
+                        <div class="sign-in-html">
+                            <form method="POST">
+                                 {% csrf_token %}
+                                <div class="group">
+                                    {{ user.username.label }}
+                                    {{ user.username }}
+                                    <span class="errors">{{ user.username.errors }}</span>
+                                    <div><i class="input-icon"><i class="fa fa-user"></i></i></div>
+                                </div>
+                                <div class="group">
+                                    {{ user.email.label }}
+                                    {{ user.email }}
+                                    <span class="errors">{{ user.email.errors }}</span>
+                                    <div><i class="input-icon"><i class="fa fa-envelope"></i></i></div>
+                                </div>
+                                <div class="group">
+                                    {{ user.password.label }}
+                                    {{ user.password }}
+                                    <span class="errors">{{ user.password.errors }}</span>
+                                     <div><i class="input-icon"><i class="fa fa-key"></i></i></div>
+                                </div>
+                                <div class="group">
+                                    {{ user.password2.label }}
+                                    {{ user.password2 }}
+                                    <span class="errors">{{ user.password2.errors }}</span>
+                                     <div><i class="input-icon"><i class="fa fa-key"></i></i></div>
+                                </div>
 
-        </div>
-        <div class="col-sm-8 form-container">
-            <form method ="POST" class="viewform">
-                {% csrf_token %}
-                {% form form=user %}{% endform %}
-                {% form form=profile %}{% endform %}
-                <p><a href="#tacs">Terms and Conditions</a></p>
-                <button type="submit" name="_submit" class="btn">Submit</button>
-            </form>
+                                <div class="group">
+                                    {{ profile.agree_to_terms }}
+                                    <span style="color: #0a3880; font-weight: 600" id="terms"><a data-toggle="modal" data-target="#tacs">{{ profile.agree_to_terms.label }}</a></span>
+                                </div>
+                                <div class="group">
+				    	            <input type="submit" class="button" value="Sign In">
+				                 </div>
+                            </form>
+                            <div class="hr"></div>
+                            <div class="foot-link">
+                                <a href="#forgot" style="float: left;">Forgot Password?</a>
+                                <a href="{% url 'accounts:login' %}" style="float: right">login Here</a>
+                            </div>
+                        </div>
+                    </div>
+                   </div>
+               </div>
+           </div>
+            <!-- Modal -->
+        <div id="tacs" class="modal fade" role="dialog">
+            <div class="modal-dialog">
 
-            <div class="modal modal-fixed-footer" id="tacs">
+              <!-- Modal content-->
                 <div class="modal-content">
-                    <h4>Terms and Conditions</h4>
-
-                    <ul class="collection">
-                        {% terms as terms %}
-                        {{terms|safe}}
-
-                    </ul>
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Terms and Conditions</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="collection">
+                            {% terms as terms %}
+                            {{terms|safe}}
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
 
-               <div class="modal-footer" >
-                   <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
-               </div>
-
             </div>
-
         </div>
-        <div class="col-sm-2">
-
-        </div>
-
+        <div class="col-sm-2"></div>
     </div>
-
-
-
-
-
 </div>
 {% endblock %}

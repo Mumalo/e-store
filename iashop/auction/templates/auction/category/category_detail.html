@@ -6,20 +6,15 @@
 {% block content %}
 
 <div class="container-fluid">
-    <div class="page-heading container-fluid">
-        <div class="text-center ">
-            <h5>{{category}}</h5>
-        </div>
-    </div>
-
+{#    <div class="page-heading container-fluid">#}
+{#        <div class="text-center ">#}
+{#            <h5>{{category}}s</h5>#}
+{#        </div>#}
+{#    </div>#}
     <ul class="breadcrumb">
-              <li>
-                <a href="{% url 'pages:home' %}">Home</a>
-              </li>
-              <li>
-                <a href="{% url 'auctions:all_categories' %}">categories</a>
-              </li>
-              <li class="active">{{ category }}</li>
+      <li><a href="{% url 'pages:home' %}">Home</a></li>
+      <li><a href="{% url 'auctions:all_categories' %}">categories</a></li>
+      <li class="active">{{ category }}s</li>
     </ul>
 
     <div class="row category-detail">

@@ -1,16 +1,16 @@
 from decimal import Decimal
-from .models import AuctionEvent,   Bid, Advert, BudgetPlan, Category, SubCategory, Image
-from datetime import datetime
+from .models import AuctionEvent,   Bid, BudgetPlan, Category, SubCategory, Image
 from django.core.exceptions import ValidationError
 
 from django import forms
 from django.forms import ModelForm, Textarea
-from material import Layout, Fieldset, Row
-from photologue.models import Photo
-# from material.frontend.forms import
 import arrow
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import HttpResponse
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Fieldset, Row, Field, Div, ButtonHolder, Submit
+from crispy_forms.bootstrap import InlineField, PrependedAppendedText, PrependedText
+
 
 
 class EmailPostForm(forms.Form):
@@ -79,34 +79,42 @@ class AuctionForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AuctionForm, self).__init__(*args, **kwargs)
-        # self.fields['sub_category2'].queryset = SubCategory.objects.none()
-        self.fields['category'].widget.attrs.update({'id':'cat-select','class': 'browser-default'})
-        self.fields['description'].widget.attrs.update({'class':'description', })
-        self.fields['sub_category3'].widget.attrs.update({'id':'sub-cat-select','class': 'browser-default'})
+        self.fields['item'].widget.attrs.update({'class':'form-control',})
+        self.fields['category'].widget.attrs.update({'class': 'form-control'})
+        self.fields['description'].widget.attrs.update({'class':'description','class':'form-control' })
+        self.fields['sub_category3'].widget.attrs.update({'class': 'form-control'})
         self.fields['sub_category3'].label = 'Sub Category'
-        self.fields['sub_category4'].widget.attrs.update({'id':'sub-cat-select2','class': 'browser-default'})
+        self.fields['sub_category4'].widget.attrs.update({'class': 'form-control'})
         self.fields['sub_category4'].label = 'Sub Category 2'
-        self.fields['place_on_auction'].widget.attrs.update({'id':'auction'})
-        self.fields['start_time'].widget.attrs.update({'id':'start_time'})
+        self.fields['place_on_auction'].widget.attrs.update({'class':'form-control'})
+        self.fields['start_time'].widget.attrs.update({'class':'form-control'})
+        self.fields['end_time'].widget.attrs.update({'class':'form-control'})
         self.fields['start_time'].required = False
-        self.fields['end_time'].widget.attrs.update({'id':'end_time'})
         self.fields['end_time'].required = False
-        self.fields['start_price'].widget.attrs.update({'id':'start_price'})
+        self.fields['start_price'].widget.attrs.update({'class':'form-control'})
+        self.fields['target_price'].widget.attrs.update({'class':'form-control'})
         self.fields['start_price'].required = False
 
-        self.layout = Layout(
-            Fieldset(
-                'Auction Information',
-                Row('item'),
-                Row('category', 'sub_category3' ,'sub_category4'),
-                Row('place_on_auction'),
-                Row('start_time', 'end_time'),
-                Row('target_price', 'start_price'),
-                    'available',
-                    'description',
-            ),
-        )
-
+        # self.helper = FormHelper()
+        # self.helper.layout = Layout(
+        #     Div('item', style="margin-left: 10px, margin-right: 10px"),
+        #     Div(
+        #         Div('category', css_class='col-sm-4 col-md-4 col-xs-4',  style="padding: 0; padding-right: 5px"),
+        #         Div('sub_category', css_class='col-sm-4 col-md-4 col-xs-4', style="padding: 0;padding-right: 5px"),
+        #         Div('sub_category2', css_class='col-sm-4 col-md-4 col-xs-4',  style="padding: 0;")
+        #     ),
+        #     Div('place_on_auction'),
+        #     Div(
+        #         Div('start_price', css_class='col-sm-6 col-md-6 start_price', style="padding: 0;padding-right: 5px"),
+        #         Div('target_price', css_class='col-sm-6 col-md-6 target_price',  style="padding: 0;"),
+        #     ),
+        #
+        #     Div(
+        #         Div('start_time', css_class='col-sm-6 col-md-6 start_time',  style="padding: 0;padding-right: 5px"),
+        #         Div('end_time', css_class='col-sm-6 col-md-6 end_time',  style="padding: 0;")
+        #     ),
+        #     Div('description'),         #   )
+        # )
 
     def clean_start_time(self):
         start_time = self.cleaned_data.get('start_time')
@@ -210,9 +218,8 @@ class BidForm(ModelForm):
 
 class AdvancedSearchForm(forms.Form):
     key = forms.CharField(max_length=200, required=False)
-    max = forms.DecimalField(decimal_places=2, max_digits=8, required=False)
-    min = forms.DecimalField(decimal_places=2, max_digits=8, required=False)
-
+    max = forms.CharField(max_length=10, required=False, widget=forms.HiddenInput())
+    min = forms.CharField(max_length=10, required=False, widget=forms.HiddenInput())
 
     def __init__(self, *args, **kwargs):
 
@@ -224,9 +231,6 @@ class AdvancedSearchForm(forms.Form):
 
         super(AdvancedSearchForm, self).__init__(*args, **kwargs)
 
-
-
-
     def search(self):
         cleaned_key = self.cleaned_data.get('key')
         cleaned_max = self.cleaned_data.get('max')
@@ -237,54 +241,63 @@ class AdvancedSearchForm(forms.Form):
         if cleaned_key:
             search_r = AuctionEvent.objects.filter(available=True, item__icontains=cleaned_key)
 
-        elif cleaned_max:
-            search_r = AuctionEvent.objects.filter(available=True, current_price__lte=cleaned_max)
-
-        elif cleaned_min:
-            search_r = AuctionEvent.objects.filter(available=True, current_price__gte=cleaned_min)
-
         elif cleaned_max and cleaned_min:
-             search_r = AuctionEvent.objects.filter(available=True, current_price__gte=cleaned_min, current_price__lte=cleaned_max)
-
-        elif cleaned_key and  cleaned_min:
-             search_r = AuctionEvent.objects.filter(available=True, current_price__gte=cleaned_max, item__icontains=cleaned_key )
-
-        elif cleaned_key and cleaned_max:
-            search_r = AuctionEvent.objects.filter(available=True,current_price__lte=cleaned_max, item__icontains=cleaned_key)
+            cleaned_min = float(cleaned_min[1:])
+            cleaned_max = float(cleaned_max[1:])
+            search_r = AuctionEvent.objects.filter(available=True, current_price__gte=cleaned_min, current_price__lte=cleaned_max)
 
         elif cleaned_key and cleaned_max and cleaned_min:
+            cleaned_min = float(cleaned_min[1:])
+            cleaned_max = float(cleaned_max[1:])
             search_r = AuctionEvent.objects.filter(available=True, current_price__gte=cleaned_min, current_price__lte=cleaned_max, item__icontains=cleaned_key )
         return search_r
 
 
+class ItemSortForm(forms.Form):
 
-class AdvertForm(ModelForm):
-
-    class Meta:
-        model = Advert
-        fields = ['title', 'image', 'description', 'price', 'creator']
+    SORT_BY_CHOICES = (
+        ('----', 'Sort Items by'),
+        ('lowest_price', 'lowest_price'),
+        ('highest_price', 'highest_price'),
+        ('ratings', 'ratings'),
+        ('new_in', 'new_in'),
+    )
+    sort_by = forms.ChoiceField(choices=SORT_BY_CHOICES, )
 
     def __init__(self, *args, **kwargs):
-        super(AdvertForm, self).__init__(*args, **kwargs)
-        self.layout = Layout(
-            Fieldset('Place Ad Below',
-                     Row('title', 'image'),
-                     'price',
-                     'description')
-        )
+        super(ItemSortForm, self).__init__(*args, **kwargs)
+        self.fields['sort_by'].widget.attrs.update({'class':'input'})
 
+    def sort(self):
+        filter = self.cleaned_data.get('sort_by')
+        print(self.cleaned_data)
+        result = None
 
+        if filter == 'lowest_price':
+            result = AuctionEvent.objects.filter(available=True).order_by('target_price')
+
+        if filter == 'highest_price':
+            result = AuctionEvent.objects.filter(available=True).order_by('-target_price')
+            for r in result:
+                print(r.target_price)
+
+        if filter == 'new_in':
+            result = AuctionEvent.objects.filter(available=True).order_by('time')
+
+        if filter == 'ratings':
+            result = AuctionEvent.objects.filter(available=True, ratings__isnull=False).order_by('ratings__average')
+
+        return result
 
 class BudgetForm(ModelForm):
     # range = forms.IntegerField()
     # time = forms.ChoiceField(choices=[(str(ch), str(ch)) for ch in time_choice])
 
-
     def __init__(self, *args, **kwargs):
         super(BudgetForm, self).__init__(*args, **kwargs)
         self.fields['title'].label = 'item'
-        self.fields['image'].widget.attrs.update({'id': 'upload'})
-        self.fields['image'].label = ''
+        self.fields['budget_image'].widget.attrs.update({'id': 'upload'})
+        self.fields['budget_image'].label = ''
 
     def clean(self):
         budgets = BudgetPlan.objects.all().count()
@@ -295,7 +308,7 @@ class BudgetForm(ModelForm):
 
     class Meta:
         model = BudgetPlan
-        fields = ['title', 'description', 'price' ,'time', 'range', 'image',]
+        fields = ['title', 'description', 'price' ,'time', 'range', 'budget_image',]
 
 
 # class BudgetPlanEmailForm():

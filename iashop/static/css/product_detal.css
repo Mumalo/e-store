@@ -8,9 +8,10 @@
 }
 
 .product-detail-side-images{
-    max-width: 90px;
-    margin: 0 !important;
+    max-width: 80px;
+    margin: 0;
 }
+
 
 .auction-detail-heading{
     color: #666;
@@ -21,8 +22,9 @@
 .auction-detail-image{
     width: 100%!important;
     height: 100%;
-    max-height: 420px !important;
+    max-height: 420px;
 }
+
 
 .auction-detail-item-info{
     border-left: none;

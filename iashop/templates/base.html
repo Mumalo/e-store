@@ -10,7 +10,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
 	<title>{% block title %}IA-STORE{% endblock %}</title>
@@ -22,20 +22,17 @@
 
 	<!-- Bootstrap -->
 	<!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 	<!-- Slick -->
 	<link rel="stylesheet" href="{% static 'css/slick.css'  %}" />
 	<link rel="stylesheet" href="{% static 'css/slick-theme.css' %}" />
 
 	<!-- nouislider -->
-	<link rel="stylesheet" href="{% static 'css/slick-theme.css' %}" />
-
-	<!-- Font Awesome Icon -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{#	<link rel="stylesheet" href="{% static 'css/slick-theme.css' %}" />#}
 
 	<!-- Custom stlylesheet -->
+{#	<link rel="stylesheet" href="{% static 'css/home.css' %}" />#}
 	<link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
     <!-- owl carousel -->
@@ -44,6 +41,8 @@
 
     <!-- star ratings  -->
     <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+
+     <link  href="{% static 'css/fasthover.css' %}" rel="stylesheet">
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -62,18 +61,22 @@
 	<header>
 		<!-- top Header -->
 		<div id="top-header">
-			<div class="container-fluid" style="">
+			<div class="container-fluid">
 				<div class="pull-left logo-container">
 					<span class="welcome">IA-STORE</span>
-                    <img src="{% static 'images/background/logo.jpg' %}" class="img-responsive img-circle logo" style="width:40px; height: 40px; border: 1px solid #fff;">
+                    <a href="{% url 'pages:home' %}"><img src="{% static 'images/background/logo.jpg' %}" class="img-responsive img-circle logo" style="width:40px; height: 40px; border: 1px solid #fff;"></a>
                     <span class="logo-text">Shop Better, Live Better</span>
 				</div>
-				<div class="pull-right">
+				<div class="pull-right" style="margin-right: 1%">
                     &nbsp;&nbsp;&nbsp;
 					<ul class="header-top-links">
-						<li><a href="#">Buy</a></li>
-						<li><a href="#">Sell</a></li>
-						<li><a href="#">FAQ</a></li>
+                        {% if request.user.is_authenticated %}
+                            <li><a href="{% url 'accounts:logout' %}">LOGOUT</a></li>
+                        {% else %}
+                            <li style="border-right: 1px solid #ddd"><a href="{% url 'accounts:login' %}">LOGIN</a></li>
+                            <li style="margin-left: 0"><a href="{% url 'accounts:register' %}">REGISTER</a></li>
+                        {% endif %}
+                         <li><a href="#">FAQ</a></li>
                     </ul>
                     <!-- end of header top links -->
 				</div>
@@ -83,10 +86,10 @@
 
 		<!-- header -->
 		<div id="header">
-			<div class="container">
-					<div class="wrap">
-						{% search_form %}
-					</div>
+			<div class="container" style="position: relative; min-height: 65px;">
+                <div class="wrap">
+                    {% search_form %}
+                </div>
 					<!-- /Search -->
 				<div class="pull-right">
 					<ul class="header-btns">
@@ -98,34 +101,95 @@
                                         <i class="fa fa-user-o"style=""></i>
                                     </a>
 								</div>
-                                <a href="#" class="text-uppercase">Login</a> / <a href="#" class="text-uppercase">Join</a>
+                                {% if not request.user.is_authenticated %}
+                                    <a href="#" class="text-uppercase">Login</a> / <a href="{% url 'accounts:login' %}" class="text-uppercase">Join</a>
+                                {% else %}
+                                    <span>Welcome {{ request.user }}</span>
+                                {% endif %}
 							</div>
                             <a>MY STORE</a>
 							<ul class="custom-menu">
-								<li><a href="{{ user.get_absolute_url }}"><i class="fa fa-user-o"></i> My Account</a></li>
-								<li><a href="{% url 'accounts:edit' request.user.pk %}"><i class="fa fa-cog"></i> Settings</a></li>
-								<li><a href="{% url 'accounts:login' %}"><i class="fa fa-unlock-alt"></i> Login</a></li>
-								<li><a href="{% url 'accounts:logout' %}"><i class="fa fa-lock"></i> Logout</a></li>
-								<li><a href="{% url 'accounts:register' %}"><i class="fa fa-user-plus"></i> Create An Account</a></li>
+                                {% if request.user.is_authenticated %}
+								    <li><a href="{{ request.user.get_absolute_url }}"><i class="fa fa-user-o"></i> My Store</a></li>
+								    <li><a href="{% url 'accounts:edit' request.user.pk %}"><i class="fa fa-cog"></i> Settings</a></li>
+                                    <li><a href="{% url 'accounts:logout' %}"><i class="fa fa-lock"></i> Logout</a></li>
+                                {% else %}
+								    <li><a href="{% url 'accounts:login' %}"><i class="fa fa-unlock-alt"></i> Login</a></li>
+								    <li><a href="{% url 'accounts:register' %}"><i class="fa fa-user-plus"></i> Create An Account</a></li>
+                                {% endif %}
 							</ul>
 						</li>
 						<!-- /Account -->
                         <li class="watch-list" style="margin-top: 3px">
-                            <a {% if request.user.is_authenticated %}href="#WatchList" {% else %} href="{% url 'accounts:login' %}" {% endif %} class="watch-list">
+                            <a {% if request.user.is_authenticated %} type="button" data-toggle="modal" data-target="#myWatchList" {% else %} href="{% url 'accounts:login' %}" {% endif %} class="watch-list">
                                 <i class="fa fa-heart-o"></i>
                             </a>
                         </li><!-- /WatchList-->
 
+                       <!-- Modal -->
+                        {% if request.user.is_authenticated %}
+                        <div id="myWatchList" class="modal fade" role="dialog">
+                             <div class="modal-dialog">
+
+                                 <!-- Modal content-->
+                                 <div class="modal-content">
+
+                                     {% watch_list request.user as lists %}
+                                     <div class="modal-header">
+                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                         <h4 class="modal-title">Items on Watch</h4>
+                                     </div>
+                                     <div class="modal-body">
+                                         {% for list in lists %}
+                                             {% for item in list.items.all %}
+                                                 <div class="list-group">
+                                                     {% with item.image.all|first as image %}
+                                                         <div class="watch-list-item" style="position: relative">
+                                                            {% if image.image %}
+                                                                <div class="image">
+                                                                         <a  href="{% url 'auctions:bid' item.id %}">
+                                                                            <img  class="circle img-responsive" src="{{ image.image.url }}" alt="">
+                                                                         </a>
+                                                                </div>
+                                                            {% else %}
+                                                                <div class="image">
+                                                                    <a  href="{% url 'auctions:bid' item.id %}">
+                                                                        <img class="circle img-responsive" src="{% static 'images/no_image.png' %}">
+                                                                    </a>
+                                                                </div>
+                                                            {% endif %}
+                                                            <div class="item-info">
+                                                                <span class="title">{{ item}}</span>
+                                                                    <p>posted by: <a href="{{ item.creator.get_absolute_url }}">{{ item.creator }}</a></p>
+                                                                    <p class="">{% if item.place_on_auction %}current Bid at: {% else %}Price:{% endif %} <span>&#x20A6 {{ item.get_current_price }}</span> </p>
+                                                                    <p><span class="watch-auction" data-action="unwatch" data-id="{{item.id}}">Unwatch</span></p>
+                                                            </div>
+                                                            <div class="item-star">
+                                                                 <span class="glyphicon glyphicon-star"></span>
+                                                            </div>
+                                                         </div>
+                                                     {% endwith %}
+                                                 </div>
+                                             {% endfor %}
+                                         {% endfor %}
+                                     </div>
+                                     <div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                     </div>
+                                 </div>
+
+                             </div>
+                        </div>
+                        {% endif %}
+
                         <li id="noti_Container">
                             {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' %}
                             {% notifications_unread as unread_count %}
-                            {% if request.user.is_authenticated %}
-                                <div id="noti_Counter">{% live_notify_badge %}</div><!--SHOW NOTIFICATIONS COUNT.-->
-                            {% else %}
-                                <div class="noti_Counter">0</div>
-                            {% endif %}
-
                             <div id="noti_Button"><!--A CIRCLE LIKE BUTTON TO DISPLAY NOTIFICATION DROPDOWN.-->
+                                {% if request.user.is_authenticated %}
+                                    <div id="noti_Counter">{% live_notify_badge %}</div><!--SHOW NOTIFICATIONS COUNT.-->
+                                {% else %}
+                                    <div id="noti_Counter">0</div>
+                                {% endif %}
                                 <a>
                                     {% if not request.user.is_authenticated %}
                                         <i class="fa fa-bell-o" onclick="loginalert()"></i>
@@ -135,9 +199,9 @@
                                         <i class="fa fa-bell-o" data-action="{{request.user}}"></i>
                                     {% endif %}
                                 </a>
-                            </div>
-                            <!--THE NOTIFICAIONS DROPDOWN BOX WHEN UNREAD NOTIFICATIONS ARE AVAILABLE-->
-                            {% if request.user.is_authenticated and unread_count > 0 %}
+
+                                <!--THE NOTIFICAIONS DROPDOWN BOX WHEN UNREAD NOTIFICATIONS ARE AVAILABLE-->
+                            {% if request.user.is_authenticated  and unread_count > 0  %}
                                 <div id="notifications" class="panel panel-default" style="height: 300px">
                                     <div class="panel-heading" style="min-height: 40px">
                                         <span><a style="color: #0f9d58; float:left">Notificatios</a></span>
@@ -146,22 +210,21 @@
                                     <div class="noti_List row no-gutter">
                                         {% for notification in user.notifications.unread %}
                                             {% if  notification.actor.profile %} <!-- notify when someone creates a new account -->
-                                                <div class="panel-body col-xs-2 col-sm-2 col-md-2">
+                                                <div class="panel-body div_noti_image col-xs-2 col-sm-2 col-md-2 text-left">
                                                     {% if notification.actor.profile.photo %}
-                                                        <img src="{{ notification.actor.profile.photo.url}}" class="img-responsive small-image">
+                                                        <img src="{{ notification.actor.profile.photo.url}}" class="img-responsive">
                                                     {% else %}
-                                                        <img src="{% static 'images/no_image.png' %}" class="img-responsive small-image">
+                                                        <img src="{% static 'images/no_image.png' %}" class="img-responsive">
                                                     {% endif %}
-
                                                 </div>
-                                                <div class="panel-body col-xs-10 col-sm-10 col-md-10">
+                                                <div class="panel-body col-xs-10 col-sm-10 col-md-10 text-light div_noti_info">
                                                     <p>
-                                                        <a href="{{notification.actor.get_absolute_url}}" >{{ notification.actor}}</a>  {{ notification.verb }}{{ notification.timesince }} ago
+                                                        <a href="{{notification.actor.get_absolute_url}}" class="author">{{ notification.actor}}</a> {{ notification.verb }} {{ notification.timesince }} ago
                                                     </p>
                                                 </div>
                                             {% elif notification.target  %} <!--notify when someone creates an item or budget plan -->
                                                 {% if notification.target %}
-                                                    <div class="panel-body colx-xs-2 col-sm-2 col-md-2">
+                                                    <div class="panel-body colx-xs-2 col-sm-2 col-md-2 div_noti_image col-xs-2">
                                                         {% if notification.actor.profile.photo %}
                                                             <img src="{{ notification.actor.profile.photo.url}}" class="img-responsive small-image">
                                                         {% else %}
@@ -170,12 +233,12 @@
                                                     </div>
                                                     <dv class="panel-body col-xs-8 col-sm-8 col-md-8">
                                                         <p>
-                                                            <a href="{{notification.actor.get_absolute_url}}" >{{ notification.actor}}</a>  {{ notification.verb }}
+                                                            <a href="{{notification.actor.get_absolute_url}}" class="author">{{ notification.actor}}</a>  {{ notification.verb }}
                                                             {{ notification.timesince }} ago
                                                         </p>
                                                     </dv>
                                                     {% with notification.target.image.all|first as image %}
-                                                        <div class="panel-body colx-xs-2 col-sm-2 col-md-2">
+                                                        <div class="panel-body colx-xs-2 col-sm-2 col-md-2 div_noti_image">
                                                             {% if image.image %}
                                                                 <a href="{% url 'auctions:bid' notification.target.id %}">
                                                                     <img src="{{ image.image.url}}" class="img-responsive small-image">
@@ -185,9 +248,7 @@
                                                                     <img src="{% static 'images/no_image.png' %}" class="img-responsive small-image">
                                                                 </a>
                                                             {% endif %}
-                                                             <span class="glyphicon glyphicon-remove-circle mark-as-read"
-                                                                  data-id="{{notification.id}}" id="{{notification.id}}"
-                                                            />
+                                                             <span class="glyphicon glyphicon-remove-circle mark-as-read" data-id="{{notification.id}}" id="{{notification.id}}"></span>
                                                         </div>
                                                     {% endwith %}
                                                     <div class="panel-body colx-xs-8 col-sm-8 col-md-8"></div>
@@ -197,15 +258,15 @@
                                         {% endfor %}
                                     </div>
                                     <div class="seeAll"><a href="#">See All</a></div>
-
                                 </div>
                             {% endif %}
+                            </div>
                         </li>
 
 						<!-- Mobile nav toggle-->
-						<li class="nav-toggle">
-							<button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>
-						</li>
+{#						<li class="nav-toggle">#}
+{#							<button class="nav-toggle-btn main-btn icon-btn"><i class="fa fa-bars"></i></button>#}
+{#						</li>#}
 						<!-- / Mobile nav toggle -->
 					</ul>
 				</div>
@@ -221,150 +282,12 @@
 		<div class="container">
 			<div id="responsive-nav">
 				<!-- menu nav -->
-				<div class="menu-nav" style="margin-left: 27%">
-					<span class="menu-header">Menu <i class="fa fa-bars"></i></span>
+				<div class="menu-nav">
+{#					<span class="menu-header">Menu <i class="fa fa-bars"></i></span>#}
 					<ul class="menu-list">
-						<li><a href="{% url 'pages:home' %}">Home</a></li>
-						<li><a href="#">Shop</a></li>
-						<li class="dropdown mega-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Women <i class="fa fa-caret-down"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-										<hr class="hidden-md hidden-lg">
-									</div>
-									<div class="col-md-4">
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-								</div>
-								<div class="row hidden-sm hidden-xs">
-									<div class="col-md-12">
-										<hr>
-										<a class="banner banner-1" href="#">
-											<img src="{% static 'img/banner05.jpg' %}" alt="">
-											<div class="banner-caption text-center">
-												<h2 class="white-color">NEW COLLECTION</h2>
-												<h3 class="white-color font-weak">HOT DEAL</h3>
-											</div>
-										</a>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="dropdown mega-dropdown full-width"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Men <i class="fa fa-caret-down"></i></a>
-							<div class="custom-menu">
-								<div class="row">
-									<div class="col-md-3">
-										<div class="hidden-sm hidden-xs">
-											<a class="banner banner-1" href="#">
-												<img src="{% static 'img/banner06.jpg' %}" alt="">
-												<div class="banner-caption text-center">
-													<h3 class="white-color text-uppercase">Women’s</h3>
-												</div>
-											</a>
-											<hr>
-										</div>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-									<div class="col-md-3">
-										<div class="hidden-sm hidden-xs">
-											<a class="banner banner-1" href="#">
-												<img src="{% static 'img/banner07.jpg' %}" alt="">
-												<div class="banner-caption text-center">
-													<h3 class="white-color text-uppercase">Men’s</h3>
-												</div>
-											</a>
-										</div>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-									<div class="col-md-3">
-										<div class="hidden-sm hidden-xs">
-											<a class="banner banner-1" href="#">
-												<img src="{% static 'img/banner08.jpg' %}" alt="">
-												<div class="banner-caption text-center">
-													<h3 class="white-color text-uppercase">Accessories</h3>
-												</div>
-											</a>
-										</div>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-									<div class="col-md-3">
-										<div class="hidden-sm hidden-xs">
-											<a class="banner banner-1" href="#">
-												<img src="{% static 'img/banner09.jpg' %}" alt="">
-												<div class="banner-caption text-center">
-													<h3 class="white-color text-uppercase">Bags</h3>
-												</div>
-											</a>
-										</div>
-										<hr>
-										<ul class="list-links">
-											<li>
-												<h3 class="list-links-title">Categories</h3></li>
-											<li><a href="#">Women’s Clothing</a></li>
-											<li><a href="#">Men’s Clothing</a></li>
-											<li><a href="#">Phones & Accessories</a></li>
-											<li><a href="#">Jewelry & Watches</a></li>
-											<li><a href="#">Bags & Shoes</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</li>
+						<li id="home2"><a href="{% url 'pages:home' %}">Home</a></li>
+						<li id="sell"><a href="{% url 'auctions:list' %}">Buy</a></li>
+						<li id="buy"><a href="{% url 'auctions:add_new_auction' %}">Sell</a></li>
 						<li class="dropdown default-dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Pages <i class="fa fa-caret-down"></i></a>
 							<ul class="custom-menu">
 								<li><a href="{% url 'pages:home' %}">Home</a></li>
@@ -396,10 +319,10 @@
            </div>
             <!-- footer content -->
            <div class="row footer-content">
-                <div class="col-xs-0 col-sm-2 col-md-2"></div>
-                <div class="col-xs-12 col-sm-8 col-md-8">
+                <div class="col-sm-1 col-md-1"></div>
+                <div class="col-xs-12 col-sm-10 col-md-10">
                     <div class="row">
-                        <div class="col-xs-4 col-sm-4 col-md-4 left-footer-content text-left">
+                        <div class="col-xs-6 col-sm-4 col-md-4 left-footer-content text-center">
                             <ul class="list-unstyled">
                                 <li><a href="{% url 'pages:about' %}">Know More About Us</a></li>
                                 <li><a href="{% url 'pages:our_team' %}">Our Team</a></li>
@@ -409,7 +332,7 @@
                             </ul>
                         </div>
 
-                        <div class="col-xs-4 col-sm-4 col-md-4 middle-footer-content text-left">
+                        <div class="col-xs-6 col-sm-4 col-md-4 middle-footer-content text-center">
                             <ul class="list-unstyled">
                                  <li><a href="{% url 'pages:make-money' %}">Make Money With Us</a></li>
                                  <li><a href="{% url 'auctions:add_new_auction' %}">Sell With IA Store</a></li>
@@ -418,7 +341,7 @@
                             </ul>
                         </div>
 
-                        <div class="col-xs-4 col-sm-4 col-md-4 right-footer-content text-left">
+                        <div class="col-xs-6 col-sm-4 col-md-4 right-footer-content text-center">
                             <ul class="list-unstyled">
                                 <li><a href="{% url 'pages:help' %}">Get Help</a></li>
                                  <li><a href="{% url 'accounts:login' %}">Your Account</a></li>
@@ -427,46 +350,47 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-0 col-sm-2 col-md-2"></div>
+                <div class="col-sm-1 col-md-2"></div>
            </div>
             <!-- footer content -->
 
-            <!-- footer subcontent -->
-            <div class="row footer-subcontent">
-                <div class="col-xs-0 col-sm-1 col-md-1 text-left"></div>
-                <div class="col-xs-12 col-sm-10 col-md-10"> <!-- col-md-12 -->
-                    <h6 class="text-left heading" style="padding-left: 41%; margin-bottom: 30px">Coming Soon</h6>
+            <!-- footer subcontent -->1
+            <div class="row footer-subcontent text-center">
+{#                <div class="col-sm-2 col-md-1"></div>#}
+                <div class="col-xs-12 col-sm-12 col-md-12"> <!-- col-md-12 -->
+                    <h6 class="text-left heading" style="padding-left:48%; margin-bottom: 30px">Coming Soon</h6>
                     <div class="row"> <!-- row -->
-                        <div class="col-xs-4 col-sm-2 col-md-2 text-left">
+                        <div class="col-md-2"></div>
+                        <div class="col-xs-3 col-sm-3 col-md-2 text-center">
                             <ul class="list-unstyled">
                                <li class="heading"><a>IA Music</a></li>
-                               <li class="text-left content"><a>Stream <br>Millions<br>of Music</a></li>
+                               <li class="content"><a>Stream <br>Millions<br>of Music</a></li>
                             </ul>
                         </div>
-                        <div class="col-xs-4 col-sm-2 col-md-2 text-left">
-                              <ul class="list-unstyled">
+                        <div class="col-xs-3 col-sm-3 col-md-2 text-center">
+                              <ul class="list-unstyled text-center ">
                                  <li class="heading"><a>IA Movies</a></li>
-                                 <li class="text-left content"><a>Stream<br>Download<br>Movies</a></li>
+                                 <li class="content"><a>Stream<br>Download<br>Movies</a></li>
                               </ul>
                         </div>
-                        <div class="col-xs-6 col-sm-2 col-md-2 text-left">
+                        <div class="col-xs-3 col-sm-3 col-md-2 text-center">
                               <ul class="list-unstyled">
                                  <li class="heading"><a>IA Travels</a></li>
-                                  <li class="text-left content"><a>Book your <br>Flight</a></li>
+                                  <li class="content"><a>Book your <br>Flight</a></li>
                               </ul>
                         </div>
-                        <div class="col-xs-6 col-sm-2 col-md-2 text-left">
-                              <ul class="list-unstyled">
+                        <div class="col-xs-3 col-sm-2 col-md-3 text-left photography">
+                              <ul class="list-unstyled text-left">
                                  <li class="heading"><a>Digital Photography</a></li>
-                                 <li class="text-left content"><a>Book for Photography jobs <br/>And buy our photos</a></li>
+                                 <li class="content"><a>Book for Photography jobs <br/>And buy our photos</a></li>
                               </ul>
                         </div>
                     </div> <!-- row -->
                 </div> <!-- col-md-12 -->
                 <div class="col-xs-0 col-sm-1 col-md-1"></div>
                 <div class="row"> <!-- row -->
-                    <div class="col-sm-2 col-md-2"></div>
-                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center social-media">
+                    <div class="col-sm-2 col-md-1"></div>
+                    <div class="col-xs-12 col-sm-7 col-md-7 text-center social-media">
                         {% social_media_links as links %}
                         <h6>Social Media</h6>
                         <div class="container-fluid">
@@ -475,404 +399,355 @@
                             <a class="social instagram" {% if links.ins %}href="{{links.ins}}"{% else %}href="#"{% endif %}><i class="fa fa-instagram"></i></a>
                         </div>
                     </div>
-                     <div class="col-sm-4 col-md-4"></div>
+{#                     <div class="col-sm-3 col-md-3"></div>#}
                 </div> <!-- row -->
             </div>
             <!-- footer subcontent -->
 
             <!-- footer suncontent -->
             <div class="row footer-contact-info text-center">
-                <div style="padding-left: 9.7%; margin-top: 10px; margin-bottom: 10px">
-                    <img src="{% static 'images/background/logo.jpg' %}" class="img-responsive img-circle" style="width:40px; height: 40px; border: 1px solid #fff;">
+                <div>
+                   <a href="{% url 'pages:home' %}"><img src="{% static 'images/background/logo.jpg' %}" class="img-responsive img-circle" style="width:40px; height: 40px; border: 1px solid #fff;"></a>
                  </div>
-                 <span style="margin-top: 15px; margin-left: -13px">IA STORE</span>
             </div>
+             <div class="container-fluid text-center" style="color: #FFF; padding: 18px; margin-left: 15px">
+                 <span class="text-right">Copyright@2017-IA-STORE All Rights Reserved</span>
+             </div>
             <!-- footer suncontent -->
-
         </div>
         <!-- footer container -->
 
 	    <!-- jQuery Plugins -->
         {% block js %}
-                <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
-                <script src="{% static 'js/jquery.matchHeight.js' %}" type="text/javascript"></script>
-                <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
-                <script src="{% static 'js/jquery.matchHeight.js' %}" type="text/javascript"></script>
-                <script src="{% static 'js/jquery.formset.js' %}" type="text/javascript"></script>
-                <script>
-                    $('.image-formset').formset({
-                       addText: 'Add',
-                       deleteText: 'remove',
-                       addCssClass: 'add',
-                       deleteCssClass: 'del'
-
-                    });
-                </script>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-                <script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
-                <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
-                <script type="text/javascript" src="https://simplewebrtc.com/latest-v2.js"></script>
-                <script src="{% static 'js/home.js' %}"></script>
-
-                <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
-                <script src="{% static 'js/jquery.matchHeight.js' %}" type="text/javascript"></script>
-                <script src="{% static 'js/jquery.formset.js' %}" type="text/javascript"></script>
-                 <!--<script src="{% static 'js/countdown.js' %}"></script>-->
-                <script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
-                <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
-                <script type="text/javascript" src="https://simplewebrtc.com/latest-v2.js"></script>
-                                <script>
-                    $(document).ready(function() {
-
-                        $('#cat-select').on('change', function () {
-                            var selectedopt = $(this).find('option:selected')
-                            var selectedval = selectedopt.val()
-                            var options = ''
-                            var cat_name = selectedopt.text()
-
-                            $.post("{% url 'auctions:select-by-category' %}",
-                                    {category: cat_name},
-                                    function (data) {
-                                         $('#sub-cat-select').each(function(){
-                                             $('#sub-cat-select option').remove()
-                                         })
-                                        for (i = data.length -1; i >= 0; i--){
-                                            options += ('<option  value="' + data[i] + '">'+ data[i] + '</option>')
-                                        }
-                                      $('#sub-cat-select').append(options)
-                                    });
-
-                        }).change()
-
-                        $("#sub-cat-select").change(function(){
-                             var subcat = $(this).find('option:selected').val()
-                             var options = ''
-
-                            $.post("{% url 'auctions:select-by-subcat'%}",
-                                    {
-                                        subcat:subcat
-                                    },
-                                    function(data){
-                                        $("#sub-cat-select2").each(function(){
-                                            $("#sub-cat-select2 option").remove()
-                                        })
-
-                                        for (i = data.length -1; i >= 0; i--){
-                                            options += ('<option  value="' + data[i] + '">'+ data[i] + '</option>')
-                                        }
-                                        $('#sub-cat-select2').append(options)
-                                    }
-                            )
-                        }).change()
-
-                        $('.cat-list').hover(function(){
-                             var el = $('#subcats');
-                             var current_cat = $(this).data('action');
-                             $(this).append(el)
-                                el.css('display', 'inline-block')
-                                el.css('position', 'absolute')
-                                el.css('z-index', '3')
-                        $.post("{% url 'auctions:subcats-for-cats' %}",
-                            { cat:current_cat},
-                            function(data) {
-                                el.empty()
-                                if (jQuery.isEmptyObject(data)){
-                                    el.css('display', 'none')
-                                }
-                                var items_array = []
-
-                                for (val in data){
-//                                    alert(data[val])
-                                    id_val = val
-                                    json_parsed_items = JSON.parse(data[val])
-//                                    alert(json_parsed_items)
-                                     var heads = $('<div class="col-md-4" id="' + id_val +'" style="color: white !important;"></div>')
-                                     heads.append('<h6 style="border-bottom: 1px solid #337ab7; text-transform: capitalize">' + val + '</h6>')
-                                     items_array.push(json_parsed_items)
-                                     item_ids = val + 'item'
-                                     el.append(heads)
-
-                                     item = $('<div class="list-group row"  id="' + item_ids + '"></div>')
-
-
-                                    for (i in json_parsed_items ){
-//
-                                        item_slug = json_parsed_items[i]["fields"]["slug"]
-                                        item_key = json_parsed_items[i]["pk"]
-                                        var url = "{% url 'auctions:subcat2_detail' 12 13 %}".replace(12, item_key).replace(13, item_slug)
-//                                        var url = "{% url 'auctions:bid' 13 %}".replace(12, item_key)
-//                                        alert(url)
-                                        link = $('<a class="" style="color: white !important; display: block; padding: 6px" href="' + url+ '" >'+ json_parsed_items[i]["fields"]["name"] + '</a>')
-                                        item.append(link)
-                                    }
-
-                                    if (item.attr('id').includes(heads.attr('id'))){
-                                        heads.append(item)
-                                    }
-                                }
-                        })
-
-                        },
-                            function(){
-                                //$( this ).find( '.sub-cat-on-hover:last' ).remove();
-                                $( this ).find( '#subcats' ).css('display', 'none')
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+             <script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+            <script src="{% static 'js/jquery.formset.js' %}" type="text/javascript"></script>
+            <script src="{% static 'js/slick.min.js' %}"></script>
+            <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+            <script type="text/javascript" src="https://simplewebrtc.com/latest-v2.js"></script>
+            <script src="{% static 'js/jquery.matchHeight.js' %}" type="text/javascript"></script>
+            <script src="{% static 'js/home.js' %}"></script>
+            <script src="{% static 'js/jquery.elevatezoom.js' %}" type="text/javascript"></script>
+            <script src="{% static 'js/main.js' %}"></script>
+            <script src="{% static 'js/jquery.formset.js' %}" type="text/javascript"></script>
+            <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+            <script type="text/javascript" src="https://simplewebrtc.com/latest-v2.js"></script>
+            <script>
+                $(document).ready(function() {
+                    <!-- update lgas for state -->
+                    $("#id_state").on('change', function(){
+                        alert('SEND THE REUEST')
+                        var selected_state = $(this).find('option:selected').text()
+                        var options = ''
+                        $.post("{% url 'accounts:lgas-for-state' %}",
+                            {state: selected_state},
+                            function(data){
+                                alert(data)
                             }
-                        );
+                        )
 
-//                        End of hover display function
+                    })
 
-                        $('.follow-button').click(function(e){
-                            e.preventDefault
+                    $('#id_category').on('change', function () {
+                        var selectedopt = $(this).find('option:selected')
+                        var selectedval = selectedopt.val()
+                        var options = ''
+                        var cat_name = selectedopt.text()
 
-                            $.post('{% url "accounts:follow" %}',
-                                    {
-                                        id: $(this).data('id'),
-                                        action:$(this).data('action')
+                        $.post("{% url 'auctions:select-by-category' %}",
+                            {category: cat_name},
+                            function (data) {
+                                 $('#id_sub_category3').each(function(){
+                                     $('#id_sub_category option').remove()
+                                 })
+                                for (i = data.length -1; i >= 0; i--){
+                                    options += ('<option  value="' + data[i] + '">'+ data[i] + '</option>')
+                                }
+                              $('#id_sub_category3').append(options)
+                            });
 
-                                    },
+                    }).change()
 
-                                    function(data){
+                    $("#id_sub_category3").change(function(){
+                         var subcat = $(this).find('option:selected').val()
+                         var options = ''
+
+                        $.post("{% url 'auctions:select-by-subcat'%}",
+                            {
+                                subcat:subcat
+                            },
+                            function(data){
+                                $("#id_sub_category4").each(function(){
+                                    $("#id_sub_category4 option").remove()
+                                })
+
+                                for (i = data.length -1; i >= 0; i--){
+                                    options += ('<option  value="' + data[i] + '">'+ data[i] + '</option>')
+                                }
+                                $('#id_sub_category4').append(options)
+                            }
+                        )
+                    }).change()
+
+                    $('.cat-list').hover(function(){
+                         var el = $('#subcats');
+                         var current_cat = $(this).data('action');
+                         $(this).append(el)
+                            el.css('display', 'inline-block')
+                            el.css('position', 'absolute')
+                            el.css('z-index', '3')
+                    $.post("{% url 'auctions:subcats-for-cats' %}",
+                        { cat:current_cat},
+                        function(data) {
+                            el.empty()
+                            if (jQuery.isEmptyObject(data)){
+                                el.css('display', 'none')
+                            }
+                            var items_array = []
+
+                            for (val in data){
+                                id_val = val
+                                json_parsed_items = JSON.parse(data[val])
+                                 var heads = $('<div class="col-md-4" id="' + id_val +'" style="color: white !important;"></div>')
+                                 heads.append('<h6 style="border-bottom: 1px solid #337ab7; text-transform: capitalize">' + val + '</h6>')
+                                 items_array.push(json_parsed_items)
+                                 item_ids = val + 'item'
+                                 el.append(heads)
+
+                                 item = $('<div class="list-group row"  id="' + item_ids + '"></div>')
+
+
+                                for (i in json_parsed_items ){
+
+                                    item_slug = json_parsed_items[i]["fields"]["slug"]
+                                    item_key = json_parsed_items[i]["pk"]
+                                    var url = "{% url 'auctions:subcat2_detail' 12 13 %}".replace(12, item_key).replace(13, item_slug)
+//                                        var url = "{% url 'auctions:bid' 13 %}".replace(12, item_key)
+                                    link = $('<a class="" style="color: white !important; display: block; padding: 6px" href="' + url+ '" >'+ json_parsed_items[i]["fields"]["name"] + '</a>')
+                                    item.append(link)
+                                }
+
+                                if (item.attr('id').includes(heads.attr('id'))){
+                                    heads.append(item)
+                                }
+                            }
+                    })
+
+                    },
+                        function(){
+                            //$( this ).find( '.sub-cat-on-hover:last' ).remove();
+                            $( this ).find( '#subcats' ).css('display', 'none')
+                        }
+                    );
+                    <!-- End of hover display function !-->
+
+                    $('.follow-button').click(function(e){
+                        e.preventDefault
+
+                        $.post('{% url "accounts:follow" %}',
+                            {
+                                id: $(this).data('id'),
+                                action:$(this).data('action')
+
+                            },
+
+                            function(data){
 //                                        alert(data['status'])
-                                        if (data['status'] == 'ok'){
-                                            var prev_action = $('.follow-button').data('action');
+                                if (data['status'] == 'ok'){
+                                    var prev_action = $('.follow-button').data('action');
 
-//                                            toggle action
-
-                                            $(".follow-button").data('action',
-                                            prev_action == 'follow' ? 'unfollow': 'follow')
+                                    $(".follow-button").data('action',
+                                    prev_action == 'follow' ? 'unfollow': 'follow')
 
 //                                            Toggle the link text
-                                            $('.follow-button').text(
-                                                    prev_action == 'follow' ? 'Unfollow': 'Follow'
-                                            )
+                                    $('.follow-button').text(
+                                            prev_action == 'follow' ? 'Unfollow': 'Follow'
+                                    )
 
 //                                            Update total followers
 
-                                            var prev_followers = parseInt($('.followers-count .total-followers').text());
-                                                $('.followers-count .total-followers').text(prev_action == 'follow' ?
-                                                prev_followers + 1: prev_followers -1);
-                                        }
-                                    }
-                            )
-                        })
+                                    var prev_followers = parseInt($('.followers-count .total-followers').text());
+                                        $('.followers-count .total-followers').text(prev_action == 'follow' ?
+                                        prev_followers + 1: prev_followers -1);
+                                }
+                            }
+                        )
+                    })
 
 //                        Watch auction function
 
-                        $('.watch-auction').click(function(e){
-                            e.preventDefault
-//                                alert($(this).data('id'))
-//                            alert($(this).find('.action').text())
-                            $.post('{% url "shopping-cart:watch" %}',
-                                    {
-                                        id: $(this).data('id'),
-                                        action: $(this).data('action')
-                                    },
-                                    function(data){
+                    $('.watch-auction').click(function(e){
+                        alert("I am watching")
+                        e.preventDefault
+                        $.post('{% url "shopping-cart:watch" %}',
+                            {
+                                id: $(this).data('id'),
+                                action: $(this).data('action')
+                            },
+                            function(data){
 //
-                                            if (data['status'] == 'ok'){
-                                                id = String(data['id'])
+                                if (data['status'] == 'ok'){
+                                    id = String(data['id'])
 //                                                Toggle the data
-                                               var  prev_action = $('#' +id).data('action')
-                                                $('#' +id).data('action',
-                                                prev_action == 'watch' ? 'unwatch' : 'watch')
+                                   var  prev_action = $('#' +id).data('action')
+                                    $('#' +id).data('action',
+                                    prev_action == 'watch' ? 'watching' : 'watch')
 
 //                                                Toggle the text
 
-                                                $('#' +id).text(
-                                                        prev_action == 'watch' ? 'Unwatch': 'Watch'
-                                                )
-                                            }
-                                    }
-                            )
-                            id = $(this).data('id')
-                            $('.watch-list-content').find("#" +id).fadeOut(1000)
-                        }
+                                    $('#' +id).text(
+                                            prev_action == 'watch' ? 'watching': 'watch'
+                                    )
+                                }
+                            }
                         )
+                        id = $(this).data('id')
+                        $('.watch-list-content').find("#" +id).fadeOut(1000)
+                    }
+                    )
 
-
-                        $('.all-notifications').mouseover(function(){
-                                $('.mark-as-read').each(function(){
-                                    $(this).css('display','inline-block')
-                                })
+                    $('.all-notifications').mouseover(function(){
+                            $('.mark-as-read').each(function(){
+                                $(this).css('display','inline-block')
                             })
-
-                        $('.all-notifications').mouseout(function(){
-                                $('.mark-as-read').each(function(){
-                                    $(this).css('display','none')
-                                })
-                            })
-
-                        $('.mark-as-read').click(function(){
-                                var el_id = $(this).data('id')
-
-                            $.post('{% url "auctions:mark-as-read" %}',
-                                     {
-                                         id:$(this).data('id')
-                                     },
-
-                                     function(data){
-//                                         alert(data['status'])
-
-                                         if (data['status'] == 'ok'){
-                                            $("#" + el_id).fadeOut(1000)
-                                         }
-                                     }
-                             )
-                         })
-
-                        $('.user-notifications').click(function(){
-//                                alert('i am clicked')
-//                            alert($(this).data('action'))
-
-                             $.post('{% url "auctions:mark-all-as-read" %}',
-                                     {
-                                         recipient: $(this).data('action')
-                                     },
-
-                                     function(data){
-//                                         alert(data['status'])
-                                     }
-                             )
-
                         })
 
-                         $('.close').click(function(){
-                            $('.messages').fadeOut(1000)
+                    $('.all-notifications').mouseout(function(){
+                            $('.mark-as-read').each(function(){
+                                $(this).css('display','none')
+                            })
                         })
+
+                    $('.mark-as-read').click(function(){
+                            var el_id = $(this).data('id')
+
+                        $.post('{% url "auctions:mark-as-read" %}',
+                             {
+                                 id:$(this).data('id')
+                             },
+
+                             function(data){
+//                                         alert(data['status'])
+
+                                 if (data['status'] == 'ok'){
+                                    $("#" + el_id).fadeOut(1000)
+                                 }
+                             }
+                         )
+                     })
+
+                    $('.user-notifications').click(function(){
+                         $.post('{% url "auctions:mark-all-as-read" %}',
+                             {
+                                 recipient: $(this).data('action')
+                             },
+
+                             function(data){
+//                                         alert(data['status'])
+                             }
+                         )
+
+                    })
+
+                     $('.close').click(function(){
+                        $('.messages').fadeOut(1000)
+                    })
 
 //                        Initialize the modal plugin
-                         $('.modal').modal({
-                                dismissible: true, // Modal can be dismissed by clicking outside of the modal
-                                opacity: .5, // Opacity of modal background
-                                inDuration: 400, // Transition in duration
-                                outDuration: 400, // Transition out duration
-                                startingTop: '4%', // Starting top style attribute
-                                endingTop: '10%',
-                         });
-
-                        $("#auction").on('change', function(){
-//                            $(this).find('option:first-child').remove()
-                            var selected = $(this).find('option:selected').val()
-
-                            var start = $("#start_time")
-                            var startlabel = $("label[for='"+start.attr('id')+"']")
-                            var end = $("#end_time")
-                            var endlabel = $("label[for='"+end.attr('id')+"']")
-                            var price = $("#start_price")
-                            var pricelabel = $("label[for='"+price.attr('id')+"']")
-
-                            if ((selected == '1') || (selected == '2')){
-                                start.prop('required', true)
-                                end.prop('required', true)
-                                price.prop('required', true)
-
-                                if (!start.is(':visible') && !startlabel.is(':visible')){
-                                    start.fadeIn(1000)
-                                    startlabel.fadeIn(1000)
-                                }
-
-                                if (!end.is(':visible') && !endlabel.is(':visible')){
-                                    end.fadeIn(1000)
-                                    endlabel.fadeIn(1000)
-                                }
-
-                                if (!price.is(':visible') && !pricelabel.is(':visible')){
-                                    price.fadeIn(1000)
-                                    pricelabel.fadeIn(1000)
-                                }
-                            }else{
-                                start.prop('required', false)
-                                end.prop('required', false)
-                                price.prop('required', false)
-
-                                start.fadeOut(1000)
-                                startlabel.fadeOut(1000)
-                                end.fadeOut(1000)
-                                endlabel.fadeOut(1000)
-                                price.fadeOut(1000)
-                                pricelabel.fadeOut(1000)
-                            }
-                        })
+{#                     $('.modal').modal({#}
+{#                            dismissible: true, // Modal can be dismissed by clicking outside of the modal#}
+{#                            opacity: .5, // Opacity of modal background#}
+{#                            inDuration: 400, // Transition in duration#}
+{#                            outDuration: 400, // Transition out duration#}
+{#                            startingTop: '4%', // Starting top style attribute#}
+{#                            endingTop: '10%',#}
+{#                     });#}
 
 //                        Match column heights to avoid unequal height issue in bootstrap
 
-                        $(".box").matchHeight()
+                    $(".box").matchHeight()
 
 //                        image upload for budget plan
 
-                        $("#upload").change(function(){
-                           $("#uploadFile").attr('value', $(this).val())
+                    $("#upload").change(function(){
+                       $("#uploadFile").attr('value', $(this).val())
 //                            alert($("#uploadFile").val())
-                        })
+                    })
 
-                        $(".delete_item").click(function(e){
-                            e.preventDefault()
-                            var id = $(this).data('id')
-                            var action = $(this).data('action')
-                            var r = confirm('Are you sure you want to delete this item'.replace('item', action))
+                    $(".delete_item").click(function(e){
+                        e.preventDefault()
+                        var id = $(this).data('id')
+                        var action = $(this).data('action')
+                        var r = confirm('Are you sure you want to delete this item'.replace('item', action))
 
 
-                            $.post("{% url 'auctions:delete_budget' %}",
-                                    {
-                                        id: id,
-                                        confirm:r,
-                                        action:action,
-                                    },
+                        $.post("{% url 'auctions:delete_budget' %}",
+                            {
+                                id: id,
+                                confirm:r,
+                                action:action,
+                            },
 
-                                    function(data){
-                                        if (data['status'] == 'ok'){
-                                            alert('item deleted successfully'.replace('item', action))
-                                            $("#" + id).fadeOut(1000)
-                                        }
-                                    }
+                            function(data){
+                                if (data['status'] == 'ok'){
+                                    alert('item deleted successfully'.replace('item', action))
+                                    $("#" + id).fadeOut(1000)
+                                }
+                            }
 
-                            )
-                        })
+                        )
+                    })
 
 //                        $('.formset-container').formset({
 //                                  addText: 'add',
 //                                  deleteText: 'remove'
 //                        });
 
-                        function getCookie(name) {
-                            var cookieValue = null;
-                            var i = 0;
-                            if (document.cookie && document.cookie !== '') {
-                                var cookies = document.cookie.split(';');
-                            for (i; i < cookies.length; i++) {
-                                var cookie = jQuery.trim(cookies[i]);
-                                // Does this cookie string begin with the name we want?
-                                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                                    break;
-                                }
+                    function getCookie(name) {
+                        var cookieValue = null;
+                        var i = 0;
+                        if (document.cookie && document.cookie !== '') {
+                            var cookies = document.cookie.split(';');
+                        for (i; i < cookies.length; i++) {
+                            var cookie = jQuery.trim(cookies[i]);
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
                             }
                         }
-                        return cookieValue;
                     }
-                    var csrftoken = getCookie('csrftoken');
+                    return cookieValue;
+                }
+                var csrftoken = getCookie('csrftoken');
 
-                    function csrfSafeMethod(method) {
-                        // these HTTP methods do not require CSRF protection
-                        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-                    }
-                    $.ajaxSetup({
-                        crossDomain: false, // obviates need for sameOrigin test
-                        beforeSend: function(xhr, settings) {
-                            if (!csrfSafeMethod(settings.type)) {
-                                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                            }
+                function csrfSafeMethod(method) {
+                    // these HTTP methods do not require CSRF protection
+                    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+                }
+                $.ajaxSetup({
+                    crossDomain: false, // obviates need for sameOrigin test
+                    beforeSend: function(xhr, settings) {
+                        if (!csrfSafeMethod(settings.type)) {
+                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
                         }
-                    });
-                })
-                function loginalert(){
-                        alert('Please Login')
                     }
-            </script>
-            {% block extrajs %}{% endblock %}
+                });
+            })
+            <!-- submit filter form when change event is propagated -->
+            $("#search_filter select").change(function(){
+                 var selectedopt = $(this).find('option:selected')
+                 var value = selectedopt.val()
+                $("#search_filter").submit()
+            })
+            function loginalert(){
+                alert('Please Login')
+            }
+        </script>
+        {% block extrajs %}{% endblock %}
     {% endblock %}
-	</div>
-	<!-- /FOOTER -->
+	</div><!-- /FOOTER -->
 </body>
 </html>

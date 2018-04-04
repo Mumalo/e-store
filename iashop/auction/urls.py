@@ -24,7 +24,6 @@ urlpatterns = [
      url(r'^budget/create/$', views.create_budget_plan, name='budget'),
      url(r'^budget/delete/$', views.delete_view, name='delete_budget'),
      url(r'^budget/(?P<budget_id>[0-9]+)/edit/$', views.update_budget, name='edit_budget'),
-     url(r'^advert/create/$', views.create_advert, name='advert'),
 
 
 #      Categories

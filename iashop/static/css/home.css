@@ -1254,98 +1254,6 @@ html{
     /*color: red; !important;*/
 /*}*/
 
-.all-categories .category-content{
-    padding-top: 15px ;
-    padding-bottom: 20px;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-}
-
-.all-categories.make-columns {
-    -moz-column-width: 19em;
-    -webkit-column-width: 19em;
-    -moz-column-gap: 1em;
-    -webkit-column-gap:1em;
-}
-.all-categories.make-columns > div {
-    display: inline-block;
-    padding:  .5rem;
-    width:  100%;
-
-}
-
-
-.all-categories .category-content h2{
-    /*color:  #e62e04;*/
-    color: #428bca;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.3;
-}
-
-.category-content ul li{
-    padding: 4px;
-}
-
-.all-categories .left-sidebar{
-    border-right: 18px solid  #D7D9C3 !important;
-     border-bottom: 10px solid  #D7D9C3 !important;
-}
-
-
-@media (min-width:992px){
-    .all-categories.left-sidebar .col-md-4:nth-child(3n+1){clear:left;}
-}
-@media (max-width:991px){
-    .all-categories.left-sidebar .col-xs-6:nth-child(2n+1){clear:left;}
-}
-
-
-
-
-.all-categories .left-sidebar img{
-   width: 100%;
-    height: 200px;
-}
-.category-content a{
-    color: #333;
-}
-
-.category-content a:hover{
-    text-decoration: none;
-    cursor: pointer;
-    color:  #e62e04 !important;
-}
-
-
-.category-detail .left-sidebar{
-    padding: 10px;
-    /*background: red !important;*/
-}
-
-.category-detail .category-heading{
-    border-bottom: 1px solid #428bca;
-    padding-bottom: 10px;
-    color: #428bca;
-    font-size: 20px;
-    position: relative;
-    margin-right: -10px;
-    margin-left: -10px;
-    margin-bottom: 4px;
-
-}
-
-.category-detail div a{
-    /*border: 2px solid #f1f1f1;*/
-    border-left: none !important;
-    border-right: none !important;
-
-}
-
-.category-detail div a:first-child{
-    border-top: none !important;
-}
-
 
 /*testing media queries */
 
@@ -2544,33 +2452,20 @@ a:hover {
 
 .user-home-side-menu{
     width: 100%;
-    /*padding-left: 25px;*/
 }
 
 .follow-user-container .btn-small{
     font-size: 60% !important;
-    /*color: #F4FF77;*/
     background: #fff;
-    /*float: left;*/
     border-radius: 15px;
     border: 1px solid darkred;
     color: darkred;
     margin: auto;
-    /*width: 100%;*/
-    /*padding-right: 15px;*/
-    /*padding-left: 15px;*/
-    /*width: 113px;*/
 }
 
 
 .follow-user-container [class*="col-"]:first-child{
-    /*background-color: red !important;*/
     padding-right: 0 !important;
-}
-
-
-.follow-user-container .btn-small:hover{
-    /*background: #1F0101;*/
 }
 
 
@@ -2669,24 +2564,6 @@ a:hover {
     /*width: 70%;*/
 /*}*/
 
-.profile-edit-button a, .budget-edit-button a{
-    padding: 7px !important;
-    font-size: 75% !important;
-    border-radius: 40% !important;
-    background: #D7D9C3 !important;
-    /*margin-top: -3px !important;*/
-    /*margin-bottom: -3px !important;*/
-    /*border-color: #4477bd !important;*/
-    height: 25% !important;
-    width: 100%; !important;
-    color: #606060 !important;
-}
-
-.profile-edit-button{
-    -webkit-transition-duration: 0.4s !important; /* Safari */
-    transition-duration: 0.4s !important;
-}
-
 
 /*password change container */
 
@@ -2708,33 +2585,12 @@ a:hover {
 .profile-edit-button:hover{
     background: white !important;
 }
-.user-profile-menu a:hover{
-    color: #4477bd;
-    background: transparent;
-}
-
-/*.user-profile-menu a:hover{*/
-    /*background-color: #ffffff;*/
-/*}*/
 
 
-.user-profile-menu ul li{
-    border-right: 1px solid #e9eaed !important;
-}
-.user-profile-menu .navbar{
-    background: #fff;
-    border: none !important;
-     width: 100% !important;
-    height: 38px !important;
-    /*margin-bottom: -4px;*/
-    border-left: 1px solid #e9eaed !important;
-}
 @media screen and (max-width: 768px)  {
     .user-profile-menu{
         left: 55%;
-        /*margin-right: -7px;*/
         max-width: 20%;
-        /*background: blue;*/
     }
 
     .user-home .middle-container{
@@ -2774,10 +2630,6 @@ a:hover {
         margin-bottom: 10px;
     }
 
-
-
-
-
     .auction-tex{
         font-size: 16px !important;
         background: red !important;
@@ -2787,15 +2639,8 @@ a:hover {
         font-size: 24px !important;
     }
 
-    /*.box {*/
-        /*height: auto !important;*/
-    /*}*/
 }
-
-
 .budget-plan-container{
-    /*height: 480px;*/
-    /*background: red;*/
     padding-bottom: 20px;
 }
 

@@ -1,66 +1,257 @@
 {% extends "base.html" %}
 {% load static %}
-{% load material_form %}
+{% load crispy_forms_tags %}
 {% block title %}add-auction{% endblock %}
+{% block extrahead %}
+    <style>
+        button#submit_button{
+            background: #ff6a00;
+            color: #FFF;
+            padding: 6px;
+            width: 120px;
+            position: relative;
+            top: 5px;
+            left: 30%;
+            margin-bottom: 25px !important;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" media="all" href="{% static 'css/daterangepicker.css' %}" />
+{% endblock %}
 
 {% block content %}
 
 <div class="container-fluid">
-    <div class="page-heading container-fluid">
-        <div class="text-center ">
-            <h5>Add New Auction</h5>
-        </div>
-    </div>
-
     <ul class="breadcrumb">
-              <li>
-                <a href="{% url 'pages:home' %}">Home</a>
-              </li>
-              <li>
-                <a href="{% url 'auctions:list' %}">auctions</a>
-              </li>
-
-            <li>
-                <a href="#">new auction</a>
-            </li>
+        <li><a href="{% url 'pages:home' %}">Home</a></li>
+        <li><a href="{% url 'auctions:list' %}">auctions</a></li>
+        <li><a href="#">new auction</a></li>
     </ul>
 
     {% if messages %}
-                            <ul class="messages">
-                            {% for message in messages %}
-                                <li class="{{ message.tags }}">
-                            {{ message|safe }}
-                                <a href="#" class="close">✖</a>
-                            </li>
-                            {% endfor %}
-                            </ul>
-              {% endif %}
-<div class="container container-fluid form-container">
+        <ul class="messages">{% for message in messages %}
+            <li class="{{ message.tags }}">{{ message|safe }}<a href="#" class="close">✖</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    <div class="row">
+        <div class="col-sm-3 col-md-3"></div>
+        <div class="col-sm-6 col-md-6 white-background" style="margin-top: 10px; padding-top: 15px; border: 1px solid #ddd">
+            <h4 class="text-center">Add New Item</h4>
+            <form method="POST" class="viewform"  id="myFormset" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="col-sm-3 col-md-3"></div>
+                    <div>
+                        <div class="col-xs-12 col-sm-12 col-sm-12">
+                            <div class="form-group" id="div_id_item">
+                            <label for="id_item">{{ form.item.label }}</label>
+                             <div class="controls">
+                                {{ form.item }}
+                             </div>
+                             <span class="errors">{{ form.item.errors }}</span>
+                         </div>
+                        </div>
+                    </div>
 
-     <form method="post" class="viewform"  id="myFormset" enctype="multipart/form-data">
-      {% csrf_token %}
-      {% form form=form %}{% endform %}
+                    <div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-2 col-sm-2 col-md-2">
+                                {{ form.available }}
+                            </div>
+                            <div class="col-xs-10 col-sm-10 col-md-10">
+                                <label for="id_available">{{ form.available.label }}</label>
+                            </div>
+                        </div>
+                    </div>
 
-       {% for form in formset.forms %}
-            <div  class="row image-formset">
-                <div class="col-xs-12 col-sm-4 col-md-4">{% form form=form %}{% endform %}</div>
-                <span class="errors">{{ form.image.errors }}</span>
-            </div>
-       {% endfor %}
+                    <div>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <div id="div_id_category" class="form-group">
+                                <label for="id_category">{{ form.category.label }}</label>
+                                <div class="controls">
+                                    {{ form.category }}
+                                </div>
+                                <span class="errors">{{ form.category.errors }}</span>
+                            </div>
+                        </div>
 
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <div id="div_id_sub_category" class="form-group">
+                                <label for="id_sub_category">{{ form.sub_category3.label }}</label>
+                                <div class="controls">
+                                    {{ form.sub_category3 }}
+                                </div>
+                                <span class="errors">{{ form.sub_category3.errors }}</span>
+                            </div>
+                        </div>
 
-    {{ formset.management_form }}
-         <button type="submit" name="_submit" class="btn" style="margin-top: 60px; margin-bottom: 20px; margin-left: 33%">Submit</button>
+                        <div class="col-xs-4 col-sm-4 col-md-4">
+                            <div id="div_id_sub_category2" class="form-group">
+                                <label for="id_sub_category2">{{ form.sub_category4.label }}</label>
+                                <div class="controls">
+                                    {{ form.sub_category4 }}
+                                </div>
+                                <span class="errors">{{ form.sub_category4.errors }}</span>
+                            </div>
+                        </div>
+                    </div>
 
-    </form>
+                    <div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div id="div_id_place_on_auction" class="form-group">
+                            <label for="id_place_on_auction">{{ form.place_on_auction.label }}</label>
+                            <div class="controls">
+                                {{ form.place_on_auction }}
+                            </div>
+                            <span class="errors">{{ form.place_on_auction.errors }}</span>
+                        </div>
+                        </div>
+                    </div>
 
-    {% block extrajs %}
+                    <div>
+                        <div class="col-sm-6 col-md-6">
+                            <div id="div_id_start_price" class="form-group">
+                                <label for="id_start_price">{{ form.start_price.label }}</label>
+                                <div class="controls">
+                                    {{ form.start_price }}
+                                </div>
+                                <span class="errors"> {{ form.start_price.errors }}</span>
+                            </div>
+                        </div>
 
-    {% endblock %}
+                        <div class="col-sm-6 col-md-6 target_price">
+                            <div id="div_id_target_price" class="form-group">
+                                <label for="id_target_price">{{ form.target_price.label }}</label>
+                                <div class="controls">
+                                    {{ form.target_price }}
+                                </div>
+                                <span class="errors"> {{ form.target_price.errors }}</span>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div>
+                        <div class="col-sm-6 col-md-6 start_price">
+                            <div id="div_id_start_time" class="form-group">
+                                <label for="id_start_time">{{ form.start_time.label }}</label>
+                                <div class="controls">
+                                    {{ form.start_time }}
+                                </div>
+                                <span class="errors">{{ form.start_time.errors }}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-6 start_price">
+                            <div id="div_id_end_time" class="form-group">
+                                <label for="id_end_time">{{ form.end_time.label }}</label>
+                                <div class="controls">
+                                    {{ form.end_time }}
+                                </div>
+                                <span class="errors"> {{ form.end_time.errors }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div id="div_id_description" class="form-group">
+                                <label for="id_description">{{ form.description.label }}</label>
+                                <div class="controls">
+                                    {{ form.description }}
+                                </div>
+                                <span class="errors"> {{ form.description.errors }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="container-fluid col-xs-12 col-sm-12 col-md-12">
+                    <h4 class="text-center">Add Images</h4>
+                    {% for form in formset.forms %}
+                        <div  class="row image-formset">
+                            <div class="col-xs-12 col-sm-4 col-md-4">{% crispy form %}</div>
+                            <span class="errors">{{ form.image.errors }}</span>
+                        </div>
+                    {% endfor %}
+                    {{ formset.management_form }}
+                <button type="submit" name="_submit" class="btn" id="submit_button">Submit</button>
+                </div>
+
+            </form>
+        </div>
+        <div class="col-sm-3 col-md-3"></div>
+
+        {% block extrajs %}
+           <!-- Bootstrap Date-Picker Plugin -->
+            <script type="text/javascript" src="{% static 'js/moment.js' %}"></script>
+            <script type="text/javascript" src="{% static 'js/daterangepicker.js' %}"></script>
+            <script>
+                $(document).ready(function(){
+                   $('#id_start_time, #id_end_time').daterangepicker({
+                       opens: 'left',
+                       autoUpdateInput: false,
+                       timePicker: true,
+                       timePicker24Hour: true,
+                       timePickerSeconds: true,
+                       singleDatePicker: true,
+                       timePickerIncrement: 30,
+                       locale: {
+                           cancelLabel: 'Clear'
+                       }
+                   });
+                   $('#id_start_time, #id_end_time').on('apply.daterangepicker', function(ev, picker) {
+                       $(this).val(picker.startDate.format('MM/DD/YYYY h:mm:ss'));
+                   });
+                   $('#id_start_time, #id_end_time').on('cancel.daterangepicker', function(ev, picker) {
+                       $(this).val('');
+                   });
+                   });
+                    $("#id_place_on_auction").on('change', function(){
+                        var selected = $(this).find('option:selected').val()
+                        var start = $("#id_start_time")
+                        var startlabel = $("label[for='"+start.attr('id')+"']")
+                        var end = $("#id_end_time")
+                        var endlabel = $("label[for='"+end.attr('id')+"']")
+                        var price = $("#id_start_price")
+                        var target_price = $(".target_price")
+                        var pricelabel = $("label[for='"+price.attr('id')+"']")
+                        if ((selected == '1') || (selected == '2')){
+                            start.prop('required', true)
+                            end.prop('required', true)
+                            price.prop('required', true)
+                            if (!start.is(':visible') && !startlabel.is(':visible')){
+                                start.fadeIn(1000)
+                                startlabel.fadeIn(1000)
+                            }
+                            if (!end.is(':visible') && !endlabel.is(':visible')){
+                                end.fadeIn(1000)
+                                endlabel.fadeIn(1000)
+                            }
+                            if (!price.is(':visible') && !pricelabel.is(':visible')){
+                                price.fadeIn(1000)
+                                pricelabel.fadeIn(1000)
+                            }
+                        }else{
+                            start.prop('required', false)
+                            end.prop('required', false)
+                            price.prop('required', false)
+                            start.fadeOut(1000)
+                            startlabel.fadeOut(1000)
+                            end.fadeOut(1000)
+                            endlabel.fadeOut(1000)
+                            price.fadeOut(1000)
+                            pricelabel.fadeOut(1000)
+                            target_price.removeClass('col-sm-6 col-md-6')
+                            target_price.addClass('col-sm-12 col-md-12')
+                            target_price.css('width: 100%', '-webkit-transition: width 2s; transition: width 2s')
+                        }
+                    })
+                    $('.image-formset').formset({
+                        addText: 'Add',
+                        deleteText: 'remove',
+                        addCssClass: 'add',
+                        deleteCssClass: 'del'
+                });
+            </script>
+        {% endblock %}
+    </div>
 </div>
-</div>
-
-
-
 {% endblock %}

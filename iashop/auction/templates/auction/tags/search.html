@@ -1,24 +1,15 @@
-
 {% load static %}
-{% load material_form %}
-
 
 {% block content %}
 
-        <form method="get" action="{% url 'auctions:list' %}">
-            {% csrf_token %}
-            <div class="search input-group">
-                {{ form.in_category }}
-                {{ form.s_key }}
-               <button type="submit" class="searchButton input-group-btn"><i class="fa fa-search"></i>SEARCH</button>
-            </div>
-        </form>
-
-
-    <!--</div>-->
-
-<!--</div>-->
-
+    <form method="get" action="{% url 'auctions:list' %}">
+        {% csrf_token %}
+        <div class="search input-group">
+            {{ form.in_category }}
+            {{ form.s_key }}
+           <button type="submit" class="searchButton input-group-btn"><i class="fa fa-search"></i>SEARCH</button>
+        </div>
+    </form>
 
 {% block extrajs %}
 

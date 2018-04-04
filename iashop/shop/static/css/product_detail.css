@@ -198,14 +198,21 @@
 /*product information*/
 
 
-.product-detail-side-images #gallery_01{
+.div-product-detail-side-images #gallery_01{
     /*margin-left: 10px;*/
     display: block;
     padding: 0px;
     margin-left: 30px;
 }
 
-.product-detail-side-images{
+
+@media only screen and (min-width:784px ){
+    .div-product-information{
+        border-left: 10px solid #f5f5f5;
+    }
+}
+
+.div-product-detail-side-images{
     max-width: 90px;
     margin: 0 !important;
 }
@@ -220,6 +227,43 @@
     width: 100%!important;
     height: 100%;
     max-height: 420px !important;
+}
+
+.div-product-images{
+     /*margin-left: 10px;*/
+}
+/*for product detail view images*/
+@media only screen and (max-width: 783px) {
+    .product-information{
+        margin: 0;
+        text-align: center;
+    }
+}
+
+.zoomLens{
+    background: #8b1014 !important;
+}
+
+.zoomWrapper{
+    height: 500px !important;
+    border: none;
+}
+
+@media only screen and (max-width: 401px){
+    .div-product-detail-side-images{
+        width: 43px;
+        position: relative;
+        left: -40px;
+    }
+
+    .div-auction-detail-image{
+        width: 220px;
+        background: green !important;
+    }
+
+    .row.section .white-background{
+        margin-left: 0;
+    }
 }
 
 .auction-detail-item-info{

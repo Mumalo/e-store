@@ -56,9 +56,9 @@ DJANGO_APPS = (
     'django.contrib.staticfiles',
     # 'django.contrib.sitemaps',
     'django.contrib.sites',
-    'bootstrap3',
-     'ckeditor',
-     'ckeditor_uploader',
+    'crispy_forms',
+    'ckeditor',
+    'ckeditor_uploader',
     # 'bootstrap3',
      # 'jquery',
     # 'staticfiles_select2',
@@ -458,3 +458,6 @@ DISQUS_WEBSITE_SHORTNAME = DISQUS_WEBSITE_SHORTNAME
 
 STAR_RATINGS_STAR_HEIGHT = 20
 STAR_RATINGS_STAR_WIDTH = 20
+
+# crispy forms
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

@@ -78,8 +78,25 @@ $(document).ready(function(){
 
    $(".slideshow-block").slick({
         infinite: true,
-        slidesToShow: 3,
-        slidesToScroll: 3
+        mobileFirst:true,
+
+        responsive: [{
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          arrows: true,
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        }
+      },
+    ]
+
   })
 
   // HOME SLICK
@@ -89,6 +106,29 @@ $(document).ready(function(){
     speed: 300,
     arrows: true,
   });
+
+   $(".latest-auctions-slick").slick({
+     infinite: true,
+        mobileFirst:true,
+
+        responsive: [{
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          arrows: true,
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        }
+      },
+    ]
+
+   })
 
 
   // PRODUCTS SLICK
@@ -168,29 +208,29 @@ $(document).ready(function(){
   });
 
   // PRODUCT ZOOM
-  $('#product-main-view .product-view').zoom();
+  //$('#product-main-view .product-view').zoom();
 
   // PRICE SLIDER
-  var slider = document.getElementById('price-slider');
-  if (slider) {
-    noUiSlider.create(slider, {
-      start: [1, 999],
-      connect: true,
-      tooltips: [true, true],
-      format: {
-        to: function(value) {
-          return value.toFixed(2) + '$';
-        },
-        from: function(value) {
-          return value
-        }
-      },
-      range: {
-        'min': 1,
-        'max': 999
-      }
-    });
-  }
+  //var slider = document.getElementById('price-slider');
+  //if (slider) {
+  //  noUiSlider.create(slider, {
+  //    start: [1, 999],
+  //    connect: true,
+  //    tooltips: [true, true],
+  //    format: {
+  //      to: function(value) {
+  //        return value.toFixed(2) + '$';
+  //      },
+  //      from: function(value) {
+  //        return value
+  //      }
+  //    },
+  //    range: {
+  //      'min': 1,
+  //      'max': 999
+  //    }
+  //  });
+  //}
 })(jQuery);
 })
 

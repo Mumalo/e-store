@@ -20,14 +20,15 @@
     </ul>
     <!-- row -->
     <div class="row section">
-        <div class="col-sm-7 col-md-7 white-background left-sidebar box">
-            <div class="row" style="margin-left: 10px;">
-            <div class="col-sm-2 col-md-2"></div>
-                <div class="col-xs-12 col-sm-8 col-md-8">
-                    <!--<p>Current bid at N{{auction.get_current_price}}</p>-->
-                    <!--<p>Winner: {{auction.winner}}</p>-->
+        <div class="col-sm-7 col-md-7 white-background div-product-images box">
+            <div class="row">
+            <div class="col-md-2"></div>
+                <div class="col-md-8">
                     <div class="row no-gutter" style="margin-top: 15px;">
-                        <div class="col-sm-3 col-md-3 product-detail-side-images text-center" >
+                        <p style="color: #30323A; font-weight: 500;">
+                                 Posted {{ auction.creator}} on {{ auction.time }}
+                        </p>
+                        <div class=" col-xs-4 col-sm-3 col-md-3 div-product-detail-side-images" >
                              {% for image in auction.image.all %}
                                  {% if image.image %}
                                     <div id="gallery_01">
@@ -38,10 +39,7 @@
                                  {% endif %}
                              {% endfor %}
                         </div>
-                        <div class="col-sm-9 col-md-9 text-left" style="margin-left: 0px">
-                             <p style="    color: #30323A; font-weight: 700;">
-                                 Posted {{ auction.creator}} on {{ auction.time }}
-                             </p>
+                        <div class="col-xs-8 col-sm-9 col-md-9 text-left div-auction-detail-image" style="margin-left: 0px">
                                 {% with auction.image.all|first as first_image %}
                                     {% if first_image.image %}
                                         <img id="zoom_01" src="{{ first_image.image.url }}"
@@ -59,13 +57,13 @@
             </div>
         </div>
         <!-- end of right side bar -->
-    <div class="col-xs-12 col-sm-5 col-md-5 white-background right-sidebar box">
+    <div class="col-xs-12 col-sm-5 col-md-5 white-background box div-product-information">
         <!--/product-information-->
         <div class="product-information">
             <span style="font-size: 10px" class="rating-no-detail">
                 <p>{% ratings auction 15 15 %}
-                    {% if auction.creator.profile.institution %}
-                        <a href="" style="top: -15px !important;">posted from {{ auction.creator.profile.institution }}</a>
+                    {% if auction.creator.profile.state %}
+                        <a href="" style="top: -15px !important;">posted from {{ auction.creator.profile.state }}</a>
                     {% endif %}
                 </p>
             </span>
@@ -106,14 +104,17 @@
                      {% csrf_token %}
                         <form method="post" class="form-group">
                         {% csrf_token %}
-                            <div class="col-sm-8 col-md-8">
-                                <button class="bid-button" style="margin-left: 10px" type="submit">
-                                    PLACE BID
-                                </button>
-                            </div>
-                            <div class="col-md-4 col-sm-4 amount">
+                            <div class="row no-gutter">
+                                <div class="col-xs-8 col-sm-8 col-md-8">
+                                    <button class="bid-button" style="margin-left: 10px" type="submit">
+                                        PLACE BID
+                                    </button>
+                                </div>
+                            <div class="col-xs-4 col-md-4 col-sm-4 amount">
                                 {{ bid_form.amount }}
                             </div>
+                            </div>
+
                             {% if messages %}
                                 <ul class="messages">
                                     <li class="error">{{ bid_form.errors }}</li>
@@ -124,6 +125,7 @@
                             {% endif %}
                         </form>
                 {% endif %}
+            <a href="{{ auction.creator.get_absolute_url }}">view all acution from {{ auction.creator }}</a>
             </div>
         </div><!--/product-information-->
     </div>

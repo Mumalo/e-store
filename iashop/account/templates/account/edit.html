@@ -1,54 +1,154 @@
 {% extends "base.html" %}
-{% load material_form %}
 {% load static %}
 {% block title %}edit{% endblock %}
 
 {% block content %}
   <div class="container contaier-fluid">
-      <div class="row">
-          <div class="col-sm-2">
-
-          </div>
-
-          <div class="col-sm-8 form-container" style="padding-top: 16px; padding-bottom: 16px">
+      <div class="row row-profile-edit">
+          <div class="col-sm-2 col-md-3"></div>
+          <div class="col-sm-8 col-md-6 profile-edit-form" style="position: relative">
               {% if messages %}
-                            <ul class="messages">
-                            {% for message in messages %}
-                                <li class="{{ message.tags }}">
-                            {{ message|safe }}
-                                <a href="#" class="close">✖</a>
-                            </li>
-                            {% endfor %}
-                            </ul>
-              {% endif %}
-
-              <form method="post" action="{% url 'accounts:edit' user.id %}" enctype="multipart/form-data" class="viewform">
+                  {% if messages %}
+                      <ul class="messages">
+                          {% for message in messages %}
+                              <li class="{{ message.tags }}">{{ message|safe }}<a href="#" class="close">✖</a></li>
+                          {% endfor %}
+                      </ul>
+                  {% endif %}
+                {% endif %}
+              <form method="post" action="{% url 'accounts:edit' user.id %}" enctype="multipart/form-data" class="viewform" class="form-horizontal">
                   {% csrf_token %}
-                   {{ profile_form.media }}
-                  {% form form=user_form %}{% endform %}
-                  {% form form=profile_form %}{% endform %}
+                  <div class="panel panel-default white-background">
+                      <div class="form-group">
+                          <div class="panel-heading" style="background: #fff !important;"><h4 class="panel-title">Profile Photo</h4></div>
+                          <div class="text-center" id="image-preview">
+                                <label for="id_image" id="image_label">Choose File</label>
+                                <input type="file" name="image" id="id_image">
+                          </div>
+                      </div>
+                  </div>
+                  <div class="panel panel-default white-background">
+                      <div class="panel-heading" style="background: #fff !important;"><h4 class="panel-title">Personal Info</h4></div>
+                      <div class="form-group">
+                          <p>
+                              <span class="label">{{ user_form.first_name.label }}</span>
+                              {{ user_form.first_name }}
+                              {{ user_form.first_name.errors }}
+                          </p>
+                          <p>
+                              <span class="label">{{ user_form.last_name.label }}</span>
+                              {{ user_form.last_name }}
+                              {{ user_form.last_name.errors }}
+                          </p>
+                          <p>
+                              <span class="label">{{ profile_form.gender.label }}</span>
+                              {{ profile_form.gender }}
+                              {{ profile_form.gender.errors }}
+                          </p>
+                          <p>
+                              <span>{{ profile_form.bio.label }}</span>
+                              {{ profile_form.bio }}
+                              {{ profile_form.bio.errors }}
+                          </p>
+                      </div>
+                  </div>
 
+                  <div class="panel panel-default white-background">
+                      <div class="panel-heading" style="background: #fff !important;"><h4 class="panel-title">Contact Info</h4></div>
+                      <div class="form-group">
+                          <p>
+                            <span>{{ profile_form.state.label }}</span>
+                              {{ profile_form.state }}
+                              {{ profile_form.state.errors }}
+                          </p>
 
-                  <button type="submit" name="_submit" class="btn">Submit</button>
+                          <p>
+                            <span>{{ profile_form.lga.label }}</span>
+                              {{ profile_form.lga }}
+                              {{ profile_form.lga.errors }}
+                          </p>
+
+                          <p>
+                              <span>{{ user_form.email.label }}</span>
+                              {{ user_form.email }}
+                              {{ user_form.email.errors }}
+                          </p>
+                          <p>
+                             <span>{{ profile_form.phone.label }}</span>
+                              {{ profile_form.phone }}
+                              {{ profile_form.phone.errors }}
+                          </p>
+                          <p class="text-center">
+                              <button type="submit" class="btn btn-default">Edit</button>
+                          </p>
+                      </div>
+                  </div>
               </form>
-
-             <div class="row text-center" style="padding-left: 40%">
-                 <div class="password-change">
-                    <a href="{% url 'password_change' %}"><span class="glyphicon glyphicon-lock"></span>Change Password</a>
-                 </div>
-             </div>
-
           </div>
-          <div class="col-sm-2">
-
-          </div>
+          <div class="col-sm-2 col-md-3"></div>
 
       </div>
-
   </div>
+    {% block extrajs %}
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+        <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/uploadPreview.min.js' %}"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $.uploadPreview({
+                  input_field: "#id_image",
+                  preview_box: "#image-preview",
+                  label_field: "#image_label"
+                });
 
-        {% block extrajs %}
-            <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
-            <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
-        {% endblock %}
+                $("#id_state").on('change', function(){
+                    var selected_state = $(this).find('option:selected').text()
+                    var options = ''
+                    $.post("{% url 'accounts:lgas-for-state' %}",
+                        {state: selected_state},
+                        function(data){
+                            $("#id_lga").each(function(){
+                                $('#id_lga option').remove()
+                            })
+                            for (i = data.length -1; i >= 0; i--){
+                                  options += ('<option  value="' + data[i] + '">'+ data[i] + '</option>')
+                            }
+                            $('#id_lga').append(options)
+                        })
+                })
+
+                function getCookie(name) {
+                        var cookieValue = null;
+                        var i = 0;
+                        if (document.cookie && document.cookie !== '') {
+                            var cookies = document.cookie.split(';');
+                        for (i; i < cookies.length; i++) {
+                            var cookie = jQuery.trim(cookies[i]);
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+                var csrftoken = getCookie('csrftoken');
+
+                function csrfSafeMethod(method) {
+                    // these HTTP methods do not require CSRF protection
+                    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+                }
+                $.ajaxSetup({
+                    crossDomain: false, // obviates need for sameOrigin test
+                    beforeSend: function(xhr, settings) {
+                        if (!csrfSafeMethod(settings.type)) {
+                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                        }
+                    }
+                });
+            });
+        </script>
+    {% endblock %}
 {% endblock %}

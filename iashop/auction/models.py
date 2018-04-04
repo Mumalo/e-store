@@ -1,17 +1,13 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
-from .choices import ITEM_CONDITION_CHOICES, ITEM_STATUS_CHOICES, USER_GENDER_CHOICES
 import arrow
-from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 from django.utils import timezone
 from base.models import BaseModel
 from django.conf import settings
-from django.db.models import Count
-from smart_selects.db_fields import ChainedForeignKey
 from django.core.exceptions import ValidationError
-from photologue.models import Photo, ImageModel
+from photologue.models import ImageModel
+from django.contrib.contenttypes.fields import GenericRelation
+from star_ratings.models import Rating
 
 
 class Category(BaseModel):
@@ -61,6 +57,7 @@ class AuctionEvent(BaseModel):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=False, null=True, related_name='cat_products')
     sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, blank=True, null=True, related_name='sub_products')
     sub_category2 = models.ForeignKey(SubCategory2, on_delete=models.CASCADE, blank=True, null=True, related_name='sub_products2')
+    ratings = GenericRelation(Rating, related_query_name='ratings')
     # sub_category = ChainedForeignKey(
     #     SubCategory,
     #     chained_field='category',
@@ -204,7 +201,7 @@ class Bid(BaseModel):
 
 class Advert(BaseModel):
     title = models.CharField(max_length=250, null=True)
-    image = models.ImageField(blank=False, null=True,upload_to='advert/%Y/%m/%d')
+    image = models.ImageField(blank=False, null=True,upload_to='budget/%Y/%m/%d')
     description = models.TextField(max_length=500, null=True, blank=True)
     price = models.DecimalField(max_digits=50, decimal_places=2)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='advert')
@@ -220,6 +217,7 @@ class Advert(BaseModel):
 
 class BudgetPlan(Advert):
     range = models.IntegerField(null=True)
+    budget_image = models.ImageField(blank=True, null=True, upload_to='budget/%Y/%m/%d')
     TIME_CHOICES = (
         ('YEARS','Years'),
         ('MONTHS','Months'),

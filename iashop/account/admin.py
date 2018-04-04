@@ -1,18 +1,18 @@
 from django.contrib import admin
-from .models import Institution,Profile
+from .models import Profile, State
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'photo', 'phone', 'institution', 'gender', 'bio']
+    list_display = ['id', 'user', 'photo', 'phone', 'state', 'local_govt_area ', 'gender', 'bio']
 
-class InstitutionAdmin(admin.ModelAdmin):
-    list_display = ['name', 'city', 'state', 'zip_code']
+class StateAdmin(admin.ModelAdmin):
+    list_display = ['name', 'city', 'zip_code']
 
 # class NotificationAdmin(admin.ModelAdmin):
 #     exclude = []
 
 
-admin.site.register(Institution, InstitutionAdmin)
-admin.site.register(Profile, ProfileAdmin)
+# admin.site.register(Sate, InstitutionAdmin)
+# admin.site.register(Profile, ProfileAdmin)
 
 # Register your models here.
