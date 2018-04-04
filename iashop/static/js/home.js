@@ -2,6 +2,8 @@
  * Created by JUSTICE on 7/22/2017.
  */
 
+
+
 $(document).ready(function(){
     var owl = $("#carousel1")
     owl.owlCarousel({
@@ -136,10 +138,7 @@ $(document).ready(function(){
     //)
 
 
-
-
-
-})
+    })
 
 
 

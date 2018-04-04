@@ -10,8 +10,6 @@ DEBUG = True
 
 # ALLOWED_HOSTS = ['*']
 
-
-
 DATABASES = {
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
@@ -27,6 +25,7 @@ DATABASES = {
     }
 
 }
+
 SECRET_KEY = SECRET_KEY
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')

@@ -1,39 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
-from .choices import ITEM_CONDITION_CHOICES, ITEM_STATUS_CHOICES, USER_GENDER_CHOICES
 import arrow
-from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 from django.utils import timezone
 from base.models import BaseModel
 from django.conf import settings
-from django.db.models import Count
-from smart_selects.db_fields import ChainedForeignKey
 from django.core.exceptions import ValidationError
-from photologue.models import Photo, ImageModel
+from photologue.models import ImageModel
+from django.contrib.contenttypes.fields import GenericRelation
+from star_ratings.models import Rating
 
-
-
-#
-# class SystemUser(User):
-#     phone = models.CharField(max_length=25)
-#     institution = models.ForeignKey(Institution,
-#                                     on_delete=models.CASCADE)
-#     gender = models.CharField(choices=USER_GENDER_CHOICES, max_length=10)
-
-
-# This is a multi-table imheritance since the parent class must also exist alone and in relation whith other classes
-
-# class Buyer(SystemUser):
-#     pass
-#
-# class Seller(SystemUser):
-#     pass
-
-
-
-# System users shall be able to place free adds on the site
 
 class Category(BaseModel):
     name = models.CharField(max_length=250, unique=True, null=True, db_index=False)
@@ -48,6 +23,7 @@ class Category(BaseModel):
     def __str__(self):
         return self.name
 
+
 class SubCategory(BaseModel):
     name = models.CharField(max_length=250,  unique=True, null=True)
     slug = models.SlugField(max_length=250, null=True)
@@ -59,11 +35,11 @@ class SubCategory(BaseModel):
     class Meta:
         verbose_name_plural = 'Sub Categories'
 
+
 class SubCategory2(BaseModel):
     name = models.CharField(max_length=250, unique=True)
     slug = models.SlugField(max_length=250, null=True)
     sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, null=True, related_name='subcat2')
-
 
     class Meta:
         verbose_name_plural = 'Sub Categories 2'
@@ -72,24 +48,16 @@ class SubCategory2(BaseModel):
         return self.name
 
 
-
-# class Item(BaseModel):
-#     name = models.CharField(max_length=250)
-#     category = models.ForeignKey(Category,
-#                                  on_delete=models.CASCADE)
-#     description = models.TextField()
-#
-#     condition = models.CharField(max_length=10, choices=ITEM_CONDITION_CHOICES)
-#     status = models.BooleanField(default=True)
-#
 class Image(ImageModel):
     pass
+
 
 class AuctionEvent(BaseModel):
     item = models.CharField(max_length=125, blank=False, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=False, null=True, related_name='cat_products')
     sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, blank=True, null=True, related_name='sub_products')
     sub_category2 = models.ForeignKey(SubCategory2, on_delete=models.CASCADE, blank=True, null=True, related_name='sub_products2')
+    ratings = GenericRelation(Rating, related_query_name='ratings')
     # sub_category = ChainedForeignKey(
     #     SubCategory,
     #     chained_field='category',
@@ -106,12 +74,11 @@ class AuctionEvent(BaseModel):
     creator = models.ForeignKey(User,
                                 on_delete=models.CASCADE, null=True)
     # image = models.ImageField(upload_to='users/%Y/%m/%d',blank=True)
-    image = models.ManyToManyField(Image, blank=True, null=True)
+    image = models.ManyToManyField(Image, blank=True)
     time = models.DateTimeField(default=timezone.now)
     available = models.BooleanField(default=True)
     description = models.TextField(max_length=250, null=True, blank=True)
     place_on_auction = models.NullBooleanField(default=True, help_text='if you click this you must provide start time, end time, start price and target price')
-
 
     class Meta:
         ordering = ('-time',)
@@ -128,6 +95,7 @@ class AuctionEvent(BaseModel):
                 raise ValidationError('End time cannot be less than start time')
             if auction_start_time > auction_end_time:
                 raise ValidationError('Start time cannot be greater than end time')
+
     def has_started(self):
 
         if self.place_on_auction:
@@ -141,8 +109,6 @@ class AuctionEvent(BaseModel):
         else:
             return True
 
-
-
     def has_ended(self):
         if self.place_on_auction:
             current_time = arrow.utcnow()
@@ -152,8 +118,6 @@ class AuctionEvent(BaseModel):
                 return True
         else:
             return False
-
-
 
     def is_running(self):
 
@@ -170,7 +134,6 @@ class AuctionEvent(BaseModel):
                 return diff.day
             else:
                 return 'ended'
-
 
     def get_current_price(self):
 
@@ -208,7 +171,6 @@ class AuctionEvent(BaseModel):
             else:
                 return "No Winner yet"
 
-
     def __str__(self):
         return self.item
 
@@ -216,41 +178,30 @@ class AuctionEvent(BaseModel):
         if self.has_ended() or not self.has_started():
             self.available = False
 
+
 class WatchList(BaseModel):
 
-    creator = models.ForeignKey(User,
-                                on_delete=models.CASCADE, null=True)
+    creator = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
     items = models.ManyToManyField(AuctionEvent)
 
 
-
-
-
-
-
-
 class Bid(BaseModel):
-    amount = models.DecimalField(max_digits=50, decimal_places=2)
-    bidder = models.ForeignKey(User,
-                                on_delete=models.CASCADE, null=True, related_name='bidder')
-    event = models.ForeignKey(AuctionEvent,
-                              on_delete=models.CASCADE, null=True, related_name='bids')
+    BID_AMOUNT_CHOICES = (
+        (500, '500.00'),
+        (1000, '100.00'),
+    )
+    amount = models.IntegerField(choices=BID_AMOUNT_CHOICES, blank=True, null=False)
+    bidder = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='bidder')
+    event = models.ForeignKey(AuctionEvent,on_delete=models.CASCADE, null=True, related_name='bids')
     created_at = models.DateTimeField(default=timezone.now, blank=True)
 
     class Meta:
         ordering = ('-created_at',)
 
 
-
-     # Takes an argument and returns the current bid object
-    # The current bid must be higher than the highest bid so far
-
-
-
-
 class Advert(BaseModel):
     title = models.CharField(max_length=250, null=True)
-    image = models.ImageField(blank=False, null=True,upload_to='advert/%Y/%m/%d')
+    image = models.ImageField(blank=False, null=True,upload_to='budget/%Y/%m/%d')
     description = models.TextField(max_length=500, null=True, blank=True)
     price = models.DecimalField(max_digits=50, decimal_places=2)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='advert')
@@ -263,8 +214,10 @@ class Advert(BaseModel):
     def __str__(self):
         return self.title
 
+
 class BudgetPlan(Advert):
     range = models.IntegerField(null=True)
+    budget_image = models.ImageField(blank=True, null=True, upload_to='budget/%Y/%m/%d')
     TIME_CHOICES = (
         ('YEARS','Years'),
         ('MONTHS','Months'),
@@ -275,7 +228,6 @@ class BudgetPlan(Advert):
         ('SECONDS', 'Seconds'),
     )
     time = models.CharField(choices=TIME_CHOICES, max_length=75, null=True)
-
 
 
 class Ratings(models.Model):
@@ -295,12 +247,9 @@ class ItemOfTheDay(BaseModel):
         if (c and u and s) or (c and u) or (c and s) or (u and s):
             raise ValidationError('Please select one option')
 
-
     class Meta:
         verbose_name = 'Item of the day'
         verbose_name_plural = 'Items of the day'
 
-
-    ''
 
 

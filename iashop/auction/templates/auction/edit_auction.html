@@ -14,17 +14,10 @@
     </div>
 
     <ul class="breadcrumb">
-              <li>
-                <a href="{% url 'pages:home' %}">Home</a>
-              </li>
-              <li>
-                <a href="{% url 'auctions:list' %}">auctions</a>
-              </li>
-
-            <li>
-                <a href="#">edit auction</a>
-            </li>
-    </ul>
+      <li><a href="{% url 'pages:home' %}">Home</a></li>
+       <li><a href="{% url 'auctions:list' %}">auctions</a></li>
+        <li><a href="#">edit auction</a></li>
+     </ul>
 <div class="container container-fluid form-container">
 
      <form method="post" class="viewform" enctype="multipart/form-data">

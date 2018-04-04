@@ -1,31 +1,15 @@
-
 {% load static %}
-{% load material_form %}
-
 
 {% block content %}
 
-
-
-
-        <form method="get" action="{% url 'auctions:list' %}">
-            {% csrf_token %}
-            <!--<div class="col-xs-8 col-sm-12 col-md-12">-->
-                <div class="input-group row" style="width: 98% !important; padding-left: 12% ">
-                    <!--<div class="row">-->
-                        <div class="search-category col-xs-2 col-sm-2 text-right">{{ form.in_category }}</div>
-                        <div class="search-key col-xs-9 col-sm-9 col-md-9">{{ form.s_key }}</div>
-                        <div class="col-xs-1 col-sm-1 col-md-1 search-icon text-left" style="margin-left: 0 !important;">
-                            <button type="submit" name="g_search" value="submit1"><span class="glyphicon glyphicon-search"></span></button>
-                        </div>
-                </div>
-        </form>
-
-
-    <!--</div>-->
-
-<!--</div>-->
-
+    <form method="get" action="{% url 'auctions:list' %}">
+        {% csrf_token %}
+        <div class="search input-group">
+            {{ form.in_category }}
+            {{ form.s_key }}
+           <button type="submit" class="searchButton input-group-btn"><i class="fa fa-search"></i>SEARCH</button>
+        </div>
+    </form>
 
 {% block extrajs %}
 

@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'', include('account.urls', namespace='accounts')),
     url(r'', include('cart.urls', namespace='shopping-cart')),
     url(r'', include('pages.urls', namespace='pages')),
-    url(r'^account/', include('django.contrib.auth.urls')),
+    url(r'^', include('django.contrib.auth.urls')),
     url('^inbox/notifications/', include('notifications.urls', namespace='notifications')),
     # url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
     # name='django.contrib.sitemaps.views.sitemap'),

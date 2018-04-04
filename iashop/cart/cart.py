@@ -7,7 +7,6 @@ from django.conf import settings
 # Use this module in the future for session based cart storage
 class Cart(object):
 
-
     def __init__(self, request):
 
         self.session = request.session

@@ -6,20 +6,15 @@
 {% block content %}
 
 <div class="container-fluid">
-    <div class="page-heading container-fluid">
-        <div class="text-center ">
-            <h5>{{category}}</h5>
-        </div>
-    </div>
-
+{#    <div class="page-heading container-fluid">#}
+{#        <div class="text-center ">#}
+{#            <h5>{{category}}s</h5>#}
+{#        </div>#}
+{#    </div>#}
     <ul class="breadcrumb">
-              <li>
-                <a href="{% url 'pages:home' %}">Home</a>
-              </li>
-              <li>
-                <a href="{% url 'auctions:all_categories' %}">categories</a>
-              </li>
-              <li class="active">{{ category }}</li>
+      <li><a href="{% url 'pages:home' %}">Home</a></li>
+      <li><a href="{% url 'auctions:all_categories' %}">categories</a></li>
+      <li class="active">{{ category }}s</li>
     </ul>
 
     <div class="row category-detail">
@@ -29,8 +24,6 @@
                 {% for s in category.subcat.all %}
                     <a class="list-group-item" href="{% url 'auctions:subcat_detail'  subcat_id=s.id subcat_slug=s.slug %}">{{ s }}</a>
                 {% endfor %}
-
-
             </div>
 
         </div>

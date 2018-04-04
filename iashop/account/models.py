@@ -11,11 +11,29 @@ USER_GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
 DEFAULT_COVER = ('default/default_cover.png')
 DEFAULT_PROFILE = ('default/default_profile.png')
 
-class Institution(BaseModel):
+class State(BaseModel):
     name = models.CharField(max_length=250, blank=False)
-    city = models.CharField(max_length=250, blank=False)
-    state = models.CharField(max_length=250, blank=False)
     zip_code = models.CharField(blank=True, max_length=25)
+    # check if this model has been loaded with data from the api call to states info
+    state_loaded = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
+
+
+class City(BaseModel):
+    state = models.ForeignKey(State, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=250, null=True)
+    city_loaded = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
+
+
+class Lga(BaseModel):
+    state = models.ForeignKey(State, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=250, null=True)
+    lga_loaded = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -26,8 +44,10 @@ class Profile(models.Model):
     photo = models.ImageField(blank=True, null=True, upload_to='profile/users', default=DEFAULT_PROFILE)
     # cover = models.ImageField(blank=True, null=True, upload_to='cover/users', default=DEFAULT_COVER)
     phone = models.CharField(max_length=25, null=True, blank=True, default='00000000')
-    institution = models.ForeignKey(Institution,
-                                    on_delete=models.CASCADE, null=True)
+    state = models.ForeignKey(State,
+                                    on_delete=models.SET_NULL, null=True)
+
+    lga = models.ForeignKey(Lga, on_delete=models.SET_NULL, null=True)
     agree_to_terms = models.BooleanField(default=False)
 
     gender = models.CharField(choices=USER_GENDER_CHOICES, max_length=10, null=True)

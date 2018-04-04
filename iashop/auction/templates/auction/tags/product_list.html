@@ -1,81 +1,60 @@
 {% load auction_tags %}
 {% load static %}
-{% load material_form %}
 {% load ratings %}
 {% load bootstrap_pagination %}
 
 
 {% block content %}
-    <div id="products" class="row list-group">
-                {% for auction in items %}
-                {% if auction.available %}
-                    <div class="item col-xs-12 col-md-3 col-sm-4 product-item-container ">
-                        <!--place{{auction.place_on_auction}}-->
-                        <div class="thumbnail box">
+    <div class="row white-background products">
+        {% for auction in items %}
+            {% if auction.available %}
+                <div class="col-xs-6 col-sm-4 col-md-4 box">
+                    <div class="product product-single">
+                        <div class="product-thumb">
+                            <a href="{% url 'auctions:bid' auction.id %}" class="main-btn quick-view"><i class="fa fa-search-plus"></i>view</a>
                             {% with auction.image.all|first as image %}
                                 {% if image.image %}
                                     <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{{ image.image.url }}" alt="" /></a>
                                 {% else %}
                                     <a href="{% url 'auctions:bid' auction.id %}"><img class="group list-group-image" src="{% static 'images/no_image.png' %}" alt="" /></a>
                                 {% endif %}
-                             {% endwith %}
-                            <div class="caption">
-                                {% if not request.user.is_anonymous %}
-                                    <a href="#" class="watch-auction" data-action="{%  if auction in watch_list and request.user in owner %}unwatch{% else %}watch{% endif %}" data-id="{{auction.id}}" id="{{auction.id}}">
-                                        <span>
-                                            {% if auction in watch_list and request.user in owner %}
-                                               Unwatch
-                                            {% else %}
-                                               Watch
-                                            {% endif %}
-                                        </span>
-                                        <!--<span class="glyphicon glyphicon-eye-open "></span>-->
+                            {% endwith %}
+                        </div>
+                        <div class="caption product-body">
+                            <h4 class="product-price"><span>&#x20A6</span>{{ auction.get_current_price }}</h4>
+                            <div class="product-rating row"><span class="rating-no-detail text-center">{% ratings auction 12 12 %}</span></div>
+                            <div class="row"><h2 class="product-name"><a href="{% url 'auctions:bid' auction.pk %}">{{ auction }}</a></h2></div>
+                            {% if auction.place_on_auction %}
+                                <div class="row myClock" data-action='{{ auction.end_time|to_json }}'>
+                                    <ul class="product-countdown">
+                                        <li><span class="days">00</span></li>
+                                        <li><span class="hours">00 H</span></li>
+                                        <li><span class="minutes">00 M</span></li>
+                                        <li><span class="seconds">00 S</span></li>
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        </div>  <!-- end of caption -->
+                        <div class="row simpleCart_shelfItem text-center watch-auction">
+                            {% if not request.user.is_anonymous %}
+                                <p>
+                                    <a class="item_add watch-auction" data-action="{%  if auction in watch_list and request.user in owner %}Watching{% else %}watch{% endif %}" data-id="{{auction.id}}" id="{{auction.id}}">
+                                        {% if auction in watch_list and request.user in owner %}
+                                            Watcing
+                                        {% else %}
+                                            Watch
+                                        {% endif %}
                                     </a>
-                                {% endif %}
-                                <a href="#" class="item-title-link-element"><div class="group inner list-group-item-heading text-center">{{ auction.item }}</div></a>
-                                <p class="group inner list-group-item-text">
-                                    <div class="container-fluid rating-no-detail text-center">
-                                        <span style="font-size: 13px">{% ratings auction 15 15 %} </span>
-                                    </div>
                                 </p>
-                                <div class="row">
-                                    <div class="col-xs-12 col-md-12 text-center lead-container">
-                                        <p class="lead">
-{#                                            <span class="naira"><img src="{% static 'images/currency_sign.png' %}" class="img-responsive"></span>#}
-                                            <span class="item-price">&#x20A6 {{ auction.get_current_price }}</span>
-                                        </p>
+                            {% endif %}
+                        </div>
+                    </div> <!-- end of thumbnail -->
+                </div> <!-- end of column -->
+            {% endif %}
+        {% endfor %}
+    </div>
 
-                                    </div>
-                                    <!--<div class="col-xs-12 col-md-6">-->
-                                        <!--<a class="btn btn-flat" href="http://www.jquery2dotnet.com">BID</a>-->
-                                    <!--</div>-->
-                                </div> <!-- end of row class for price and bid -->
-                                {% if auction.place_on_auction %}
-                                    <div class="row myClock  text-center" style="margin-top: -49px" data-action='{{ auction.end_time|to_json }}'>
-                                        <div class="row">
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 days"></div>
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 hours"></div>
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 minutes"></div>
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 seconds"></div>
-                                        </div>
-                                        <div class="row time-info">
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">D</div>
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">H</div>
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">M</div>
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 counter-text">S</div>
-                                        </div> <!-- counter text ends here -->
-                                    </div>
-                                {% endif %}
-                            </div>  <!-- end of caption -->
-                        </div> <!-- end of thumbnail -->
-                    </div> <!-- end of column -->
-                {% endif %}
-                {% endfor %}
-            </div>
-
-            <div class="pagination-row text-center">
-                {% bootstrap_paginate  items range=10 show_prev_next="false" show_first_last="true" %}
-            </div>
-
-            <!--End of products -->
+    <div class="pagination-row text-center">
+        {% bootstrap_paginate  items range=10 show_prev_next="false" show_first_last="true" %}
+    </div>
 {% endblock %}

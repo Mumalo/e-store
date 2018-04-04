@@ -2,106 +2,108 @@
  * Created by JUSTICE on 7/22/2017.
  */
 
+
+
 $(document).ready(function(){
-    var owl = $("#carousel1")
-    owl.owlCarousel({
-        items:1,
-        loop:true,
-        margin:10,
-        autoplay:true,
-        autoplayTimeout:4000,
-        autoplaySpeed: 5000,
-        autoplayHoverPause:true,
-        animateOut: 'fadeOut',
-        animateIn: 'fadeIn',
-
-    })
-
-    var owl2 = $("#carousel2")
-
-    owl2.owlCarousel({
-        loop:true,
-        margin:10,
-        autoplay:true,
-        autoplayTimeout:4000,
-        autoplaySpeed: 5000,
-        autoplayHoverPause:true,
-        animateOut: 'fadeOut',
-        animateIn: 'fadeIn',
-
-        responsiveClass:true,
-            responsive:{
-           0:{
-               items:1,
-               nav:true
-           },
-           600:{
-               items:3,
-               nav:false
-           },
-           1000:{
-               items:4,
-               nav:true,
-               loop:false
-           }
-          }
-
-    })
-
-    var owl3 =  $("#carousel3")
-
-    owl3.owlCarousel({
-        loop:true,
-        margin:10,
-        autoplay:true,
-        autoplayTimeout:4000,
-        autoplaySpeed: 5000,
-        autoplayHoverPause:true,
-        animateOut: 'fadeOut',
-        animateIn: 'fadeIn',
-
-        responsiveClass:true,
-            responsive:{
-           0:{
-               items:1,
-               nav:true
-           },
-           600:{
-               items:3,
-               nav:false
-           },
-           1000:{
-               items:4,
-               nav:true,
-               loop:false
-           }
-          }
-    })
-
-    var owl4 = $('#carousel4')
-
-    owl4.owlCarousel({
-        items : 1,
-        loop: true,
-        autoplay: true,
-        autoplayTimeout:4000,
-        autoplaySpeed: 5000,
-        animateOut: 'fadeOut',
-        animateIn: 'fadeIn',
-    })
-
-    var owl5 = $("#item-detail-carousel")
-    owl5.owlCarousel({
-        items:1,
-        loop:true,
-        margin:10,
-        autoplay:true,
-        autoplayTimeout:4000,
-        autoplaySpeed: 5000,
-        autoplayHoverPause:true,
-        animateOut: 'fadeOut',
-        animateIn: 'fadeIn',
-    })
+    //var owl = $("#carousel1")
+    //owl.owlCarousel({
+    //    items:1,
+    //    loop:true,
+    //    margin:10,
+    //    autoplay:true,
+    //    autoplayTimeout:4000,
+    //    autoplaySpeed: 5000,
+    //    autoplayHoverPause:true,
+    //    animateOut: 'fadeOut',
+    //    animateIn: 'fadeIn',
+    //
+    //})
+    //
+    //var owl2 = $("#carousel2")
+    //
+    //owl2.owlCarousel({
+    //    loop:true,
+    //    margin:10,
+    //    autoplay:true,
+    //    autoplayTimeout:4000,
+    //    autoplaySpeed: 5000,
+    //    autoplayHoverPause:true,
+    //    animateOut: 'fadeOut',
+    //    animateIn: 'fadeIn',
+    //
+    //    responsiveClass:true,
+    //        responsive:{
+    //       0:{
+    //           items:1,
+    //           nav:true
+    //       },
+    //       600:{
+    //           items:3,
+    //           nav:false
+    //       },
+    //       1000:{
+    //           items:4,
+    //           nav:true,
+    //           loop:false
+    //       }
+    //      }
+    //
+    //})
+    //
+    //var owl3 =  $("#carousel3")
+    //
+    //owl3.owlCarousel({
+    //    loop:true,
+    //    margin:10,
+    //    autoplay:true,
+    //    autoplayTimeout:4000,
+    //    autoplaySpeed: 5000,
+    //    autoplayHoverPause:true,
+    //    animateOut: 'fadeOut',
+    //    animateIn: 'fadeIn',
+    //
+    //    responsiveClass:true,
+    //        responsive:{
+    //       0:{
+    //           items:1,
+    //           nav:true
+    //       },
+    //       600:{
+    //           items:3,
+    //           nav:false
+    //       },
+    //       1000:{
+    //           items:4,
+    //           nav:true,
+    //           loop:false
+    //       }
+    //      }
+    //})
+    //
+    //var owl4 = $('#carousel4')
+    //
+    //owl4.owlCarousel({
+    //    items : 1,
+    //    loop: true,
+    //    autoplay: true,
+    //    autoplayTimeout:4000,
+    //    autoplaySpeed: 5000,
+    //    animateOut: 'fadeOut',
+    //    animateIn: 'fadeIn',
+    //})
+    //
+    //var owl5 = $("#item-detail-carousel")
+    //owl5.owlCarousel({
+    //    items:1,
+    //    loop:true,
+    //    margin:10,
+    //    autoplay:true,
+    //    autoplayTimeout:4000,
+    //    autoplaySpeed: 5000,
+    //    autoplayHoverPause:true,
+    //    animateOut: 'fadeOut',
+    //    animateIn: 'fadeIn',
+    //})
 
     //var user_home_owl = $(' .user-home .tab-content .item img')
     //
@@ -136,10 +138,7 @@ $(document).ready(function(){
     //)
 
 
-
-
-
-})
+    })
 
 
 
@@ -222,10 +221,10 @@ var x = setInterval(function(){
         var converted = parseInt(dates)
         var newDate = new Date(converted)
         var distance = newDate - now
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24)) + ' D';
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + ' H';
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)) + ' M';
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000) + ' S';
         $(this).find(".days").text(days)
         $(this).find(".hours").text(hours)
         $(this).find(".minutes").text(minutes)
@@ -238,18 +237,7 @@ var x = setInterval(function(){
             $(this).find(".minutes").text(0)
             $(this).find(".seconds").text(0)
         }
-        //if (distance < 0){
-        //    //clearInterval(x);
-        //    (this).find("time-info").text("Finished")
-        //}
-
-
     })
-
-
-
-
-
 },1000)
 
 

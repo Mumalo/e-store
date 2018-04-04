@@ -1,0 +1,119 @@
+
+
+.product-detail-side-images #gallery_01{
+    /*margin-left: 10px;*/
+    display: block;
+    padding: 0px;
+    margin-left: 30px;
+}
+
+.product-detail-side-images{
+    max-width: 80px;
+    margin: 0;
+}
+
+
+.auction-detail-heading{
+    color: #666;
+    padding-left: 15px;
+    font-size: 36px;
+}
+
+.auction-detail-image{
+    width: 100%!important;
+    height: 100%;
+    max-height: 420px;
+}
+
+
+.auction-detail-item-info{
+    border-left: none;
+    border-right: none;
+}
+
+#auction-detail-user-info li{
+    border-right: none;
+    border-left: none;
+}
+
+#auction-detail-user-info{
+    padding: 18px;
+    font-size: 15px;
+}
+
+.auction-detail-heading{
+    font-family: 'Bitter',Arial, Helvetica, sans-serif;
+    font-size: 20px !important;
+    padding-bottom: 15px;
+
+}
+
+/*.auction-detail-item-info .auction-detail-item-text{*/
+    /*margin-left: 50px;*/
+/*}*/
+
+
+.auction-detail-item-info{
+    /*padding-top: 6px;*/
+    /*margin-bottom: -22px;*/
+    /*height: 40px;*/
+    /*max-height: 120px;*/
+}
+
+.auction-detail-item-info .auction-detail-item-heading{
+    font-weight: bold;
+}
+
+.auction-detail-item-info div{
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.product-tab {
+  margin-top: 30px;
+}
+
+.product-tab .tab-nav {
+  border-bottom: 1px solid #DADADA;
+  margin-bottom: 30px;
+}
+
+.product-tab .tab-nav li {
+  display: inline-block;
+}
+
+.product-tab .tab-nav li+li {
+  margin-left: 30px;
+}
+
+.product-tab .tab-nav li a {
+  display: block;
+  padding: 15px 0px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #0a0a0a;
+}
+
+.product-tab .tab-nav li.active {
+  position: relative;
+}
+
+.product-tab .tab-nav li.active a {
+  color: #F8694A;
+}
+
+.product-tab .tab-nav li.active a:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1.5px;
+  height: 3px;
+  width: 30px;
+  background-color: #F8694A;
+}
+
+
+ #gallery_01 img{
+     border: 2px solid white;
+ }
+

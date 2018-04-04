@@ -11,12 +11,34 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from common.decorators import ajax_required
 from django.core.urlresolvers import reverse
-from .models import Follow
+from .models import Follow, State, Lga
 from notifications.signals import notify
 from auction.models import WatchList, AuctionEvent
 from auction.forms import  EmailPostForm
 from django.conf import settings
 # from cart.cart import Cart
+
+
+"""
+smart select for state and lga
+given a state, populate the lga dropdown only with lgas belonging
+to that state
+"""
+
+@ajax_required
+def lgas_for_state(request):
+    state = request.POST.get('state')
+    lgas_list = []
+    print("YES YOU CALLED")
+
+    if state:
+        lgas = Lga.objects.filter(state__name=state)
+
+        if len(lgas) > 0:
+            for lga in lgas:
+                lg = str(lga)
+                lgas_list.append(lg)
+    return JsonResponse(lgas_list, safe=False)
 
 # from notify.signals import notify
 def user_login(request):
@@ -116,9 +138,6 @@ def edit_profile(request, pk):
     else:
         raise PermissionDenied
 
-
-
-
 # @login_required
 # def budget_reply_form(request):
 #     form = EmailPostForm()
@@ -129,7 +148,6 @@ def edit_profile(request, pk):
 #         form = EmailPostForm()
 #     return render(request, 'budget/budget_reply.html', {'form':form, 'me':'message'})
 #
-
 
 @login_required
 def user_detail(request, pk):
@@ -146,8 +164,6 @@ def user_detail(request, pk):
         budget_reply_form = EmailPostForm(request.POST)
         budget = request.POST.get('budget', None)
 
-
-
         if budget_reply_form.is_valid():
             message = budget_reply_form.cleaned_data.get('message')
             from_email = settings.EMAIL_HOST_USER
@@ -155,9 +171,6 @@ def user_detail(request, pk):
             subject = "{}, {} reacted on your budget plan {}".format(sender, sender.email, budget)
             message = "{}".format(message)
             budget_reply_form.send(subject, message, from_email, [to_email])
-
-
-
 
     if user.is_authenticated and user.is_active:
         return render(request, 'account/user_home.html', {
@@ -181,7 +194,6 @@ def user_follow(request):
     user_id = request.POST.get('id')
     action = request.POST.get('action')
 
-
     if user_id and action:
 
         try:
@@ -202,12 +214,5 @@ def user_follow(request):
         except user.DoesNotExist:
             return JsonResponse({'status':'ko'})
     return JsonResponse({'status':'ko'})
-
-
-
-
-
-
-
 
 # Create your views here.
