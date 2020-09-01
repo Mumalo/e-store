@@ -27,8 +27,8 @@ from . import common
 #             'photologue_photos': PhotoSitemap,
 #             }
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
-     url(r'^chaining/', include('smart_selects.urls')),
+    # url(r'^admin/', include('admin.site.urls')),
+    url(r'^chaining/', include('smart_selects.urls')),
     url(r'', include('auction.urls', namespace='auctions')),
     url(r'', include('account.urls', namespace='accounts')),
     url(r'', include('cart.urls', namespace='shopping-cart')),
@@ -40,24 +40,12 @@ urlpatterns = [
     url(r'^photologue/', include('photologue.urls', namespace='photologue')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^grapelli/', include('grappelli.urls')),
-
-
-#     ratings app
     url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
-
 ]
-# + static(common.STATIC_URL, document_root=common.STATIC_ROOT)
-# urlpatterns += staticfiles_urlpatterns()
-
-# urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if common.DEBUG:
     urlpatterns += static(common.MEDIA_URL,
     document_root=common.MEDIA_ROOT)
-
-
-# from django.conf.urls import handler400, handler403, handler404, handler500
-
 handler404 = 'pages.views.not_found'
 handler500 = 'pages.views.server_error'
 handler403 = 'pages.views.permission_denied'

@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from common.decorators import ajax_required
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from .models import Follow
 from notifications.signals import notify
 from auction.models import WatchList, AuctionEvent

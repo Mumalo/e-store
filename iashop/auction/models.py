@@ -14,27 +14,6 @@ from django.core.exceptions import ValidationError
 from photologue.models import Photo, ImageModel
 
 
-
-#
-# class SystemUser(User):
-#     phone = models.CharField(max_length=25)
-#     institution = models.ForeignKey(Institution,
-#                                     on_delete=models.CASCADE)
-#     gender = models.CharField(choices=USER_GENDER_CHOICES, max_length=10)
-
-
-# This is a multi-table imheritance since the parent class must also exist alone and in relation whith other classes
-
-# class Buyer(SystemUser):
-#     pass
-#
-# class Seller(SystemUser):
-#     pass
-
-
-
-# System users shall be able to place free adds on the site
-
 class Category(BaseModel):
     name = models.CharField(max_length=250, unique=True, null=True, db_index=False)
     description = models.TextField(blank=True)
@@ -48,6 +27,7 @@ class Category(BaseModel):
     def __str__(self):
         return self.name
 
+
 class SubCategory(BaseModel):
     name = models.CharField(max_length=250,  unique=True, null=True)
     slug = models.SlugField(max_length=250, null=True)
@@ -58,6 +38,7 @@ class SubCategory(BaseModel):
 
     class Meta:
         verbose_name_plural = 'Sub Categories'
+
 
 class SubCategory2(BaseModel):
     name = models.CharField(max_length=250, unique=True)
@@ -72,32 +53,15 @@ class SubCategory2(BaseModel):
         return self.name
 
 
-
-# class Item(BaseModel):
-#     name = models.CharField(max_length=250)
-#     category = models.ForeignKey(Category,
-#                                  on_delete=models.CASCADE)
-#     description = models.TextField()
-#
-#     condition = models.CharField(max_length=10, choices=ITEM_CONDITION_CHOICES)
-#     status = models.BooleanField(default=True)
-#
 class Image(ImageModel):
     pass
+
 
 class AuctionEvent(BaseModel):
     item = models.CharField(max_length=125, blank=False, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=False, null=True, related_name='cat_products')
     sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, blank=True, null=True, related_name='sub_products')
     sub_category2 = models.ForeignKey(SubCategory2, on_delete=models.CASCADE, blank=True, null=True, related_name='sub_products2')
-    # sub_category = ChainedForeignKey(
-    #     SubCategory,
-    #     chained_field='category',
-    #     chained_model_field='category',
-    #     show_all=False,
-    #     auto_choose=True,
-    #     sort=True,
-    # )
     target_price = models.DecimalField(max_digits=50, decimal_places=2)
     start_price = models.DecimalField(max_digits=50, decimal_places=2, null=True, blank=True)
     current_price = models.DecimalField(max_digits=50, decimal_places=2, default=0.00)
@@ -253,7 +217,7 @@ class Advert(BaseModel):
     image = models.ImageField(blank=False, null=True,upload_to='advert/%Y/%m/%d')
     description = models.TextField(max_length=500, null=True, blank=True)
     price = models.DecimalField(max_digits=50, decimal_places=2)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='advert')
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='advert', on_delete=models.CASCADE)
     available = models.BooleanField(default=False)
 
 
@@ -283,9 +247,9 @@ class Ratings(models.Model):
 
 
 class ItemOfTheDay(BaseModel):
-    category = models.ForeignKey(Category, blank=True, null=True, help_text='Please select a category to include')
-    user = models.ForeignKey(User, blank=True, null=True, help_text='Please select a user whose items you wish to include')
-    subcategory = models.ForeignKey(SubCategory, blank=True, null=True, help_text='Please select select a sub category to include')
+    category = models.ForeignKey(Category, blank=True, null=True, help_text='Please select a category to include', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, blank=True, null=True, help_text='Please select a user whose items you wish to include', on_delete=models.CASCADE)
+    subcategory = models.ForeignKey(SubCategory, blank=True, null=True, help_text='Please select select a sub category to include', on_delete=models.CASCADE)
 
     def clean(self):
         c = self.category

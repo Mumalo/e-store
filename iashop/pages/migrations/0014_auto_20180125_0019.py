@@ -19,6 +19,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='teammember',
             name='photo',
-            field=models.ForeignKey(to='photologue.Photo', null=True),
+            field=models.ForeignKey(to='photologue.Photo', null=True, on_delete=models.CASCADE),
         ),
     ]

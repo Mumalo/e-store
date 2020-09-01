@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='teammember',
             name='team',
-            field=models.ForeignKey(help_text='Add Team', to='pages.Team', null=True),
+            field=models.ForeignKey(help_text='Add Team', to='pages.Team', null=True, on_delete=models.CASCADE),
         ),
     ]

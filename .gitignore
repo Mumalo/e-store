@@ -11,7 +11,7 @@ __pycache__
 htmlcov
 #iashop/iashop/secret.py
 myvenv/Include/
-/myvenv/
+myvenv/
 iashop/shop/templates/
 /iashop/iashop/secret.py
 

@@ -18,7 +18,7 @@ settings.configure()
 # from os.path import abspath, basename, dirname, join, normpath
 from .secret import DATABASE_NAME, PASSWORD, USER, SECRET_KEY, EMAIL_HOST, \
     EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, EMAIL_USE_TLS, HOST, ENGINE, DISQUS_API_KEY, DISQUS_WEBSITE_SHORTNAME
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # print(BASE_DIR)
 

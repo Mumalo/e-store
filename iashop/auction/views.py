@@ -7,7 +7,7 @@ from .models import AuctionEvent, Bid, Category, Advert, BudgetPlan, SubCategory
 from django.contrib import messages
 from django.views.generic.edit import CreateView
 from django.shortcuts import render, render_to_response
-from django.core.urlresolvers import reverse_lazy, reverse
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth import get_user
 from .models import User
 from django.views.generic.edit import DeleteView

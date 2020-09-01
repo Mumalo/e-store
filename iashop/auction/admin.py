@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import  Category, AuctionEvent, Bid, SubCategory, WatchList, ItemOfTheDay, SubCategory2, BudgetPlan
+from .models import Category, AuctionEvent, Bid, SubCategory, WatchList, ItemOfTheDay, SubCategory2, BudgetPlan
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['id','name', 'image','description', 'slug']

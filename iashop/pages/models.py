@@ -48,13 +48,13 @@ class Team(models.Model):
 
 class TeamMember(models.Model):
     short_intro = models.TextField(max_length=250, null=True, blank=True)
-    photo = models.ForeignKey(Photo, null=True)
+    photo = models.ForeignKey(Photo, null=True, on_delete=models.CASCADE)
     fb_page_url = models.URLField(null=True, blank=True, help_text="link to member\'s facebook page")
     tw_page_url = models.URLField(null=True, blank=True, help_text="link to member\'s twitter page")
     inst_page_url = models.URLField(null=True, blank=True, help_text="link to member\'s instagram page")
     name = models.CharField(max_length=150, null=True)
     position = models.CharField(max_length=150, null=True)
-    team = models.ForeignKey(Team, help_text='Add Team', null=True)
+    team = models.ForeignKey(Team, help_text='Add Team', null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

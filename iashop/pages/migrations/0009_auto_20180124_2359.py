@@ -35,6 +35,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='ourteam',
             name='team_member',
-            field=models.ForeignKey(to='pages.TeamMember', help_text='Add Team Member'),
+            field=models.ForeignKey(to='pages.TeamMember', help_text='Add Team Member', on_delete=models.CASCADE),
         ),
     ]

@@ -22,7 +22,7 @@ class Institution(BaseModel):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profile')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='profile', on_delete=models.CASCADE)
     photo = models.ImageField(blank=True, null=True, upload_to='profile/users', default=DEFAULT_PROFILE)
     # cover = models.ImageField(blank=True, null=True, upload_to='cover/users', default=DEFAULT_COVER)
     phone = models.CharField(max_length=25, null=True, blank=True, default='00000000')
@@ -47,8 +47,8 @@ post_save.connect(create_profle, sender=User)
 
 
 class Follow(models.Model):
-    user_followed = models.ForeignKey(User, related_name='rel_from_set')
-    user_following = models.ForeignKey(User, related_name='rel_to_set')
+    user_followed = models.ForeignKey(User, related_name='rel_from_set', on_delete=models.CASCADE)
+    user_following = models.ForeignKey(User, related_name='rel_to_set',  on_delete=models.CASCADE)
 
     created = models.DateTimeField(auto_now_add=True,
                                    db_index=True)
