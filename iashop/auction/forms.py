@@ -1,18 +1,18 @@
 from decimal import Decimal
-from .models import AuctionEvent,   Bid, Advert, BudgetPlan, Category, SubCategory, Image
-from datetime import datetime
-from django.core.exceptions import ValidationError
 
-from django import forms
-from django.forms import ModelForm, Textarea
-from material import Layout, Fieldset, Row
-from photologue.models import Photo
 # from material.frontend.forms import
 import arrow
+from django import forms
+from django.core.exceptions import ValidationError
 from django.core.mail import send_mail, BadHeaderError
+from django.forms import ModelForm, Textarea
 from django.shortcuts import HttpResponse
+from material import Layout, Fieldset, Row
 
-    # def get_item_label(self, item):
+from .models import AuctionEvent, Bid, Advert, BudgetPlan, Category, Image
+
+
+# def get_item_label(self, item):
     #     return "{}, {}".format(item.name, item.category)
 
      # def get_item_label(self, item):
@@ -39,6 +39,7 @@ class EmailPostForm(forms.Form):
         except BadHeaderError:
             return HttpResponse('Invalid Header found')
         ''
+
 
 class GeneralSearchForm(forms.Form):
     first_choice = ('All','All')
